@@ -27,9 +27,13 @@ function App() {
                         path="/"
                         element={loggedIn ? <Navigate to="/dashboard" /> : <Video />}
                     />
-                    <Route
+                    <Route 
                         path="/dashboard"
-                        element={loggedIn ? <Dashboard /> : <Navigate to="/" />}
+                        element={
+                            loggedIn
+                                ? <Dashboard  />
+                                : <Navigate to="/" />
+                        }
                     />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />

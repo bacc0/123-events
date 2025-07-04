@@ -26,13 +26,13 @@ export default function GifPage() {
     }, []);
 
     return (
-        <div style={{ 
-            position: "relative", height: "100vh", overflow: "hidden", 
-        background: '#003E99'
-         }}>
+        <div style={{
+            position: "relative", height: "100vh", overflow: "hidden",
+            background: '#003E99'
+        }}>
             <img
                 src={
-                    highQualityLoaded ? "/your-animation_2.gif" : "/your-animation_2.gif"
+                    highQualityLoaded ? "/your-animation_2.png" : "/your-animation_2.png"
                 }
                 alt="Animated background"
                 style={{
@@ -42,8 +42,9 @@ export default function GifPage() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    filter: highQualityLoaded ? "blur(3px)" : "blur(45px)",
-                    transition: "filter 5s ease",
+                    filter: highQualityLoaded ? "blur(0px)" : "blur(105px)",
+                    transform: highQualityLoaded ? "scale(1)" : "scale(2)",
+                    transition: "filter 5s ease, transform 5s ease",
                 }}
             />
 
@@ -54,12 +55,12 @@ export default function GifPage() {
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    background: `linear-gradient(180deg,
+                    background: `linear-gradient(177deg,
                #003E99 0%,
-               #003E9944 25%,
+               #003E9977 25%,
                #3399ff00 50%,
-               #003E9933 75%,
-               #003E9955 100%`,
+               #003E9955 75%,
+               #003E9999 100%`,
                 }}
             />
 

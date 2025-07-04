@@ -17,7 +17,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                     color="default"
                     elevation={0}
                     sx={{
-                         backgroundColor: '#ffffffbb', // semi-transparent background
+                    
+                         backgroundColor: isLoggedIn ?  '#ffffffbb' : '#ffffff00', // semi-transparent background
                          backdropFilter: 'blur(16px)',
                          WebkitBackdropFilter: 'blur(16px)',
                     }}
@@ -88,14 +89,16 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               </Box>
                               <Button
                                    variant="outlined"
-                                   color="inherit"
+                                   // color="inherit"
                                    onClick={onToggleLogin}
                                    sx={{
                                         ml: 1,
                                         height: 40,
-                                        color: 'primary.main',
+                                        // color: 'primary.main',
                                         borderColor: 'primary.main',
                                         px: 3,
+                                        minWidth: '120px',
+                                        background:  '#ffffff',
                                    }}
                               >
                                    {isLoggedIn ? 'Logout' : 'Login'}

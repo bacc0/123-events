@@ -32,7 +32,7 @@ export default function GifPage() {
          }}>
             <img
                 src={
-                    highQualityLoaded ? "/your-animation_2.gif" : "/your-animation.gif"
+                    highQualityLoaded ? "/your-animation_2.gif" : "/your-animation_2.gif"
                 }
                 alt="Animated background"
                 style={{
@@ -42,8 +42,8 @@ export default function GifPage() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    filter: highQualityLoaded ? "none" : "blur(55px)",
-                    transition: "filter 6.3s ease",
+                    filter: highQualityLoaded ? "blur(3px)" : "blur(45px)",
+                    transition: "filter 5s ease",
                 }}
             />
 
@@ -96,7 +96,7 @@ export default function GifPage() {
                 }}
             >
                 <motion.div
-                    initial={{ scale: 0.3, opacity: 0, y: 40 }}
+                    initial={{ scale: 0.3, opacity: 0, y: -40 }}
                     animate={showTitle ? { scale: 1, opacity: 1, y: 0 } : {}}
                     transition={{ type: "spring", stiffness: 270, delay: 0.26 }}
                 >
@@ -110,8 +110,8 @@ export default function GifPage() {
                             backgroundColor: "#ffffffaa",
                             color: "#003E99",
                             cursor: "pointer",
-                            backdropFilter: "blur(3px)",
-                            WebkitBackdropFilter: "blur(3px)",
+                            backdropFilter: "blur(10px)",
+                            WebkitBackdropFilter: "blur(10px)",
                         }}
                     >
                         Login
@@ -127,8 +127,8 @@ export default function GifPage() {
                             backgroundColor: "#ffffffaa",
                             color: "#003E99",
                             cursor: "pointer",
-                            backdropFilter: "blur(3px)",
-                            WebkitBackdropFilter: "blur(3px)",
+                            backdropFilter: "blur(10px)",
+                            WebkitBackdropFilter: "blur(10px)",
                         }}
                     >
                         Register

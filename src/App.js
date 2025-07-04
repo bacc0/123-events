@@ -9,10 +9,25 @@ import MyProfile from './components/my_profile';
 import PublicUPser_profile from './components/public_user_profile';
 import Video from './components/video';
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+
+function AnimatedRoute({ children }) {
+    return (
+        <motion.div
+            initial={{ scale: 1.2, opacity: 0.2, y: -40, filter: "blur(10px)" }}
+            animate={{ scale: 1, opacity: 1,     y: 0, filter: "blur(0px)" }}
+            exit={{ scale: 1.2, opacity: 0.05,   y: 40, filter: "blur(10px)" }}
+            transition={{  duration: 0.35, ease: "easeInOut" }}
+        >
+            {children}
+        </motion.div>
+    );
+}
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
+    const location = useLocation();
 
     const handleToggleLogin = () => {
         setLoggedIn((prev) => !prev);
@@ -20,39 +35,90 @@ function App() {
 
     return (
         <div className="App">
-            <Router>
-                <div
-                    style={{
-                        position: loggedIn ? "static" : "absolute",
-                        top: 110, left: 0, right: 0, zIndex: 1000,
-                       
-
-                    }}
-                >
-                    <MenuAppBar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
-                </div>
-                <Routes>
+            <div
+                style={{
+                    position: loggedIn ? "static" : "absolute",
+                    top: 110, left: 0, right: 0, zIndex: 1000,
+                }}
+            >
+                <MenuAppBar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
+            </div>
+            <AnimatePresence mode="wait">
+                <Routes location={location} key={location.pathname}>
                     <Route
                         path="/"
-                        element={loggedIn ? <Navigate to="/dashboard" /> : <Video />}
+                        element={
+                            loggedIn ? (
+                                <Navigate to="/dashboard" />
+                            ) : (
+                                <AnimatedRoute>
+                                    <Video />
+                                </AnimatedRoute>
+                            )
+                        }
                     />
                     <Route
                         path="/dashboard"
                         element={
-                            loggedIn
-                                ? <Dashboard />
-                                : <Navigate to="/" />
+                            loggedIn ? (
+                                <AnimatedRoute>
+                                    <Dashboard />
+                                </AnimatedRoute>
+                            ) : (
+                                <Navigate to="/" />
+                            )
                         }
                     />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/forgot-password" element={<ForgotPass />} />
-                    <Route path="/my-profile" element={<MyProfile />} />
-                    <Route path="/public-user-profile" element={<PublicUPser_profile />} />
+                    <Route
+                        path="/signup"
+                        element={
+                            <AnimatedRoute>
+                                <Signup />
+                            </AnimatedRoute>
+                        }
+                    />
+                    <Route
+                        path="/login"
+                        element={
+                            <AnimatedRoute>
+                                <Login />
+                            </AnimatedRoute>
+                        }
+                    />
+                    <Route
+                        path="/forgot-password"
+                        element={
+                            <AnimatedRoute>
+                                <ForgotPass />
+                            </AnimatedRoute>
+                        }
+                    />
+                    <Route
+                        path="/my-profile"
+                        element={
+                            <AnimatedRoute>
+                                <MyProfile />
+                            </AnimatedRoute>
+                        }
+                    />
+                    <Route
+                        path="/public-user-profile"
+                        element={
+                            <AnimatedRoute>
+                                <PublicUPser_profile />
+                            </AnimatedRoute>
+                        }
+                    />
                 </Routes>
-            </Router>
+            </AnimatePresence>
         </div>
     );
 }
 
-export default App;
+export default function AppWrapper() {
+    return (
+        <Router>
+            <App />
+        </Router>
+    );
+}

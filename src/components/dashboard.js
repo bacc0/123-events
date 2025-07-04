@@ -270,7 +270,8 @@ export default function Dashboard() {
                                         <Typography
                                             style={{
                                                 position: "relative",
-                                                top: "-198px",
+                                                top: "-215px",
+                                                left: -20,
                                                 marginTop: -60,
                                                 fontSize: "1.2rem",
                                                 fontWeight: "bold",
@@ -280,8 +281,10 @@ export default function Dashboard() {
                                                 borderRadius: "8px",
                                                 padding: "8px 12px",
                                                 textAlign: "center",
-                                                backdropFilter: 'blur(6px)',
-                                                WebkitBackdropFilter: 'blur(6px)',
+                                                backdropFilter: 'blur(12px)',
+                                                WebkitBackdropFilter: 'blur(12px)',
+                                                width: 'calc(100% + 40px)',
+                                                borderBottom: "0.2px solid #00000011",
                                             }}
                                             variant="h6" sx={{ mb: 1 }}>
                                             Event Title {item}

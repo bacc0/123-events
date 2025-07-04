@@ -17,10 +17,10 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                     color="default"
                     elevation={0}
                     sx={{
-                    
-                         backgroundColor: isLoggedIn ?  '#ffffffbb' : '#ffffff00', // semi-transparent background
-                         backdropFilter:  isLoggedIn ? 'blur(6px)': 'blur(0px)',
-                         WebkitBackdropFilter: isLoggedIn ? 'blur(16px)': 'blur(0px)',
+
+                         backgroundColor: isLoggedIn ? '#ffffffbb' : '#ffffff00', // semi-transparent background
+                         backdropFilter: isLoggedIn ? 'blur(6px)' : 'blur(0px)',
+                         WebkitBackdropFilter: isLoggedIn ? 'blur(16px)' : 'blur(0px)',
                     }}
                >
                     <Toolbar
@@ -39,15 +39,20 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    width: '40%',
                               }}
                          >
-                              <IconButton color="primary" sx={{ mr: 1 }}>
-                                   <EventNote />
-                              </IconButton>
-                              <Typography
-                                   variant="subtitle2"
-                                   sx={{ fontWeight: 'bold', fontSize: '.9rem', whiteSpace: 'nowrap', ml: 0 }}
-                              >
-                                   Event Manager
-                              </Typography>
+                              {isLoggedIn &&
+                                   <IconButton color="primary" sx={{ mr: 1 }}>
+                                        <EventNote />
+                                   </IconButton>
+                              }
+                              {isLoggedIn &&
+
+                                   <Typography
+                                        variant="subtitle2"
+                                        sx={{ fontWeight: 'bold', fontSize: '.9rem', whiteSpace: 'nowrap', ml: 0 }}
+                                   >
+                                        Event Manager
+                                   </Typography>
+                              }
                          </Box>
 
                          {/* Middle container */}
@@ -58,11 +63,13 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    width: '20%',
                               }}
                          >
-                              <IconButton color="inherit"> 
-                                   <Badge color="error" variant="dot">
-                                        <NotificationsIcon />
-                                   </Badge>
-                              </IconButton>
+                              {isLoggedIn &&
+                                   <IconButton color="inherit">
+                                        <Badge color="error" variant="dot">
+                                             <NotificationsIcon />
+                                        </Badge>
+                                   </IconButton>
+                              }
                          </Box>
 
                          {/* Right container */}
@@ -83,10 +90,13 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         mx: 1,
                                    }}
                               >
-                                   <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                                        JohnathonSuperLongNameThatScrolls
-                                   </Typography>
+                                   {isLoggedIn &&
+                                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                                             JohnathonSuperLongNameThatScrolls
+                                        </Typography>
+                                   }
                               </Box>
+
                               <Button
                                    variant="outlined"
                                    // color="inherit"
@@ -98,7 +108,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         borderColor: 'primary.main',
                                         px: 3,
                                         minWidth: '120px',
-                                        background:  '#ffffff',
+                                        background: '#ffffff',
                                    }}
                               >
                                    {isLoggedIn ? 'Logout' : 'Login'}

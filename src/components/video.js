@@ -55,7 +55,7 @@ export default function GifPage() {
                     left: 0,
                     width: "100%",
                     height: "100%",
-                    background: `linear-gradient(177deg,
+                    background: `linear-gradient(180deg,
                #003E99 0%,
                #003E9977 25%,
                #3399ff00 50%,

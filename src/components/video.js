@@ -44,7 +44,7 @@ export default function GifPage() {
                     objectFit: "cover",
                     filter: highQualityLoaded ? "blur(0px)" : "blur(105px)",
                     transform: highQualityLoaded ? "scale(1)" : "scale(2)",
-                    transition: "filter 5s ease, transform 5s ease",
+                    transition: "filter 2s ease, transform 2.4s ease",
                 }}
             />
 
@@ -108,7 +108,7 @@ export default function GifPage() {
                             fontSize: "18px",
                             borderRadius: "8px",
                             border: "1px solid #003E99",
-                            backgroundColor: "#ffffffaa",
+                            backgroundColor: "#ffffff",
                             color: "#003E99",
                             cursor: "pointer",
                             backdropFilter: "blur(10px)",
@@ -125,7 +125,7 @@ export default function GifPage() {
                             fontSize: "18px",
                             borderRadius: "8px",
                             border: "1px solid #003E99",
-                            backgroundColor: "#ffffffaa",
+                            backgroundColor: "#ffffff",
                             color: "#003E99",
                             cursor: "pointer",
                             backdropFilter: "blur(10px)",

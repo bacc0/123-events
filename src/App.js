@@ -21,17 +21,24 @@ function App() {
     return (
         <div className="App">
             <Router>
-                <MenuAppBar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
+                <div
+                    style={{
+                        position: loggedIn ? "static" : "absolute",
+                        top: 110, left: 0, right: 0, zIndex: 1000
+                    }}
+                >
+                    <MenuAppBar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
+                </div>
                 <Routes>
                     <Route
                         path="/"
                         element={loggedIn ? <Navigate to="/dashboard" /> : <Video />}
                     />
-                    <Route 
+                    <Route
                         path="/dashboard"
                         element={
                             loggedIn
-                                ? <Dashboard  />
+                                ? <Dashboard />
                                 : <Navigate to="/" />
                         }
                     />

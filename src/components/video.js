@@ -79,7 +79,7 @@ export default function GifPage() {
                     paddingLeft: "10%",
                     paddingRight: "10%",
                     margin: 0,
-                    fontSize: isSmallScreen ? "2.7rem" : "3.2rem",
+                    fontSize: isSmallScreen ? "2.7rem" : "4.5rem",
                     zIndex: 1,
                 }}
             >

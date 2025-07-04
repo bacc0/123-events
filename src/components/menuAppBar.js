@@ -19,8 +19,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                     sx={{
                     
                          backgroundColor: isLoggedIn ?  '#ffffffbb' : '#ffffff00', // semi-transparent background
-                         backdropFilter: 'blur(16px)',
-                         WebkitBackdropFilter: 'blur(16px)',
+                         backdropFilter:  isLoggedIn ? 'blur(6px)': 'blur(0px)',
+                         WebkitBackdropFilter: isLoggedIn ? 'blur(16px)': 'blur(0px)',
                     }}
                >
                     <Toolbar

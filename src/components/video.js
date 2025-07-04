@@ -70,7 +70,7 @@ export default function GifPage() {
                 transition={{ type: "spring", stiffness: 270 }}
                 style={{
                     position: "absolute",
-                    top: isSmallScreen ? "10%" : "12%",
+                    top: isSmallScreen ? "13%" : "12%",
                     transform: "translateX(-50%)",
                     fontWeight: "bold",
                     color: "#ffffff",

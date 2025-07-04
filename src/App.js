@@ -24,7 +24,9 @@ function App() {
                 <div
                     style={{
                         position: loggedIn ? "static" : "absolute",
-                        top: 110, left: 0, right: 0, zIndex: 1000
+                        top: 110, left: 0, right: 0, zIndex: 1000,
+                        opacity:  loggedIn ? 1 :0.1
+
                     }}
                 >
                     <MenuAppBar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />

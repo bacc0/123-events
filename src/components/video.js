@@ -75,7 +75,7 @@ export default function GifPage() {
                     transform: "translateX(-50%)",
                     fontWeight: "bold",
                     color: "#ffffff",
-                    textShadow: "0px 0px 17px rgba(0, 28, 71, 0.88)",
+                    textShadow: "1px 3px 2px rgba(0, 28, 71, 0.4)",
                     textAlign: "center",
                     paddingLeft: "10%",
                     paddingRight: "10%",

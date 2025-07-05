@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, useTheme, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
+import { TypeAnimation } from "react-type-animation";
 
 export default function GifPage() {
     const [highQualityLoaded, setHighQualityLoaded] = useState(false);
@@ -42,7 +43,7 @@ export default function GifPage() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    filter: highQualityLoaded ? "blur(0px)" : "blur(105px)",
+                    filter: highQualityLoaded ? "blur(0px)" : "blur(22px)",
                     transform: highQualityLoaded ? "scale(1)" : "scale(2)",
                     transition: "filter 2s ease, transform 2.4s ease",
                 }}
@@ -56,11 +57,11 @@ export default function GifPage() {
                     width: "100%",
                     height: "100%",
                     background: `linear-gradient(180deg,
-               #003E99 0%,
-               #003E9977 25%,
-               #3399ff00 50%,
-               #003E9955 75%,
-               #003E9999 100%`,
+                                    #003E99 0%,
+                                    #003E9944 25%,
+                                    #3399ff33 50%,
+                                    #003E9944 75%,
+                                    #003E99dd 100%)`,
                 }}
             />
 
@@ -81,9 +82,23 @@ export default function GifPage() {
                     margin: 0,
                     fontSize: isSmallScreen ? "2.7rem" : "4.5rem",
                     zIndex: 1,
+                    left: "0%",
+                
                 }}
             >
-                Discover and Manage Your Events Easily
+                {/* {" "} */}
+                {showTitle && (
+                    <TypeAnimation
+                        sequence={[
+                            "Discover and Manage Your Events Easily", // text
+                            1000,                          // wait before repeating
+                        ]}
+                        wrapper="span"
+                        speed={40}
+                        style={{ display: 'inline-block' }}
+                        repeat={Infinity}
+                    />
+                )}
             </motion.h1>
 
             <div

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-
+import {
+    Typography,
+    Button,
+   
+} from "@mui/material"
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -508,7 +512,7 @@ const SignUpPage = () => {
             className="signup-button"
             disabled={loading}
           >
-            <span style={styles.buttonText}>Create Account</span>
+            <span style={styles.buttonText}>CREATE ACCOUNT</span>
             <div style={styles.spinner}></div>
           </button>
         </div>

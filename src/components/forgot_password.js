@@ -153,7 +153,7 @@ const ForgotPasswordPage = () => {
       marginBottom: '24px'
     },
     buttonText: {
-      visibility: loading ? 'hidden' : 'visible'
+      visibility: loading ? 'hidden' : 'visible',
     },
     spinner: {
       display: loading ? 'inline-block' : 'none',
@@ -303,7 +303,7 @@ const ForgotPasswordPage = () => {
               className="submit-button"
               disabled={loading}
             >
-              <span style={styles.buttonText}>Send Reset Link</span>
+              <span style={styles.buttonText}>SEND RESET LINK</span>
               <div style={styles.spinner}></div>
             </button>
 

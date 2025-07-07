@@ -437,7 +437,7 @@ const LoginPage = () => {
             className="login-button"
             disabled={loading}
           >
-            <span style={styles.buttonText}>Log In</span>
+            <span style={styles.buttonText}>LOG IN</span>
             <div style={styles.spinner}></div>
           </button>
         </div>

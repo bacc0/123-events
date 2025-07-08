@@ -626,7 +626,7 @@ const App = () => {
     const [currentView, setCurrentView] = useState('dashboard');
     const [editingEvent, setEditingEvent] = useState(null);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [showFilters, setShowFilters] = useState(true);
+    const [showFilters, setShowFilters] = useState(false);
     const [confirmingAction, setConfirmingAction] = useState(null);
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -709,6 +709,7 @@ const App = () => {
             <div key={event.id} className="event-card">
                 {event.image ? (
                     <img src={event.image} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }} />
+                    
                 ) : (
                     <div className="event-image-placeholder">
                         <svg width="40" height="40" viewBox="0 0 16 16" fill="#9CA3AF">
@@ -764,19 +765,20 @@ const App = () => {
 
             {currentView === 'dashboard' ? (
                 <main className="main-content">
-                    <div className="card card-padded">
-                        <div className="section-header">
-                            <h2 className="section-title">Events</h2>
+                    <h3>Events</h3>
+                    <div className="card card-padded">    
+                        <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '12px' }}>
                             <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
                                 <div className="search-box">
                                     <svg className="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                     </svg>
+                                
                                     <input type="text" placeholder="Search by keyword..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
                                 </div>
                                 <button className="btn btn-outline" onClick={() => setShowFilters(!showFilters)}>Filters</button>
-                                <button className="btn btn-primary" onClick={() => setCurrentView('createEvent')}>Create Event</button>
                             </div>
+                            <button className="btn btn-primary" onClick={() => setCurrentView('createEvent')}>Create Event</button>
                         </div>
                         {showFilters && (
                             <div className="filter-panel">

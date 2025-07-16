@@ -12,13 +12,15 @@ import Video from './components/video';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import EventList from "./components/EventList";
+
 function AnimatedRoute({ children }) {
     return (
         <motion.div
             initial={{ scale: 1.2, opacity: 0.2, y: -40, filter: "blur(10px)" }}
-            animate={{ scale: 1, opacity: 1,     y: 0, filter: "blur(0px)" }}
-            exit={{ scale: 1.2, opacity: 0.05,   y: 40, filter: "blur(10px)" }}
-            transition={{  duration: 0.35, ease: "easeInOut" }}
+            animate={{ scale: 1, opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ scale: 1.2, opacity: 0.05, y: 40, filter: "blur(10px)" }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
         >
             {children}
         </motion.div>
@@ -27,7 +29,7 @@ function AnimatedRoute({ children }) {
 
 function App() {
 
-    
+
     const [loggedIn, setLoggedIn] = useState(false);
     const location = useLocation();
 
@@ -119,8 +121,11 @@ function App() {
 
 export default function AppWrapper() {
     return (
-        <Router>
-            <App />
-        </Router>
+        <>
+            <Router>
+                <App />
+            </Router>
+            <EventList />
+        </>
     );
 }

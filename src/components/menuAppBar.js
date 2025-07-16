@@ -148,7 +148,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                </AppBar>
                {/* Padding box to push content below the AppBar */}
                <Toolbar />
-               {!isLoggedIn && (
+               {/* {!isLoggedIn && (
                     <Box
                          sx={{
                               backgroundColor: "#EBF4FFdd",
@@ -180,7 +180,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               <h5>🚀 New Event: “Startup Pitch Night” added</h5>
                          </ul>
                     </Box>
-               )}
+               )} */}
           </Box>
      );
 }

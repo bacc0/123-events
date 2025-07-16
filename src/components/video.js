@@ -83,7 +83,7 @@ export default function GifPage() {
                     fontSize: isSmallScreen ? "2.7rem" : "4.5rem",
                     zIndex: 1,
                     left: "0%",
-                
+
                 }}
             >
                 {/* {" "} */}
@@ -133,24 +133,31 @@ export default function GifPage() {
                         Login
                     </Button>
                     <div style={{ minHeight: 28 }} />
-                    <Button
-                        onClick={() => navigate("/signup")}
-                        style={{
-                            padding: "12px 48px",
-                            fontSize: "18px",
-                            borderRadius: "8px",
-                            border: "1px solid #003E99",
-                            backgroundColor: "#ffffff",
-                            color: "#003E99",
-                            cursor: "pointer",
-                            backdropFilter: "blur(10px)",
-                            WebkitBackdropFilter: "blur(10px)",
-                        }}
-                    >
-                        Register
-                    </Button>
                 </motion.div>
-            </div>
+
+                <motion.div
+                    initial={{ scale: 0.1, opacity: 0, y: -40 }}
+                    animate={showTitle ? { scale: 1, opacity: 1, y: 0 } : {}}
+                    transition={{ type: "spring", stiffness: 270, delay: 0.33 }}
+                >
+                <Button
+                    onClick={() => navigate("/signup")}
+                    style={{
+                        padding: "12px 48px",
+                        fontSize: "18px",
+                        borderRadius: "8px",
+                        border: "1px solid #003E99",
+                        backgroundColor: "#ffffff",
+                        color: "#003E99",
+                        cursor: "pointer",
+                        backdropFilter: "blur(10px)",
+                        WebkitBackdropFilter: "blur(10px)",
+                    }}
+                >
+                    Register
+                </Button>
+            </motion.div>
         </div>
+        </div >
     );
 }

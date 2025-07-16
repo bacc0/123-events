@@ -1,402 +1,11 @@
-// // This component displays the dashboard page with event filters, tabs, and event cards.
-// import React, { useState } from "react";
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-// import {
-//     Typography,
-//     Button,
-//     Box,
-//     TextField,
-//     InputAdornment,
-//     Paper,
-//     Tabs,
-//     Tab,
-//     Card,
-//     CardContent,
-//     CardMedia,
-//     Grid,
-//     Divider,
-//     useMediaQuery
-// } from "@mui/material";
-// import SearchIcon from "@mui/icons-material/Search";
-// import LocationOnIcon from "@mui/icons-material/LocationOn";
-// import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-// import dayjs from "dayjs";
 
-// export default function Dashboard() {
-//     const [fromDate, setFromDate] = useState(dayjs('2025-07-02'));
-//     const [toDate, setToDate] = useState(dayjs('2025-07-30'));
-//     const [tabValue, setTabValue] = useState(0);
-
-//     const isSmallScreen = useMediaQuery('(max-width:839px)');
-
-//     return (
-//         <Box sx={{ flexGrow: 1 }}>
-//             <Box sx={{ p: 3 }}>
-//                 <Paper sx={{ p: 2, mb: 3, borderRadius: "12px", boxShadow: 0, backgroundColor: "#F5F5F5" }}>
-//                     <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
-//                         Events
-//                     </Typography>
-//                     <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 2, justifyContent: 'center' }}>
-//                         <TextField
-//                             placeholder="Search by keyword..."
-//                             size="medium"
-//                             InputProps={{
-//                                 startAdornment: (
-//                                     <InputAdornment position="start">
-//                                         <SearchIcon />
-//                                     </InputAdornment>
-//                                 )
-//                             }}
-//                             sx={{
-//                                 height: 56,
-//                                 backgroundColor: "#ffffff",
-//                                 borderRadius: "8px",
-//                                 marginBottom: 2,
-//                                 width: { xs: '100%', sm: '246px' }
-//                             }}
-//                         />
-//                         <TextField
-//                             placeholder="e.g. London"
-//                             label="Location"
-//                             size="medium"
-//                             InputProps={{
-//                                 startAdornment: (
-//                                     <InputAdornment position="start">
-//                                         <LocationOnIcon />
-//                                     </InputAdornment>
-//                                 )
-//                             }}
-//                             sx={{
-//                                 height: 56,
-//                                 backgroundColor: "#ffffff",
-//                                 borderRadius: "8px",
-//                                 marginBottom: 2,
-//                                 width: { xs: '100%', sm: '246px' }
-//                             }}
-//                         />
-//                         <span
-//                             style={{
-//                                 background: '#ffffff',
-//                                 borderRadius: 3,
-//                                 height: 56,
-//                                 marginBottom: '16px',
-
-//                             }}>
-//                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-//                                 <DatePicker
-//                                     label="From"
-//                                     value={fromDate}
-//                                     onChange={(newValue) => setFromDate(newValue)}
-//                                     renderInput={(params) => (
-//                                         <TextField
-//                                             {...params}
-//                                             size="small"
-//                                             sx={{
-//                                                 height: 56,
-//                                                 borderRadius: "8px",
-//                                                 width: { xs: '100%', sm: 'auto' }
-//                                             }}
-//                                         />
-//                                     )}
-//                                 />
-//                             </LocalizationProvider>
-//                         </span>
-//                         <span style={{ background: '#ffffff', borderRadius: 3, height: 56 }}>
-//                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-//                                 <DatePicker
-//                                     label="To"
-//                                     value={toDate}
-//                                     onChange={(newValue) => setToDate(newValue)}
-//                                     renderInput={(params) => (
-//                                         <TextField
-//                                             {...params}
-//                                             size="small"
-//                                             sx={{
-//                                                 height: 40,
-//                                                 width: { xs: '100%', sm: 'auto' }
-//                                             }}
-//                                         />
-//                                     )}
-//                                 />
-//                             </LocalizationProvider>
-//                         </span>
-
-//                         {isSmallScreen ? (
-//                             <Box
-//                                 sx={{
-//                                     display: "flex",
-//                                     alignItems: "center",
-//                                     flexDirection: "column",
-//                                     width: "100%",
-//                                     gap: 1,
-//                                     mt: 1
-//                                 }}
-//                             >
-//                                 <Button variant="outlined"
-//                                     sx={{
-//                                         borderColor: "#003E99",
-//                                         color: "#003E99",
-//                                         flex: 1,
-//                                         borderRadius: "8px",
-//                                         minWidth: 0,
-//                                         marginBottom: 1.5,
-//                                         marginTop: 1,
-//                                         padding: "10px",
-//                                         width: { xs: '75%', sm: '507px' }
-//                                     }}
-
-//                                 >Filters</Button>
-//                                 <Button variant="outlined" color="error" sx={{
-//                                     flex: 1,
-//                                     borderRadius: "8px",
-//                                     minWidth: 0,
-//                                     marginBottom: 1.5,
-//                                     marginTop: 1,
-//                                     padding: "10px",
-//                                     width: { xs: '75%', sm: '507px' }
-//                                 }}>Clear</Button>
-//                                 <Button
-//                                     variant="contained"
-//                                     sx={{
-//                                         flex: 1,
-//                                         borderRadius: "8px",
-//                                         minWidth: 0,
-//                                         bgcolor: "#003E99",
-//                                         "&:hover": {
-//                                             bgcolor: "#0052CC"
-//                                         },
-//                                         marginBottom: 1.5,
-//                                         marginTop: 1,
-//                                         padding: "10px",
-//                                         width: { xs: '75%', sm: '507px' }
-//                                     }}
-//                                 >
-//                                     Create Event
-//                                 </Button>
-//                             </Box>
-//                         ) : (
-//                             <>
-//                                 <div
-//                                     style={{
-//                                         display: "flex",
-//                                         alignItems: "flex-end",
-//                                         justifyContent: "space-between",
-//                                         gap: "16px"
-//                                     }}
-//                                 >
-//                                     <Button
-//                                         variant="outlined"
-//                                         sx={{
-//                                             height: 40,
-//                                             width: 160,
-//                                             borderRadius: "8px",
-//                                             borderColor: "#003E99",
-//                                             color: "#003E99",
-//                                         }}
-//                                     >
-//                                         Filters
-//                                     </Button>
-//                                     <Button
-//                                         variant="outlined"
-//                                         color="error"
-//                                         sx={{ height: 40, width: 160, borderRadius: "8px" }}
-//                                     >
-//                                         Clear
-//                                     </Button>
-//                                     <Button
-//                                         variant="contained"
-//                                         sx={{
-//                                             height: 40,
-//                                             width: 160,
-//                                             borderRadius: "8px",
-//                                             bgcolor: "#003E99",
-//                                             "&:hover": {
-//                                                 bgcolor: "#0052CC"
-//                                             },
-//                                         }}
-//                                     >
-//                                         Create Event
-//                                     </Button>
-//                                 </div>
-//                             </>
-//                         )}
-//                     </Box>
-//                 </Paper>
-
-//                 <Tabs
-//                     value={tabValue}
-//                     onChange={(event, newValue) => setTabValue(newValue)}
-//                     textColor="primary"
-//                     indicatorColor="primary"
-//                     sx={{
-//                         mb: 3,
-//                     }}
-//                 >
-//                     <Tab label="Discover" />
-//                     <Tab label="My Events" />
-//                     <Tab label="Attending" />
-//                 </Tabs>
-
-//                 {tabValue === 0 && (
-//                     <Grid container spacing={2} justifyContent="center">
-//                         {[1, 2, 3].map(item => (
-//                             <Grid item xs={12} sm={6} md={4} key={item}>
-//                                 <Card
-//                                     sx={{
-//                                         borderRadius: "12px",
-//                                         transition: "all 0.3s ease",
-//                                         boxShadow: 1,
-//                                         "&:hover": {
-//                                             boxShadow: 3,
-//                                             transform: "translateY(-3px)"
-//                                         },
-//                                         maxWidth: 388,
-//                                         margin: isSmallScreen ? "auto" : undefined
-//                                     }}
-//                                 >
-//                                     <CardMedia
-//                                         component="img"
-//                                         height="258"
-//                                         image="https://images.unsplash.com/photo-1663680942106-883c2e50c05f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-//                                         alt="Event image"
-//                                         sx={{
-//                                             borderTopLeftRadius: "12px",
-//                                             borderTopRightRadius: "12px"
-//                                         }}
-//                                     />
-//                                     <CardContent>
-//                                         <Typography
-//                                             style={{
-//                                                 position: "relative",
-//                                                 top: "-215px",
-//                                                 left: -20,
-//                                                 marginTop: -60,
-//                                                 fontSize: "1.2rem",
-//                                                 fontWeight: "bold",
-//                                                 textShadow: "0 0 2px rgba(0, 0, 0, 0.5)",
-//                                                 color: "#ffffff",
-//                                                 background: `linear-gradient(to right, transparent,transparent, #00000011, transparent, transparent)`,
-//                                                 borderRadius: "8px",
-//                                                 padding: "8px 12px",
-//                                                 textAlign: "center",
-//                                                 backdropFilter: 'blur(12px)',
-//                                                 WebkitBackdropFilter: 'blur(12px)',
-//                                                 width: 'calc(100% + 40px)',
-//                                                 borderBottom: "0.2px solid #00000011",
-//                                             }}
-//                                             variant="h6" sx={{ mb: 1 }}>
-//                                             Event Title {item}
-//                                         </Typography>
-//                                         <Box sx={{ display: "flex", alignItems: "center", mb: 0.5 }}>
-//                                             <CalendarTodayIcon sx={{ fontSize: 16, mr: 0.5 }} />
-//                                             <Typography variant="body2">20 July</Typography>
-//                                         </Box>
-//                                         <Box sx={{ display: "flex", alignItems: "center" }}>
-//                                             <LocationOnIcon sx={{ fontSize: 16, mr: 0.5 }} />
-//                                             <Typography variant="body2">Hyde Park, London</Typography>
-//                                         </Box>
-//                                         <Divider sx={{ my: 1.5 }} />
-//                                         <Box
-//                                             sx={{
-//                                                 display: "flex",
-//                                                 justifyContent: "space-between",
-//                                                 gap: 1
-//                                             }}
-//                                         >
-//                                             <Button
-//                                                 variant="outlined"
-//                                                 size="small"
-//                                                 sx={{
-//                                                     flex: 1,
-//                                                     height: 40,
-//                                                     borderRadius: "8px",
-//                                                     minWidth: 0,
-//                                                     borderColor: "#003E99",
-//                                                     color: "#003E99",
-//                                                     marginBottom: -1.5,
-//                                                 }}
-//                                             >
-//                                                 Details
-//                                             </Button>
-//                                             <Button
-//                                                 variant="contained"
-//                                                 size="small"
-//                                                 sx={{
-//                                                     flex: 1,
-//                                                     height: 40,
-//                                                     borderRadius: "8px",
-//                                                     minWidth: 0,
-//                                                     bgcolor: "#003E99",
-//                                                     "&:hover": {
-//                                                         bgcolor: "#0052CC"
-//                                                     },
-//                                                     marginBottom: -1.5,
-//                                                 }}
-//                                             >
-//                                                 Edit
-//                                             </Button>
-//                                             <Button
-//                                                 variant="outlined"
-//                                                 color="error"
-//                                                 size="small"
-//                                                 sx={{
-//                                                     flex: 1,
-//                                                     height: 40,
-//                                                     borderRadius: "8px",
-//                                                     minWidth: 0,
-//                                                     marginBottom: -1.5,
-//                                                 }}
-//                                             >
-//                                                 Cancel
-//                                             </Button>
-//                                         </Box>
-//                                     </CardContent>
-//                                 </Card>
-//                             </Grid>
-//                         ))}
-//                     </Grid>
-//                 )}
-
-//                 {tabValue === 1 && (
-//                     <Typography variant="body1">These are your events.</Typography>
-//                 )}
-
-//                 {tabValue === 2 && (
-//                     <Typography variant="body1">Events you are attending.</Typography>
-//                 )}
-//             </Box>
-//         </Box >
-//     );
-// }
 
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { database } from "../firebase";
+import { ref as dbRef, get, child, set } from "firebase/database";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// --- Mock Data ---
-const initialMyEvents = [
-    { id: 1, title: 'Tech Conference 2025', date: '2025-03-15', time: '09:00', location: 'Convention Center, London', attendees: 45, status: 'upcoming', image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&h=240&fit=crop&crop=center', description: 'Join us for an exciting day of innovation and networking at our annual tech conference.' },
-    { id: 2, title: 'Product Launch Party', date: '2025-03-22', time: '18:00', location: 'Rooftop Venue, Canary Wharf', attendees: 120, status: 'upcoming', image: null, description: 'Celebrate the launch of our latest product with cocktails and networking.' },
-];
-
-const initialAttendingEvents = [
-    { id: 4, title: 'Marketing Summit 2025', date: '2025-03-18', time: '10:00', location: 'Excel London', organizer: 'Sarah Johnson', rsvpStatus: 'accepted', attendees: 200, image: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=400&h=240&fit=crop&crop=center', description: 'Annual marketing summit featuring keynote speakers, workshops, and networking opportunities.' }
-];
-
-const initialAllEvents = [
-    ...initialMyEvents,
-    ...initialAttendingEvents,
-    { id: 5, title: 'Art & Design Fair', date: '2025-04-05', time: '11:00', location: 'Somerset House, London', organizer: 'Creative UK', attendees: 1500, image: 'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?w=400&h=240&fit=crop&crop=center', description: 'Discover contemporary art from emerging artists and designers.' },
-    { id: 6, title: 'Music Festival', date: '2025-07-20', time: '12:00', location: 'Hyde Park, London', organizer: 'LiveNation', attendees: 50000, image: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=240&fit=crop&crop=center', description: 'A weekend of live music from the world\'s biggest artists.' },
-    { id: 7, title: 'Manchester Tech Expo', date: '2025-05-10', time: '09:00', location: 'Manchester Central', organizer: 'TechNorth', attendees: 3000, image: 'https://images.unsplash.com/photo-1529070470440-9f3507b52243?w=400&h=240&fit=crop&crop=center', description: 'The north\'s largest gathering of tech innovators and businesses.' }
-];
-
-const initialNotifications = [
-    { id: 1, type: 'invite', text: 'Sarah Johnson invited you to Marketing Summit 2025.', timestamp: new Date(Date.now() - 5 * 60 * 1000), read: false },
-    { id: 2, type: 'update', text: 'Tech Conference 2025 has been updated.', timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), read: false },
-    { id: 3, type: 'rsvp', text: 'Mike Chen accepted your invite to Tech Conference 2025.', timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true },
-];
 
 // Reusable Components
 const EventDetailsModal = ({ event, onClose }) => (
@@ -411,7 +20,7 @@ const EventDetailsModal = ({ event, onClose }) => (
                 </button>
             </div>
             <div className="modal-body">
-                {event.image && <img src={event.image} alt={event.title} className="modal-image" onError={(e) => { e.target.style.display = 'none'; }} />}
+                {event.imageUrl && <img src={event.imageUrl} alt={event.title} className="modal-image" onError={(e) => { e.target.style.display = 'none'; }} />}
                 <div style={{ display: 'grid', gap: '20px' }}>
                     <div className="detail-item">
                         <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
@@ -447,8 +56,13 @@ const EventDetailsModal = ({ event, onClose }) => (
 );
 
 const EditEventModal = ({ event, onSave, onClose }) => {
-    const [formData, setFormData] = useState(event);
-    const [imagePreview, setImagePreview] = useState(event.image);
+    // Use imageUrl consistently
+    const [formData, setFormData] = useState({
+        ...event,
+        imageUrl: event.imageUrl || ""
+    });
+    const [imagePreview, setImagePreview] = useState(event.imageUrl || "");
+    const [imageFile, setImageFile] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -461,15 +75,23 @@ const EditEventModal = ({ event, onSave, onClose }) => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result);
-                setFormData(prev => ({ ...prev, image: reader.result }));
+                // Don't set image in formData, just preview; imageUrl will be updated after upload
             };
             reader.readAsDataURL(file);
+            setImageFile(file);
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave(formData);
+
+        if (!formData.title || !formData.date || !formData.time || !formData.location || !formData.description) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        // Use imageFile from useState, and pass imageUrl as well
+        onSave({ ...formData, imageFile: imageFile });
     };
 
     return (
@@ -529,21 +151,51 @@ const EditEventModal = ({ event, onSave, onClose }) => {
 };
 
 const CreateEventPage = ({ onSave, onCancel }) => {
-    const [formData, setFormData] = useState({ title: '', date: '', time: '', location: '', image: '', description: '' });
+    const [formData, setFormData] = useState({ title: '', date: '', time: '', location: '', description: '', imageUrl: '' });
     const [imagePreview, setImagePreview] = useState('');
+    const [uploading, setUploading] = useState(false);
+
     const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
-    const handleImageChange = (e) => {
+
+    const handleImageChange = async (e) => {
         if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result);
-                setFormData(prev => ({ ...prev, image: reader.result }));
             };
-            reader.readAsDataURL(e.target.files[0]);
+            reader.readAsDataURL(file);
+
+            try {
+                setUploading(true);
+                const storage = getStorage();
+                const imageRef = storageRef(storage, `event_images/${Date.now()}_${file.name}`);
+                await uploadBytes(imageRef, file);
+                const url = await getDownloadURL(imageRef);
+                setFormData(prev => ({ ...prev, imageUrl: url }));
+                console.log("✅ Image uploaded immediately:", url);
+            } catch (error) {
+                console.error("❌ Image upload error:", error);
+                alert("There was an error uploading the image. Please try again.");
+            } finally {
+                setUploading(false);
+            }
         }
     };
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!formData.title || !formData.date || !formData.time || !formData.location || !formData.description) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        if (!formData.imageUrl) {
+            alert("Please wait for the image to finish uploading before submitting.");
+            return;
+        }
+
         onSave({ ...formData, id: Date.now(), attendees: 0, status: 'upcoming' });
     };
 
@@ -562,33 +214,33 @@ const CreateEventPage = ({ onSave, onCancel }) => {
                 <form onSubmit={handleSubmit} className="form">
                     <div className="form-group">
                         <label className="form-label" htmlFor="title">Event Title</label>
-                        <input className="form-input" type="text" id="title" name="title" onChange={handleChange} placeholder="e.g., Summer Music Festival" required />
+                        <input className="form-input" type="text" id="title" name="title" value={formData.title} onChange={handleChange} placeholder="e.g., Summer Music Festival" required />
                     </div>
                     <div className="form-row">
                         <div className="form-group">
                             <label className="form-label" htmlFor="date">Date</label>
-                            <input className="form-input" type="date" id="date" name="date" onChange={handleChange} required />
+                            <input className="form-input" type="date" id="date" name="date" value={formData.date} onChange={handleChange} required />
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="time">Time</label>
-                            <input className="form-input" type="time" id="time" name="time" onChange={handleChange} required />
+                            <input className="form-input" type="time" id="time" name="time" value={formData.time} onChange={handleChange} required />
                         </div>
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="location">Location</label>
-                        <input className="form-input" type="text" id="location" name="location" onChange={handleChange} placeholder="e.g., Hyde Park, London" required />
+                        <input className="form-input" type="text" id="location" name="location" value={formData.location} onChange={handleChange} placeholder="e.g., Hyde Park, London" required />
                     </div>
                     <div className="form-group">
                         <label className="form-label">Event Image</label>
                         <input type="file" id="image-upload-create" accept="image/*" onChange={handleImageChange} className="hidden" />
                         <label htmlFor="image-upload-create" className="image-upload">
-                            Click to upload image
+                            {uploading ? "Uploading image..." : "Click to upload image"}
                         </label>
                         {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview" />}
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="description">Description</label>
-                        <textarea className="form-textarea" id="description" name="description" onChange={handleChange} placeholder="Describe your event..." required />
+                        <textarea className="form-textarea" id="description" name="description" value={formData.description} onChange={handleChange} placeholder="Describe your event..." required />
                     </div>
                     <div className="modal-footer" style={{ padding: 0, borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
                         <button type="button" className="btn btn-outline" onClick={onCancel}>Cancel</button>
@@ -616,10 +268,35 @@ const ConfirmationModal = ({ title, message, onConfirm, onCancel, confirmText })
 );
 
 const App = () => {
-    const [myEvents, setMyEvents] = useState(initialMyEvents);
-    const [attendingEvents, setAttendingEvents] = useState(initialAttendingEvents);
-    const [allEvents, setAllEvents] = useState(initialAllEvents);
-    const [notifications, setNotifications] = useState(initialNotifications);
+    const [myEvents, setMyEvents] = useState([]);
+    const [attendingEvents, setAttendingEvents] = useState([]);
+    const [allEvents, setAllEvents] = useState([]);
+    const [notifications, setNotifications] = useState([]);
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const dbRefInstance = dbRef(database);
+                const snapshot = await get(child(dbRefInstance, "events"));
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const eventsArray = Object.keys(data).map((key) => ({
+                        id: key,
+                        ...data[key],
+                        date: data[key].dateTime ? new Date(data[key].dateTime._seconds * 1000).toISOString().split("T")[0] : "",
+                        imageUrl: data[key].imageUrl || "",
+                    }));
+                    console.log("Loaded events from Realtime DB:", eventsArray);
+                    setAllEvents(eventsArray);
+                } else {
+                    console.log("⚠️ No data available in 'events'.");
+                }
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
+        };
+
+        fetchEvents();
+    }, []);
 
     const [showNotifications, setShowNotifications] = useState(false);
     const [activeTab, setActiveTab] = useState('discover');
@@ -644,13 +321,34 @@ const App = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [notificationRef]);
 
-    const handleCreateEvent = (newEvent) => {
-        setMyEvents(prev => [{ ...newEvent, id: Date.now() }, ...prev]);
-        setAllEvents(prev => [{ ...newEvent, id: Date.now() }, ...prev]);
+    const handleCreateEvent = async (newEvent) => {
+      try {
+        let imageUrl = newEvent.imageUrl; // Use imageUrl already uploaded
+
+        // Generate custom ID
+        const keyName = `_v_${newEvent.title.toLowerCase().replace(/\s+/g, "_")}_${new Date(newEvent.date).getFullYear()}`;
+
+        // Create event data with correct imageUrl
+        const eventData = {
+          ...newEvent,
+          id: keyName,
+          imageUrl: imageUrl,
+          attendeesCount: 0,
+          status: 'upcoming'
+        };
+
+        const databaseEventRef = dbRef(database, `events/${keyName}`);
+        await set(databaseEventRef, eventData);
+
+        setMyEvents(prev => [{ ...eventData }, ...prev]);
+        setAllEvents(prev => [{ ...eventData }, ...prev]);
         alert(`Event "${newEvent.title}" created successfully!`);
         setCurrentView('dashboard');
+      } catch (error) {
+        console.error("Error creating event:", error);
+        alert("There was an error creating the event. Please check console for details.");
+      }
     };
-
     const handleUpdateEvent = (updatedEvent) => {
         setMyEvents(prev => prev.map(e => e.id === updatedEvent.id ? updatedEvent : e));
         setAllEvents(prev => prev.map(e => e.id === updatedEvent.id ? updatedEvent : e));
@@ -682,21 +380,38 @@ const App = () => {
     };
 
     const publicEvents = useMemo(() => {
-        return allEvents.filter(event =>
-            !myEvents.some(e => e.id === event.id) &&
-            !attendingEvents.some(e => e.id === event.id)
-        ).filter(event => {
-            const keywordMatch = searchQuery === '' || event.title.toLowerCase().includes(searchQuery.toLowerCase()) || event.description.toLowerCase().includes(searchQuery.toLowerCase());
-            const locationMatch = locationFilter === '' || event.location.toLowerCase().includes(locationFilter.toLowerCase());
+        return allEvents.filter(event => {
+            const keywordMatch = searchQuery === "" ||
+                (event.title && event.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (event.description && event.description.toLowerCase().includes(searchQuery.toLowerCase()));
+
+            const locationMatch = locationFilter === "" ||
+                (event.location && event.location.toLowerCase().includes(locationFilter.toLowerCase()));
+
             const startDate = startDateFilter ? new Date(startDateFilter) : null;
             const endDate = endDateFilter ? new Date(endDateFilter) : null;
             const eventDate = new Date(event.date);
+
             if (startDate) startDate.setHours(0, 0, 0, 0);
             if (endDate) endDate.setHours(23, 59, 59, 999);
-            const dateMatch = (!startDate || eventDate >= startDate) && (!endDate || eventDate <= endDate);
+
+            const dateMatch =
+                (!startDate || eventDate >= startDate) &&
+                (!endDate || eventDate <= endDate);
+
             return keywordMatch && locationMatch && dateMatch;
         });
-    }, [allEvents, myEvents, attendingEvents, searchQuery, locationFilter, startDateFilter, endDateFilter]);
+    }, [allEvents, searchQuery, locationFilter, startDateFilter, endDateFilter]);
+
+    // Immediate search handler
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    // Immediate location filter handler
+    const handleLocationChange = (e) => {
+        setLocationFilter(e.target.value);
+    };
 
     const markAllAsRead = () => setNotifications(prev => prev.map(n => ({ ...n, read: true })));
     const unreadCount = notifications.filter(n => !n.read).length;
@@ -707,9 +422,8 @@ const App = () => {
 
         return (
             <div key={event.id} className="event-card">
-                {event.image ? (
-                    <img src={event.image} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }} />
-                    
+                {event.imageUrl ? (
+                    <img src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }} />
                 ) : (
                     <div className="event-image-placeholder">
                         <svg width="40" height="40" viewBox="0 0 16 16" fill="#9CA3AF">
@@ -766,15 +480,14 @@ const App = () => {
             {currentView === 'dashboard' ? (
                 <main className="main-content">
                     <h3>Events</h3>
-                    <div className="card card-padded">    
+                    <div className="card card-padded">
                         <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '12px' }}>
                             <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
                                 <div className="search-box">
                                     <svg className="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                     </svg>
-                                
-                                    <input type="text" placeholder="Search by keyword..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
+                                    <input type="text" placeholder="Search by keyword..." value={searchQuery} onChange={handleSearchChange} className="search-input" />
                                 </div>
                                 <button className="btn btn-outline" onClick={() => setShowFilters(!showFilters)}>Filters</button>
                             </div>
@@ -784,7 +497,14 @@ const App = () => {
                             <div className="filter-panel">
                                 <div className="filter-group">
                                     <label className="filter-label" htmlFor="location">Location</label>
-                                    <input type="text" id="location" className="form-input" placeholder="e.g. London" value={locationFilter} onChange={(e) => setLocationFilter(e.target.value)} />
+                                    <input
+                                        type="text"
+                                        id="location"
+                                        className="form-input"
+                                        placeholder="e.g. London"
+                                        value={locationFilter}
+                                        onChange={handleLocationChange}
+                                    />
                                 </div>
                                 <div className="filter-group">
                                     <label className="filter-label" htmlFor="start-date">From</label>

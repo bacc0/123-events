@@ -14,6 +14,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import EventList from "./components/EventList";
 
+// import TestFirebase from "./TestFirebase";
+
+
 function AnimatedRoute({ children }) {
     return (
         <motion.div
@@ -113,6 +116,14 @@ function App() {
                             </AnimatedRoute>
                         }
                     />
+                    <Route
+                        path="/events"
+                        element={
+                            <AnimatedRoute>
+                                <EventList />
+                            </AnimatedRoute>
+                        }
+                    />
                 </Routes>
             </AnimatePresence>
         </div>
@@ -121,11 +132,9 @@ function App() {
 
 export default function AppWrapper() {
     return (
-        <>
-            <Router>
-                <App />
-            </Router>
-            <EventList />
-        </>
+        <Router>
+            <App />
+        </Router>
+        // <TestFirebase/>
     );
 }

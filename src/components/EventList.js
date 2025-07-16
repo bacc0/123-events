@@ -1,41 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import React, { useEffect, useState, useMemo } from "react";
 
-function EventList() {
-     const [events, setEvents] = useState([]);
+function Dashboard({ allEvents }) {
+    const [searchQuery, setSearchQuery] = useState("");
 
-     useEffect(() => {
-          const fetchEvents = async () => {
-               try {
-                    const querySnapshot = await getDocs(collection(db, "events"));
-                    const eventsData = querySnapshot.docs.map(doc => ({
-                         id: doc.id,
-                         ...doc.data()
-                    }));
-                    setEvents(eventsData);
-               } catch (error) {
-                    console.error("Error fetching events:", error);
-               }
-          };
+    const publicEvents = useMemo(() => {
+        return allEvents.filter(event => {
+            return searchQuery === "" ||
+                (event.title && event.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                (event.description && event.description.toLowerCase().includes(searchQuery.toLowerCase()));
+        });
+    }, [allEvents, searchQuery]);
 
-          fetchEvents();
-     }, []);
-
-     return (
-          <div>
-               <h2>Event List</h2>
-               {events.map(event => (
-                    <div key={event.id}>
-                         <h3>{event.name}</h3>
-                         <p>{event.date}</p>
-                         <p>{event.location}</p>
-                         <p>{event.description}</p>
-                         <hr />
-                    </div>
-               ))}
-          </div>
-     );
+    return (
+        <div>
+            <input
+                type="text"
+                placeholder="Search by keyword..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <ul>
+                {publicEvents.map(event => (
+                    <li key={event.id}>
+                        <h3>{event.title}</h3>
+                        <p>{event.description}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
-export default EventList;
+export default Dashboard;

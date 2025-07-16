@@ -1,16 +1,19 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-     apiKey: "YOUR_API_KEY",
-     authDomain: "YOUR_AUTH_DOMAIN",
-     projectId: "YOUR_PROJECT_ID",
-     storageBucket: "YOUR_STORAGE_BUCKET",
-     messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-     appId: "YOUR_APP_ID"
+     apiKey: "AIzaSyA-Npbn1LwXLq2ISOfZqCIfl5MZJEGShnI",
+     authDomain: "events-bf90b.firebaseapp.com",
+     databaseURL: "https://events-bf90b-default-rtdb.europe-west1.firebasedatabase.app",
+     projectId: "events-bf90b",
+     storageBucket: "events-bf90b.firebasestorage.app",
+     messagingSenderId: "594562087327",
+     appId: "1:594562087327:web:34a93b80c3497e9c7de5aa"
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const database = getDatabase(app);
+const storage = getStorage(app);
 
-export { db };
+export { app, database, storage };

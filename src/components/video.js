@@ -86,7 +86,6 @@ export default function GifPage() {
 
                 }}
             >
-                {/* {" "} */}
                 {showTitle && (
                     <TypeAnimation
                         sequence={[

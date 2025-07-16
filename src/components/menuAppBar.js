@@ -54,7 +54,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              }}
                                         >
                                              <img src="/appLogoEvents.svg" alt="App Logo" width="52" height="52" />
-                                          
+
 
                                         </div>
                                    </IconButton>
@@ -148,6 +148,39 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                </AppBar>
                {/* Padding box to push content below the AppBar */}
                <Toolbar />
+               {!isLoggedIn && (
+                    <Box
+                         sx={{
+                              backgroundColor: "#EBF4FFdd",
+                              color: "#0D47A1",
+                              padding: "10px 20px",
+                              textAlign: "left",
+                              fontFamily: "Arial, sans-serif",
+                              border: "2px solid #0D47A1",
+                              borderRadius: "16px",
+                              margin: "0 auto 10px auto",
+                              maxWidth: "80%",
+                              fontSize: "15px",
+                              position: "fixed",
+                              top: 16,
+                              left: 0,
+                              right: 0,
+                              zIndex: 1111,
+                              backdropFilter: 'blur(6px)',
+                              WebkitBackdropFilter: 'blur(6px)',
+                              textAlignLast: "center",
+                              boxShadow: "0 0 26px #00000033",
+                         
+                         }}
+                    >
+                         <p style={{ margin: "0 0 5px 0", fontWeight: "bold" }}> Live Event Updates:</p>
+                         <ul style={{ paddingLeft: "20px", margin: 0 }}>
+                              <h5>🎉 New Event: “React Workshop” added</h5>
+                              <h5>🎨 New Event: “Design Meetup” added</h5>
+                              <h5>🚀 New Event: “Startup Pitch Night” added</h5>
+                         </ul>
+                    </Box>
+               )}
           </Box>
      );
 }

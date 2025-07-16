@@ -429,7 +429,14 @@ const App = () => {
 
                 key={event.id} className="event-card">
                 {event.imageUrl ? (
-                    <img src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }} />
+                    <motion.img
+                    style={{background: '#E5E5E5'}}
+                        initial={{ opacity: 0, scale : 1., filter: "blur(7px)" }}
+                        animate={{ opacity: 1 ,scale:1, filter: "blur(0px)" }}
+                        transition={{ duration: 1.2, delay: 0.0 }}
+
+                        src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }}
+                         />
                 ) : (
                     <div className="event-image-placeholder">
                         <svg width="40" height="40" viewBox="0 0 16 16" fill="#9CA3AF">

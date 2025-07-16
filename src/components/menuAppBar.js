@@ -48,22 +48,14 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                   alignItems: 'center',
                                                   gap: '8px',
                                                   whiteSpace: 'nowrap',
-                                                  backgroundColor: '#0D47A1',
+                                                  // backgroundColor: '#0D47A1',
                                                   padding: 4,
                                                   borderRadius: 6,
                                              }}
                                         >
-                                             <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                  <rect x="4" y="8" width="28" height="24" rx="3" stroke="white" strokeWidth="2" fill="none" />
-                                                  <rect x="4" y="8" width="28" height="8" fill="white" opacity="0.3" />
-                                                  <line x1="10" y1="4" x2="10" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                                                  <line x1="26" y1="4" x2="26" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                                                  <circle cx="12" cy="22" r="2" fill="white" />
-                                                  <circle cx="18" cy="22" r="2" fill="white" />
-                                                  <circle cx="24" cy="22" r="2" fill="white" />
-                                                  <circle cx="12" cy="27" r="2" fill="white" opacity="0.6" />
-                                                  <circle cx="18" cy="27" r="2" fill="white" opacity="0.6" />
-                                             </svg>
+                                             <img src="/appLogoEvents.svg" alt="App Logo" width="52" height="52" />
+                                          
+
                                         </div>
                                    </IconButton>
                               )}
@@ -113,14 +105,14 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    }}
                               >
                                    {isLoggedIn &&
-                                          <IconButton color="inherit">
-                                        <Badge color="error" variant="dot">
-                                             <NotificationsIcon />
-                                        </Badge>
-                                   </IconButton>
+                                        <IconButton color="inherit">
+                                             <Badge color="error" variant="dot">
+                                                  <NotificationsIcon />
+                                             </Badge>
+                                        </IconButton>
                                    }
                               </Box>
-                               <Box
+                              <Box
                                    sx={{
                                         maxWidth: 100,
                                         overflowX: 'auto',

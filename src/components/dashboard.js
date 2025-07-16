@@ -5,7 +5,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { database } from "../firebase";
 import { ref as dbRef, get, child, set } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-
+// import { EventDetailsModal, EditEventModal, ConfirmationModal } from './EventModals';
+import { motion } from 'framer-motion';
 
 // Reusable Components
 const EventDetailsModal = ({ event, onClose }) => (
@@ -322,32 +323,32 @@ const App = () => {
     }, [notificationRef]);
 
     const handleCreateEvent = async (newEvent) => {
-      try {
-        let imageUrl = newEvent.imageUrl; // Use imageUrl already uploaded
+        try {
+            let imageUrl = newEvent.imageUrl; // Use imageUrl already uploaded
 
-        // Generate custom ID
-        const keyName = `_v_${newEvent.title.toLowerCase().replace(/\s+/g, "_")}_${new Date(newEvent.date).getFullYear()}`;
+            // Generate custom ID
+            const keyName = `_v_${newEvent.title.toLowerCase().replace(/\s+/g, "_")}_${new Date(newEvent.date).getFullYear()}`;
 
-        // Create event data with correct imageUrl
-        const eventData = {
-          ...newEvent,
-          id: keyName,
-          imageUrl: imageUrl,
-          attendeesCount: 0,
-          status: 'upcoming'
-        };
+            // Create event data with correct imageUrl
+            const eventData = {
+                ...newEvent,
+                id: keyName,
+                imageUrl: imageUrl,
+                attendeesCount: 0,
+                status: 'upcoming'
+            };
 
-        const databaseEventRef = dbRef(database, `events/${keyName}`);
-        await set(databaseEventRef, eventData);
+            const databaseEventRef = dbRef(database, `events/${keyName}`);
+            await set(databaseEventRef, eventData);
 
-        setMyEvents(prev => [{ ...eventData }, ...prev]);
-        setAllEvents(prev => [{ ...eventData }, ...prev]);
-        alert(`Event "${newEvent.title}" created successfully!`);
-        setCurrentView('dashboard');
-      } catch (error) {
-        console.error("Error creating event:", error);
-        alert("There was an error creating the event. Please check console for details.");
-      }
+            setMyEvents(prev => [{ ...eventData }, ...prev]);
+            setAllEvents(prev => [{ ...eventData }, ...prev]);
+            alert(`Event "${newEvent.title}" created successfully!`);
+            setCurrentView('dashboard');
+        } catch (error) {
+            console.error("Error creating event:", error);
+            alert("There was an error creating the event. Please check console for details.");
+        }
     };
     const handleUpdateEvent = (updatedEvent) => {
         setMyEvents(prev => prev.map(e => e.id === updatedEvent.id ? updatedEvent : e));
@@ -421,7 +422,12 @@ const App = () => {
         const isAttending = attendingEvents.some(e => e.id === event.id);
 
         return (
-            <div key={event.id} className="event-card">
+            <motion.div
+                // initial={{  opacity: 0,}}
+                // animate={{ opacity: 1}}
+                // transition={{ duration: 0.3, delay: 0.4}}
+
+                key={event.id} className="event-card">
                 {event.imageUrl ? (
                     <img src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }} />
                 ) : (
@@ -468,7 +474,7 @@ const App = () => {
                         )}
                     </div>
                 </div>
-            </div>
+            </motion.div>
         );
     };
 

@@ -129,11 +129,11 @@ const EditEventModal = ({ event, onSave, onClose }) => {
                             </div>
                             <div className="form-group">
                                 <label className="form-label">Event Image</label>
-                                <input type="file" id="image-upload-edit" accept="image/*" onChange={handleImageChange} className="hidden" />
-                                <label htmlFor="image-upload-edit" className="image-upload">
+                                <input type="file" id="image-upload-edit" accept="image/*" onChange={handleImageChange} className="hidden" className="form-group" />
+                                <label htmlFor="image-upload-edit" className="image-upload" >
                                     Click to upload image
                                 </label>
-                                {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview" />}
+                                {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview" style={{ maxWidth: 360, maxHeight: 360, display: 'block', margin: '30px auto 0' }} />}
                             </div>
                             <div className="form-group">
                                 <label className="form-label" htmlFor="description">Description</label>
@@ -235,9 +235,9 @@ const CreateEventPage = ({ onSave, onCancel }) => {
                         <label className="form-label">Event Image</label>
                         <input type="file" id="image-upload-create" accept="image/*" onChange={handleImageChange} className="hidden" />
                         <label htmlFor="image-upload-create" className="image-upload">
-                            {uploading ? "Uploading image..." : "Click to upload image"}
+                            {uploading ? "Uploading image..." : <>Click to upload image <span style={{ fontSize: '0.62rem', color: '#999' }}>  Suggested aspect ratio 2:1 </span></>}
                         </label>
-                        {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview" />}
+                        {imagePreview && <img src={imagePreview} alt="Preview" className="image-preview" style={{ maxWidth: 360, maxHeight: 360, display: 'block', margin: '30px auto 0' }} />}
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="description">Description</label>
@@ -435,7 +435,7 @@ const App = () => {
                         animate={{ opacity: 1 ,scale:1, filter: "blur(0px)" }}
                         transition={{ duration: 1.2, delay: 0.0 }}
 
-                        src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }}
+                        src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = ""; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }}
                          />
                 ) : (
                     <div className="event-image-placeholder">

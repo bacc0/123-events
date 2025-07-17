@@ -172,14 +172,14 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         {isLoggedIn
                                              ? <div>
                                                   <div
-                                                       style={{ position: 'relative', top: 5, left: 5.4 }}
-                                                  >
-                                                       <LogoutIcon sx={{ mr: 1 }} />
-                                                  </div>
-                                                  <div
-                                                       style={{ fontSize: 6, position: 'relative', top: -2 }}
+                                                       style={{ fontSize: 5.4, position: 'relative', top: -2 }}
                                                   >
                                                        LOGOUT
+                                                  </div>
+                                                  <div
+                                                       style={{ position: 'relative', top: -1, left: 5.4 }}
+                                                  >
+                                                       <LogoutIcon sx={{ mr: 1 }} />
                                                   </div>
                                              </div>
                                              : 'Login'
@@ -194,7 +194,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                </AppBar>
                {/* Padding box to push content below the AppBar */}
                <Toolbar />
-               {/* {!isLoggedIn && (
+               {/* {isLoggedIn && (
                     <Box
                          sx={{
                               backgroundColor: "#EBF4FFdd",

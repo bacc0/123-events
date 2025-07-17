@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import EventNote from '@mui/icons-material/EventNote';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+import { pink } from '@mui/material/colors';
 
 export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
      const navigate = useNavigate();
@@ -116,12 +117,15 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    {isLoggedIn &&
                                         <IconButton color="inherit">
                                              <Badge
-                                                  color="error"
-                                                  badgeContent={7}
-                                                  sx={{
-                                                  }}
+                                                 badgeContent={3}
+                                                 sx={{
+                                                     '& .MuiBadge-badge': {
+                                                         backgroundColor: pink.A200,
+                                                         color: 'white',
+                                                     }
+                                                 }}
                                              >
-                                                  <NotificationsIcon />
+                                                 <NotificationsIcon />
                                              </Badge>
                                         </IconButton>
                                    }

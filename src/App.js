@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import MenuAppBar from './components/menuAppBar';
 import Dashboard from './components/dashboard';
@@ -13,6 +13,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { AnimatePresence, motion } from 'framer-motion';
 
 import EventList from "./components/EventList";
+
+import { auth } from './firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 // import TestFirebase from "./TestFirebase";
 
@@ -34,6 +37,14 @@ function App() {
 
 
     const [loggedIn, setLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setLoggedIn(!!user);
+        });
+        return () => unsubscribe();
+    }, []);
+
     const location = useLocation();
 
     const handleToggleLogin = () => {
@@ -79,17 +90,25 @@ function App() {
                     <Route
                         path="/signup"
                         element={
-                            <AnimatedRoute>
-                                <Signup />
-                            </AnimatedRoute>
+                            loggedIn ? (
+                                <Navigate to="/dashboard" />
+                            ) : (
+                                <AnimatedRoute>
+                                    <Signup />
+                                </AnimatedRoute>
+                            )
                         }
                     />
                     <Route
                         path="/login"
                         element={
-                            <AnimatedRoute>
-                                <Login />
-                            </AnimatedRoute>
+                            loggedIn ? (
+                                <Navigate to="/dashboard" />
+                            ) : (
+                                <AnimatedRoute>
+                                    <Login onLogin={() => setLoggedIn(true)} />
+                                </AnimatedRoute>
+                            )
                         }
                     />
                     <Route

@@ -291,7 +291,10 @@ const UserProfilePage = () => {
                         }
                     </div>
 
-                    <h3 className="section-title" style={{ fontSize: '24px', marginBottom: '24px', borderBottom: '2px solid var(--primary-color)', paddingBottom: '8px', display: 'inline-block' }}>
+                    <h3
+                        className="section-title"
+                        style={{ fontSize: '24px', marginBottom: '24px', borderBottom: '2px solid var(--primary-color)', paddingBottom: '8px', display: 'inline-block' }}
+                    >
                         Past Events
                     </h3>
                     <div className="profile-events-grid">

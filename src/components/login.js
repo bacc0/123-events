@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { auth } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -12,6 +15,8 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertType, setAlertType] = useState('');
+
+    const navigate = useNavigate();
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,15 +35,13 @@ const LoginPage = () => {
         setAlertMessage('');
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const newErrors = {};
 
-        // Validate email
         if (!formData.email || !validateEmail(formData.email)) {
             newErrors.email = 'Please enter a valid email address';
         }
 
-        // Validate password
         if (!formData.password) {
             newErrors.password = 'Password is required';
         }
@@ -48,14 +51,25 @@ const LoginPage = () => {
             return;
         }
 
-        // Simulate API call
         setLoading(true);
-
-        setTimeout(() => {
-            setLoading(false);
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+            console.log('Logged in:', userCredential.user);
+            setAlertType('success');
+            setAlertMessage('Login successful!');
+            if (typeof props.onLogin === 'function') {
+                props.onLogin(); // notify App.js
+            }
+            setTimeout(() => {
+                navigate('/');
+            }, 1500);
+        } catch (error) {
+            console.error("Login failed:", error.message);
             setAlertType('error');
-            setAlertMessage('This is a UI demo. Backend logic not implemented.');
-        }, 1500);
+            setAlertMessage(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleKeyPress = (e) => {
@@ -70,18 +84,8 @@ const LoginPage = () => {
 
             <div className="auth-box">
                 <div className="auth-logo-section">
-                    <div className="auth-logo auth-logo-hover">
-                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="4" y="8" width="28" height="24" rx="3" stroke="white" strokeWidth="2" fill="none" />
-                            <rect x="4" y="8" width="28" height="8" fill="white" opacity="0.3" />
-                            <line x1="10" y1="4" x2="10" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                            <line x1="26" y1="4" x2="26" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                            <circle cx="12" cy="22" r="2" fill="white" />
-                            <circle cx="18" cy="22" r="2" fill="white" />
-                            <circle cx="24" cy="22" r="2" fill="white" />
-                            <circle cx="12" cy="27" r="2" fill="white" opacity="0.6" />
-                            <circle cx="18" cy="27" r="2" fill="white" opacity="0.6" />
-                        </svg>
+                    <div >
+                        <img src="/appLogoEvents.svg" alt="App Logo" width="55" height="55" />
                     </div>
                     <h1 className="auth-title">Welcome Back</h1>
                     <p className="auth-subtitle">Log in to manage your events</p>
@@ -194,10 +198,22 @@ const LoginPage = () => {
                         className="auth-link"
                         onClick={(e) => {
                             e.preventDefault();
-                            alert('Redirect to registration page');
+                            navigate('/signup');
                         }}
                     >
                         Sign up
+                    </a>
+                </div>
+                <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <a
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            navigate('/');
+                        }}
+                        style={{ color: '#0d47a1', textDecoration: 'none', fontWeight: '500' }}
+                    >
+                        ← Back to Home
                     </a>
                 </div>
             </div>

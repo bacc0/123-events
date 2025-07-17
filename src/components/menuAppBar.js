@@ -12,6 +12,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import { pink } from '@mui/material/colors';
+import { getAuth, signOut } from "firebase/auth";
+
 
 export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
      const navigate = useNavigate();
@@ -139,14 +141,14 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    }}
                                    style={{
                                         background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 80%, rgba(217, 217, 217, 0.4) 100%)',
-                                     
+
                                         position: 'relative', top: 1.4
 
                                    }}
                               >
                                    {isLoggedIn &&
                                         <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                                             JohnathonSuperLongNameThatScrolls
+                                             {getAuth().currentUser?.displayName || getAuth().currentUser?.email || 'User'}
                                         </Typography>
                                    }
                               </Box>
@@ -163,7 +165,17 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    <IconButton
                                         variant="outlined"
                                         // color="inherit"
-                                        onClick={onToggleLogin}
+                                        // onClick={onToggleLogin}
+                                        onClick={() => {
+                                             const auth = getAuth();
+                                             signOut(auth)
+                                                  .then(() => {
+                                                       window.location.href = '/'; // Redirect immediately
+                                                  })
+                                                  .catch((error) => {
+                                                       console.error('Logout error:', error);
+                                                  });
+                                        }}
                                         sx={{
                                              // ml: 1,
                                              height: 40,
@@ -192,7 +204,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                        <LogoutIcon sx={{ mr: 1 }} />
                                                   </div>
                                              </div>
-                                             :  <LoginIcon sx={{ mr: 1 }} />
+                                             : null
+                                             // <LoginIcon sx={{ mr: 1 }} />
                                         }
                                         {/* {isLoggedIn && <LogoutIcon sx={{ mr: 1 }} />} */}
                                         <div />

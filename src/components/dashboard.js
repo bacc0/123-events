@@ -201,7 +201,7 @@ const CreateEventPage = ({ onSave, onCancel }) => {
     };
 
     return (
-        <main className="main-content">
+        <main className="main-content" style={{ maxWidth: '678px' }}>
             <div className="section-header">
                 <h1 className="section-title page-title">Create New Event</h1>
                 <button className="btn btn-outline" onClick={onCancel}>

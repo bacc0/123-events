@@ -52,7 +52,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                   // backgroundColor: '#0D47A1',
                                                   padding: 4,
                                                   borderRadius: 6,
-                                                  position: 'relative', 
+                                                  position: 'relative',
                                                   top: -2
                                              }}
                                         >
@@ -106,13 +106,21 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         whiteSpace: 'nowrap',
                                         mx: 1,
                                         color: '#757575',
-                                        // paddingRight: 1,
+                                        paddingRight: '2px',
                                         paddingLeft: 1,
+                                        paddingTop: '2px',
+                                    
+
                                    }}
                               >
                                    {isLoggedIn &&
                                         <IconButton color="inherit">
-                                             <Badge color="error" variant="dot">
+                                             <Badge
+                                                  color="error"
+                                                  badgeContent={7}
+                                                  sx={{
+                                                  }}
+                                             >
                                                   <NotificationsIcon />
                                              </Badge>
                                         </IconButton>
@@ -138,7 +146,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         whiteSpace: 'nowrap',
                                         mx: 0,
                                         // paddingRight: 1,
-                                        paddingLeft: 1,
+                                        paddingLeft: 1,   paddingTop: '2px',
                                    }}
                               >
                                    <IconButton
@@ -154,12 +162,13 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              // px: 3,
                                              // minWidth: '120px',
                                              // background: '#ffffff',
+                                             
                                         }}
                                    >
                                         {isLoggedIn
                                              ? <div>
                                                   <div
-                                                       style={{  position: 'relative', top: 5,left: 5.4 }}
+                                                       style={{ position: 'relative', top: 5, left: 5.4 }}
                                                   >
                                                        <LogoutIcon sx={{ mr: 1 }} />
                                                   </div>

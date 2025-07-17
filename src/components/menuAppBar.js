@@ -8,6 +8,7 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Button from '@mui/material/Button';
 import EventNote from '@mui/icons-material/EventNote';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
 
 export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
@@ -51,9 +52,11 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                   // backgroundColor: '#0D47A1',
                                                   padding: 4,
                                                   borderRadius: 6,
+                                                  position: 'relative', 
+                                                  top: -2
                                              }}
                                         >
-                                             <img src="/appLogoEvents.svg" alt="App Logo" width="52" height="52" />
+                                             <img src="/appLogoEvents.svg" alt="App Logo" width="50" height="50" />
 
 
                                         </div>
@@ -92,7 +95,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    display: 'flex',
                                    alignItems: 'center',
                                    justifyContent: 'flex-end',
-                                   width: '40%',
+                                   width: '80%',
                                    overflow: 'hidden',
                               }}
                          >
@@ -102,6 +105,9 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         overflowX: 'auto',
                                         whiteSpace: 'nowrap',
                                         mx: 1,
+                                        color: '#757575',
+                                        // paddingRight: 1,
+                                        paddingLeft: 1,
                                    }}
                               >
                                    {isLoggedIn &&
@@ -114,10 +120,9 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               </Box>
                               <Box
                                    sx={{
-                                        maxWidth: 100,
+                                        maxWidth: 60,
                                         overflowX: 'auto',
                                         whiteSpace: 'nowrap',
-                                        mx: 1,
                                    }}
                               >
                                    {isLoggedIn &&
@@ -126,23 +131,51 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         </Typography>
                                    }
                               </Box>
-
-                              <Button
-                                   variant="outlined"
-                                   // color="inherit"
-                                   onClick={onToggleLogin}
+                              <Box
                                    sx={{
-                                        ml: 1,
-                                        height: 40,
-                                        // color: 'primary.main',
-                                        borderColor: 'primary.main',
-                                        px: 3,
-                                        minWidth: '120px',
-                                        background: '#ffffff',
+                                        maxWidth: 100,
+                                        overflowX: 'auto',
+                                        whiteSpace: 'nowrap',
+                                        mx: 0,
+                                        // paddingRight: 1,
+                                        paddingLeft: 1,
                                    }}
                               >
-                                   {isLoggedIn ? 'Logout' : 'Login'}
-                              </Button>
+                                   <IconButton
+                                        variant="outlined"
+                                        // color="inherit"
+                                        onClick={onToggleLogin}
+                                        sx={{
+                                             // ml: 1,
+                                             height: 40,
+                                             width: 40,
+                                             // color: 'primary.main',
+                                             // borderColor: 'primary.main',
+                                             // px: 3,
+                                             // minWidth: '120px',
+                                             // background: '#ffffff',
+                                        }}
+                                   >
+                                        {isLoggedIn
+                                             ? <div>
+                                                  <div
+                                                       style={{  position: 'relative', top: 5,left: 6 }}
+                                                  >
+                                                       <LogoutIcon sx={{ mr: 1 }} />
+                                                  </div>
+                                                  <div
+                                                       style={{ fontSize: 6.4, position: 'relative', top: -2 }}
+                                                  >
+                                                       LOGOUT
+                                                  </div>
+                                             </div>
+                                             : 'Login'
+                                        }
+                                        {/* {isLoggedIn && <LogoutIcon sx={{ mr: 1 }} />} */}
+                                        <div />
+                                   </IconButton>
+                              </Box>
+
                          </Box>
                     </Toolbar>
                </AppBar>

@@ -159,12 +159,12 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         {isLoggedIn
                                              ? <div>
                                                   <div
-                                                       style={{  position: 'relative', top: 5,left: 6 }}
+                                                       style={{  position: 'relative', top: 5,left: 5.4 }}
                                                   >
                                                        <LogoutIcon sx={{ mr: 1 }} />
                                                   </div>
                                                   <div
-                                                       style={{ fontSize: 6.4, position: 'relative', top: -2 }}
+                                                       style={{ fontSize: 6, position: 'relative', top: -2 }}
                                                   >
                                                        LOGOUT
                                                   </div>

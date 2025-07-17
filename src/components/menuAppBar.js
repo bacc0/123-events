@@ -9,6 +9,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import Button from '@mui/material/Button';
 import EventNote from '@mui/icons-material/EventNote';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import { pink } from '@mui/material/colors';
 
@@ -191,7 +192,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                        <LogoutIcon sx={{ mr: 1 }} />
                                                   </div>
                                              </div>
-                                             : 'Login'
+                                             :  <LoginIcon sx={{ mr: 1 }} />
                                         }
                                         {/* {isLoggedIn && <LogoutIcon sx={{ mr: 1 }} />} */}
                                         <div />

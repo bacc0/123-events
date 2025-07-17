@@ -13,10 +13,27 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import { pink } from '@mui/material/colors';
 import { getAuth, signOut } from "firebase/auth";
+import { getDatabase, ref, onValue } from 'firebase/database';
 
 
 export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
      const navigate = useNavigate();
+     const [fullName, setFullName] = React.useState('');
+  
+     React.useEffect(() => {
+       const auth = getAuth();
+       const user = auth.currentUser;
+       if (user) {
+         const db = getDatabase();
+         const userRef = ref(db, 'users/' + user.uid);
+         onValue(userRef, (snapshot) => {
+           const data = snapshot.val();
+           if (data && data.fullName) {
+             setFullName(data.fullName);
+           }
+         });
+       }
+     }, []);
      return (
           <Box sx={{ flexGrow: 1 }}>
                <AppBar
@@ -153,7 +170,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               >
                                    {isLoggedIn &&
                                         <Typography variant="subtitle2" sx={{ fontWeight: '600' }}>
-                                             {getAuth().currentUser?.displayName || getAuth().currentUser?.email || 'User'}
+                                             {fullName || getAuth().currentUser?.email || 'User'}
                                         </Typography>
                                    }
                               </Box>

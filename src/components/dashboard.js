@@ -2,59 +2,113 @@
 
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Timestamp } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { database } from "../firebase";
 import { ref as dbRef, get, child, set } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref as dbRefRealtime, onValue } from 'firebase/database';
 // import { EventDetailsModal, EditEventModal, ConfirmationModal } from './EventModals';
 import { motion } from 'framer-motion';
 
 // Reusable Components
-const EventDetailsModal = ({ event, onClose }) => (
-    <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-                <h2 className="modal-title">{event.title}</h2>
-                <button className="close-button" onClick={onClose}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M18 6L6 18M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <div className="modal-body">
-                {event.imageUrl && <img src={event.imageUrl} alt={event.title} className="modal-image" onError={(e) => { e.target.style.display = 'none'; }} />}
-                <div style={{ display: 'grid', gap: '20px' }}>
-                    <div className="detail-item">
-                        <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+const EventDetailsModal = ({ event, onClose }) => {
+    const navigate = useNavigate();
+    return (
+        <div className="modal-overlay" onClick={onClose}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                <div className="modal-header">
+                    <h2 className="modal-title">{event.title}</h2>
+                    <button className="close-button" onClick={onClose}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M18 6L6 18M6 6l12 12" />
                         </svg>
-                        <div className="detail-content">
-                            <div className="detail-label">Date & Time</div>
-                            <div className="detail-value">{new Date(event.date).toLocaleDateString('en-GB')} at {event.time}</div>
+                    </button>
+                </div>
+                <div className="modal-body">
+                    {event.imageUrl && <img src={event.imageUrl} alt={event.title} className="modal-image" onError={(e) => { e.target.style.display = 'none'; }} />}
+                    <div style={{ display: 'grid', gap: '20px' }}>
+                        {/* Organiser block */}
+                        <div className="detail-item">
+                            <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            <div className="detail-content">
+                                <div className="detail-label">Organiser</div>
+                                <div
+                                    className="detail-value"
+                                    style={{ color: '#0d47a1', cursor: 'pointer', fontWeight: 500 }}
+                                    onClick={() => navigate('/public-user-profile', { state: { uid: event.organizer?.uid, fullName: event.organizer?.fullName } })}
+                                >
+                                    {event.organizer?.fullName || 'Unknown'}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="detail-item">
-                        <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                        </svg>
-                        <div className="detail-content">
-                            <div className="detail-label">Location</div>
-                            <div className="detail-value">{event.location}</div>
+                        <div className="detail-item">
+                            <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg>
+                            <div className="detail-content">
+                                <div className="detail-label">Date & Time</div>
+                                <div className="detail-value">
+                                    {(() => {
+                                        // Log event object for inspection
+                                        console.log("Event details in modal:", event);
+                                        // Check for both _seconds and seconds
+                                        if (event.dateTime && (event.dateTime._seconds || event.dateTime.seconds)) {
+                                            const seconds = event.dateTime._seconds || event.dateTime.seconds;
+                                            const date = new Date(seconds * 1000);
+                                            const dateStr = date.toLocaleDateString('en-GB', {
+                                                year: 'numeric',
+                                                month: '2-digit',
+                                                day: '2-digit',
+                                            });
+                                            const timeStr = date.toLocaleTimeString('en-GB', {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                            });
+                                            return (
+                                                <>
+                                                    <strong>Date &amp; Time:</strong> {dateStr} at {timeStr} <br />
+                                                </>
+                                            );
+                                        } else {
+                                            return (
+                                                <>
+                                                    <strong>Date &amp; Time:</strong> Not available<br />
+                                                </>
+                                            );
+                                        }
+                                    })()}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="detail-item">
-                        <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
-                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM4 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1-1H5a1 1 0 0 1-1-1V8z" />
-                        </svg>
-                        <div className="detail-content">
-                            <div className="detail-label">Description</div>
-                            <div className="detail-value">{event.description}</div>
+                        <div className="detail-item">
+                            <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                            </svg>
+                            <div className="detail-content">
+                                <div className="detail-label">Location</div>
+                                <div className="detail-value">{event.location}</div>
+                            </div>
+                        </div>
+                        <div className="detail-item">
+                            <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM4 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1-1H5a1 1 0 0 1-1-1V8z" />
+                            </svg>
+                            <div className="detail-content">
+                                <div className="detail-label">Description</div>
+                                <div className="detail-value">{event.description}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 const EditEventModal = ({ event, onSave, onClose }) => {
     // Use imageUrl consistently
@@ -197,7 +251,14 @@ const CreateEventPage = ({ onSave, onCancel }) => {
             return;
         }
 
-        onSave({ ...formData, id: Date.now(), attendees: 0, status: 'upcoming' });
+        // Pass only dateTime, not separate date and time
+        onSave({
+            ...formData,
+            id: Date.now(),
+            attendees: 0,
+            status: 'upcoming',
+            dateTime: Timestamp.fromDate(new Date(`${formData.date}T${formData.time}`)),
+        });
     };
 
     return (
@@ -273,6 +334,7 @@ const App = () => {
     const [attendingEvents, setAttendingEvents] = useState([]);
     const [allEvents, setAllEvents] = useState([]);
     const [notifications, setNotifications] = useState([]);
+    const [userInfo, setUserInfo] = useState({ fullName: '', uid: '' });
     useEffect(() => {
         const fetchEvents = async () => {
             try {
@@ -280,12 +342,19 @@ const App = () => {
                 const snapshot = await get(child(dbRefInstance, "events"));
                 if (snapshot.exists()) {
                     const data = snapshot.val();
-                    const eventsArray = Object.keys(data).map((key) => ({
-                        id: key,
-                        ...data[key],
-                        date: data[key].dateTime ? new Date(data[key].dateTime._seconds * 1000).toISOString().split("T")[0] : "",
-                        imageUrl: data[key].imageUrl || "",
-                    }));
+                    const eventsArray = Object.keys(data).map((key) => {
+                        const event = data[key];
+                        // Safely parse dateTime
+                        const dateTime = event.dateTime?.seconds || event.dateTime?._seconds;
+                        const jsDate = dateTime ? new Date(dateTime * 1000) : null;
+                        const isoString = jsDate instanceof Date && !isNaN(jsDate) ? jsDate.toISOString() : "";
+                        return {
+                            id: key,
+                            ...event,
+                            date: isoString ? isoString.split("T")[0] : "",
+                            imageUrl: event.imageUrl || "",
+                        };
+                    });
                     console.log("Loaded events from Realtime DB:", eventsArray);
                     setAllEvents(eventsArray);
                 } else {
@@ -297,6 +366,22 @@ const App = () => {
         };
 
         fetchEvents();
+    }, []);
+
+    // Fetch current user's full name and uid
+    useEffect(() => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+            const db = getDatabase();
+            const userRef = dbRefRealtime(db, 'users/' + user.uid);
+            onValue(userRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data && data.fullName) {
+                    setUserInfo({ fullName: data.fullName, uid: user.uid });
+                }
+            });
+        }
     }, []);
 
     const [showNotifications, setShowNotifications] = useState(false);
@@ -327,16 +412,29 @@ const App = () => {
             let imageUrl = newEvent.imageUrl; // Use imageUrl already uploaded
 
             // Generate custom ID
-            const keyName = `_v_${newEvent.title.toLowerCase().replace(/\s+/g, "_")}_${new Date(newEvent.date).getFullYear()}`;
+            // Use dateTime from newEvent, not date/time
+            const eventDateObj = newEvent.dateTime instanceof Timestamp
+                ? newEvent.dateTime.toDate()
+                : (newEvent.dateTime && newEvent.dateTime.seconds
+                    ? new Date(newEvent.dateTime.seconds * 1000)
+                    : new Date());
+            const keyName = `_v_${newEvent.title.toLowerCase().replace(/\s+/g, "_")}_${eventDateObj.getFullYear()}`;
 
-            // Create event data with correct imageUrl
+            // Create event data with correct imageUrl and organizer info
             const eventData = {
                 ...newEvent,
                 id: keyName,
                 imageUrl: imageUrl,
                 attendeesCount: 0,
-                status: 'upcoming'
+                status: 'upcoming',
+                organizer: {
+                    fullName: userInfo.fullName,
+                    uid: userInfo.uid
+                }
             };
+            // Remove any old date/time fields if present
+            delete eventData.date;
+            delete eventData.time;
 
             const databaseEventRef = dbRef(database, `events/${keyName}`);
             await set(databaseEventRef, eventData);
@@ -391,14 +489,21 @@ const App = () => {
 
             const startDate = startDateFilter ? new Date(startDateFilter) : null;
             const endDate = endDateFilter ? new Date(endDateFilter) : null;
-            const eventDate = new Date(event.date);
+            // Use event.dateTime if available, fallback to event.date
+            let eventDate = null;
+            if (event.dateTime && (event.dateTime._seconds || event.dateTime.seconds)) {
+                const seconds = event.dateTime._seconds || event.dateTime.seconds;
+                eventDate = new Date(seconds * 1000);
+            } else if (event.date) {
+                eventDate = new Date(event.date);
+            }
 
             if (startDate) startDate.setHours(0, 0, 0, 0);
             if (endDate) endDate.setHours(23, 59, 59, 999);
 
             const dateMatch =
-                (!startDate || eventDate >= startDate) &&
-                (!endDate || eventDate <= endDate);
+                (!startDate || (eventDate && eventDate >= startDate)) &&
+                (!endDate || (eventDate && eventDate <= endDate));
 
             return keywordMatch && locationMatch && dateMatch;
         });
@@ -421,12 +526,20 @@ const App = () => {
         const isMyEvent = myEvents.some(e => e.id === event.id);
         const isAttending = attendingEvents.some(e => e.id === event.id);
 
+        // Use event.dateTime for display if present
+        let dateDisplay = "";
+        if (event.dateTime && (event.dateTime._seconds || event.dateTime.seconds)) {
+            const seconds = event.dateTime._seconds || event.dateTime.seconds;
+            const dateObj = new Date(seconds * 1000);
+            dateDisplay = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+        } else if (event.date) {
+            dateDisplay = new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+        } else {
+            dateDisplay = "Not available";
+        }
+
         return (
             <motion.div
-                // initial={{  opacity: 0,}}
-                // animate={{ opacity: 1}}
-                // transition={{ duration: 0.3, delay: 0.4}}
-
                 key={event.id} className="event-card">
                 {event.imageUrl ? (
                     <motion.img
@@ -434,7 +547,6 @@ const App = () => {
                         initial={{ opacity: 0, scale : 1, filter: "blur(7px)" }}
                         animate={{ opacity: 1 ,scale:1, filter: "blur(0px)" }}
                         transition={{ duration: 1.2, delay: 0.0 }}
-
                         src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = ""; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }}
                          />
                 ) : (
@@ -452,7 +564,7 @@ const App = () => {
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                 <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                             </svg>
-                            {new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })}
+                            {dateDisplay}
                         </div>
                         <div className="event-meta">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -487,7 +599,7 @@ const App = () => {
 
     return (
         <div className="app-container">
-            <link rel="stylesheet" href="universal-styles.css" />
+            <link rel="stylesheet" href="/universal-styles.css" />
 
 
             {currentView === 'dashboard' ? (

@@ -431,7 +431,7 @@ const App = () => {
                 {event.imageUrl ? (
                     <motion.img
                     style={{background: '#E5E5E5'}}
-                        initial={{ opacity: 0, scale : 1., filter: "blur(7px)" }}
+                        initial={{ opacity: 0, scale : 1, filter: "blur(7px)" }}
                         animate={{ opacity: 1 ,scale:1, filter: "blur(0px)" }}
                         transition={{ duration: 1.2, delay: 0.0 }}
 

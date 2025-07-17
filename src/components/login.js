@@ -61,7 +61,7 @@ const LoginPage = (props) => {
                 props.onLogin(); // notify App.js
             }
             setTimeout(() => {
-                navigate('/');
+                navigate('/dashboard');
             }, 1500);
         } catch (error) {
             console.error("Login failed:", error.message);
@@ -166,9 +166,10 @@ const LoginPage = (props) => {
                         <a
                             href="#"
                             className="auth-link"
+
                             onClick={(e) => {
                                 e.preventDefault();
-                                alert('Redirect to password reset page');
+                                navigate('/forgot-password');
                             }}
                         >
                             Forgot password?
@@ -209,7 +210,7 @@ const LoginPage = (props) => {
                         href="#"
                         onClick={(e) => {
                             e.preventDefault();
-                            navigate('/');
+                            navigate('/dashboard');
                         }}
                         style={{ color: '#0d47a1', textDecoration: 'none', fontWeight: '500' }}
                     >

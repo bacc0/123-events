@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ const ForgotPasswordPage = () => {
         return re.test(email);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setError('');
 
         if (!email || !validateEmail(email)) {
@@ -20,12 +21,16 @@ const ForgotPasswordPage = () => {
         }
 
         setLoading(true);
+        const auth = getAuth();
 
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
+        try {
+            await sendPasswordResetEmail(auth, email);
             setSuccess(true);
-        }, 1500);
+        } catch (err) {
+            setError('Error sending reset email: ' + err.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleKeyPress = (e) => {
@@ -40,18 +45,8 @@ const ForgotPasswordPage = () => {
 
             <div className="auth-box">
                 <div className="auth-logo-section">
-                    <div className="auth-logo">
-                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="4" y="8" width="28" height="24" rx="3" stroke="white" strokeWidth="2" fill="none" />
-                            <rect x="4" y="8" width="28" height="8" fill="white" opacity="0.3" />
-                            <line x1="10" y1="4" x2="10" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                            <line x1="26" y1="4" x2="26" y2="12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                            <circle cx="12" cy="22" r="2" fill="white" />
-                            <circle cx="18" cy="22" r="2" fill="white" />
-                            <circle cx="24" cy="22" r="2" fill="white" />
-                            <circle cx="12" cy="27" r="2" fill="white" opacity="0.6" />
-                            <circle cx="18" cy="27" r="2" fill="white" opacity="0.6" />
-                        </svg>
+                    <div>
+                          <img src="/appLogoEvents.svg" alt="App Logo" width="55" height="55" />
                     </div>
                     <h1 className="auth-title">Reset Password</h1>
                     <p className="auth-subtitle">
@@ -74,7 +69,7 @@ const ForgotPasswordPage = () => {
                         </div>
 
                         <button
-                            onClick={() => alert('Redirect to login page')}
+                            onClick={() => window.location.href = '/login'}
                             className="btn btn-primary btn-lg btn-full"
                         >
                             Back to Login
@@ -120,7 +115,7 @@ const ForgotPasswordPage = () => {
                                 className="auth-link"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    alert('Redirect to login page');
+                                    window.location.href = '/login';
                                 }}
                             >
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style={{ marginRight: '4px' }}>

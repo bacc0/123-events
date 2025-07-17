@@ -23,9 +23,9 @@ import { onAuthStateChanged } from 'firebase/auth';
 function AnimatedRoute({ children }) {
     return (
         <motion.div
-            initial={{ scale: 1.2, opacity: 0.2, y: -40, filter: "blur(10px)" }}
+            initial={{ scale: 1.05, opacity: 0.2, y: -20, filter: "blur(10px)" }}
             animate={{ scale: 1, opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ scale: 1.2, opacity: 0.05, y: 40, filter: "blur(10px)" }}
+            exit={{ scale: 1.05, opacity: 0.05, y: 20, filter: "blur(10px)" }}
             transition={{ duration: 0.35, ease: "easeInOut" }}
         >
             {children}

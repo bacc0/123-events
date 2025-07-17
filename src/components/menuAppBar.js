@@ -136,6 +136,9 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         overflowX: 'auto',
                                         whiteSpace: 'nowrap',
                                    }}
+                                   style={{ background: 'linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 80%, rgba(217, 217, 217, 0.4) 100%)',
+                                        // boxShadow: 'inset -5px 0px 15px rgba(255, 255, 255, 0.15)', 
+                                    }}
                               >
                                    {isLoggedIn &&
                                         <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>

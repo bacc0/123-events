@@ -110,22 +110,22 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         paddingRight: '2px',
                                         paddingLeft: 1,
                                         paddingTop: '2px',
-                                    
+
 
                                    }}
                               >
                                    {isLoggedIn &&
                                         <IconButton color="inherit">
                                              <Badge
-                                                 badgeContent={3}
-                                                 sx={{
-                                                     '& .MuiBadge-badge': {
-                                                         backgroundColor: pink.A200,
-                                                         color: 'white',
-                                                     }
-                                                 }}
+                                                  badgeContent={3}
+                                                  sx={{
+                                                       '& .MuiBadge-badge': {
+                                                            backgroundColor: pink.A200,
+                                                            color: 'white',
+                                                       }
+                                                  }}
                                              >
-                                                 <NotificationsIcon />
+                                                  <NotificationsIcon />
                                              </Badge>
                                         </IconButton>
                                    }
@@ -136,9 +136,12 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         overflowX: 'auto',
                                         whiteSpace: 'nowrap',
                                    }}
-                                   style={{ background: 'linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 80%, rgba(217, 217, 217, 0.4) 100%)',
-                                        // boxShadow: 'inset -5px 0px 15px rgba(255, 255, 255, 0.15)', 
-                                    }}
+                                   style={{
+                                        background: 'linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 80%, rgba(217, 217, 217, 0.4) 100%)',
+                                     
+                                        position: 'relative', top: 1.4
+
+                                   }}
                               >
                                    {isLoggedIn &&
                                         <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
@@ -153,7 +156,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         whiteSpace: 'nowrap',
                                         mx: 0,
                                         // paddingRight: 1,
-                                        paddingLeft: 1,   paddingTop: '2px',
+                                        paddingLeft: 1, paddingTop: '2px',
                                    }}
                               >
                                    <IconButton
@@ -169,13 +172,16 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              // px: 3,
                                              // minWidth: '120px',
                                              // background: '#ffffff',
-                                             
+
                                         }}
                                    >
                                         {isLoggedIn
                                              ? <div>
                                                   <div
-                                                       style={{ fontSize: 5.4, position: 'relative', top: -2 }}
+                                                       style={{
+                                                            fontSize: 5.4,
+                                                            position: 'relative', top: -2
+                                                       }}
                                                   >
                                                        LOGOUT
                                                   </div>

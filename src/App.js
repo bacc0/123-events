@@ -33,17 +33,8 @@ function AnimatedRoute({ children }) {
     );
 }
 
-function App() {
+function App({ loggedIn, setLoggedIn }) {
 
-
-    const [loggedIn, setLoggedIn] = useState(false);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setLoggedIn(!!user);
-        });
-        return () => unsubscribe();
-    }, []);
 
     const location = useLocation();
 
@@ -114,6 +105,7 @@ function App() {
                     <Route
                         path="/forgot-password"
                         element={
+
                             <AnimatedRoute>
                                 <ForgotPass />
                             </AnimatedRoute>
@@ -122,25 +114,37 @@ function App() {
                     <Route
                         path="/my-profile"
                         element={
-                            <AnimatedRoute>
-                                <MyProfile />
-                            </AnimatedRoute>
+                            loggedIn ? (
+                                <AnimatedRoute>
+                                    <MyProfile />
+                                </AnimatedRoute>
+                            ) : (
+                                <Navigate to="/" />
+                            )
                         }
                     />
                     <Route
                         path="/public-user-profile"
                         element={
-                            <AnimatedRoute>
-                                <PublicUPser_profile />
-                            </AnimatedRoute>
+                            loggedIn ? (
+                                <AnimatedRoute>
+                                    <PublicUPser_profile />
+                                </AnimatedRoute>
+                            ) : (
+                                <Navigate to="/" />
+                            )
                         }
                     />
                     <Route
                         path="/events"
                         element={
-                            <AnimatedRoute>
-                                <EventList />
-                            </AnimatedRoute>
+                            loggedIn ? (
+                                <AnimatedRoute>
+                                    <EventList />
+                                </AnimatedRoute>
+                            ) : (
+                                <Navigate to="/" />
+                            )
                         }
                     />
                 </Routes>
@@ -150,10 +154,24 @@ function App() {
 }
 
 export default function AppWrapper() {
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [checkingAuth, setCheckingAuth] = useState(true);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setLoggedIn(!!user);
+            setCheckingAuth(false);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    if (checkingAuth) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Router>
-            <App />
+            <App loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </Router>
-        // <TestFirebase/>
     );
 }

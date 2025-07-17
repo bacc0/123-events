@@ -144,9 +144,9 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         }
                                    }}
                                    style={{
-                                        background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 80%, rgba(217, 217, 217, 0.4) 100%)',
+                                        background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 60%, rgba(217, 217, 217, 0.4) 100%)',
 
-                                        position: 'relative', top: 1.4,
+                                        position: 'relative', top: 1.2,
                                       
 
                                    }}

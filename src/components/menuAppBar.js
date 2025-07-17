@@ -135,19 +135,24 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               </Box>
                               <Box
                                    sx={{
-                                        maxWidth: 60,
+                                        maxWidth: 78,
                                         overflowX: 'auto',
                                         whiteSpace: 'nowrap',
+                                        scrollbarWidth: 'none', // For Firefox
+                                        '&::-webkit-scrollbar': {
+                                          display: 'none', // For Chrome, Safari
+                                        }
                                    }}
                                    style={{
                                         background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 80%, rgba(217, 217, 217, 0.4) 100%)',
 
-                                        position: 'relative', top: 1.4
+                                        position: 'relative', top: 1.4,
+                                      
 
                                    }}
                               >
                                    {isLoggedIn &&
-                                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                                        <Typography variant="subtitle2" sx={{ fontWeight: '600' }}>
                                              {getAuth().currentUser?.displayName || getAuth().currentUser?.email || 'User'}
                                         </Typography>
                                    }

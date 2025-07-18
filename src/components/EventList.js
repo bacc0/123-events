@@ -4,6 +4,8 @@ import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Card, CardContent, CardMedia, Button, Typography } from '@mui/material';
 import { useTheme, useMediaQuery } from '@mui/material';
+import { motion } from 'framer-motion';
+
 
 const DiscoverOnly = ({ creatorName, date }) => {
     const [events, setEvents] = useState([]);
@@ -138,16 +140,23 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                 // margin: '2px',
                             }}
                         >
-                            <CardMedia
-                                component="img"
-                                alt={event.title}
+                            <motion.div
 
-                                image={event.imageUrl}
-                                sx={{ objectFit: 'cover', height: 160, minHeight: 160 }}
-                            />
+                                initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
+                                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                transition={{ duration: 1.2, delay: 0.0 }}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt={event.title}
+
+                                    image={event.imageUrl}
+                                    sx={{ objectFit: 'cover', height: 160, minHeight: 160 }}
+                                />
+                            </motion.div>
                             <CardContent>
                                 <div
-                                className='card-content'
+                                    className='card-content'
                                     style={{
                                         // height:106,
                                         // paddingBottom: 30,
@@ -156,7 +165,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                         // display: 'flex',
                                         // flexDirection: 'column',
                                         // justifyContent: 'center',
-                                    
+
                                     }}
                                 >
                                     <Typography

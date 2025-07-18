@@ -266,10 +266,13 @@ const UserProfilePage = () => {
                             marginLeft: 40
                         }}
                     >
+
                         Past Events
                     </h3>
 
                     <EventList creatorName={user.fullName} date="past" />
+
+                  
 
                 </div>
             </div>

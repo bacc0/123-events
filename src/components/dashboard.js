@@ -428,6 +428,7 @@ const App = () => {
     const [locationFilter, setLocationFilter] = useState('');
     const [startDateFilter, setStartDateFilter] = useState('');
     const [endDateFilter, setEndDateFilter] = useState('');
+    const [showPastTab, setShowPastTab] = useState(false);
 
     const notificationRef = useRef(null);
 
@@ -596,7 +597,7 @@ const App = () => {
     };
 
     const publicEvents = useMemo(() => {
-        return allEvents.filter(event => {
+        const filtered = allEvents.filter(event => {
             const keywordMatch = searchQuery === "" ||
                 (event.title && event.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
                 (event.description && event.description.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -606,7 +607,7 @@ const App = () => {
 
             const startDate = startDateFilter ? new Date(startDateFilter) : null;
             const endDate = endDateFilter ? new Date(endDateFilter) : null;
-            // Use event.dateTime if available, fallback to event.date
+
             let eventDate = null;
             if (event.dateTime && (event.dateTime._seconds || event.dateTime.seconds)) {
                 const seconds = event.dateTime._seconds || event.dateTime.seconds;
@@ -622,9 +623,24 @@ const App = () => {
                 (!startDate || (eventDate && eventDate >= startDate)) &&
                 (!endDate || (eventDate && eventDate <= endDate));
 
+            let isPastEvent = false, isFutureEvent = false;
+            if (eventDate) {
+                const now = new Date();
+                isPastEvent = eventDate < now;
+                isFutureEvent = eventDate >= now;
+            }
+            if (showPastTab && !isPastEvent) return false;
+            if (!showPastTab && !isFutureEvent) return false;
+
             return keywordMatch && locationMatch && dateMatch;
         });
-    }, [allEvents, searchQuery, locationFilter, startDateFilter, endDateFilter]);
+
+        return filtered.sort((a, b) => {
+            const aDate = a.dateTime?.seconds || a.dateTime?._seconds || new Date(a.date).getTime() / 1000;
+            const bDate = b.dateTime?.seconds || b.dateTime?._seconds || new Date(b.date).getTime() / 1000;
+            return showPastTab ? bDate - aDate : aDate - bDate;
+        });
+    }, [allEvents, searchQuery, locationFilter, startDateFilter, endDateFilter, showPastTab]);
 
     // Immediate search handler
     const handleSearchChange = (e) => {
@@ -831,32 +847,81 @@ const App = () => {
                     <h3>Events</h3>
                     <div className="card card-padded">
                         <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '12px' }}>
-                            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <div
+                                style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}
+                            >
                                 <div className="search-box">
                                     <svg className="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                     </svg>
                                     <input type="text" placeholder="Search by keyword..." value={searchQuery} onChange={handleSearchChange} className="search-input" />
                                 </div>
-                                <button className="btn btn-outline" onClick={() => setShowFilters(!showFilters)}>Filters</button>
+                                <Button
+                                    style={{
+                                        color: '#0A47A3',
+                                        border: "1px solid #0A47A3",
+                                        borderRadius: 8,
+                                        height: 35,
+                                        minWidth: 138,
+                                        backgroundColor: showFilters ? '#EAF3FF' : '#ffffff00',     
+                                    }}
+                                    // className="btn btn-outline"
+                                    onClick={() => setShowFilters(!showFilters)}>
+                                    Filters
+                                </Button>
                             </div>
+                            <Button
+                                className={`tab ${showPastTab ? 'tab-active-past' : ''}`}
+                                onClick={() => {
+                                    setActiveTab('discover');
+                                    setShowPastTab(prev => !prev);
+                                }}
+                                style={{
+                                    color: showPastTab ? '#0A47A3' : '#A0C3FF',
+                                    border: showPastTab ? "1px solid #0A47A3" : "1px solid #A0C3FF",
+                                    borderRadius: 8,
+                                    height: 35,
+                                    minWidth: 138,
+                                }}
+                            >
+                                Past Events
+                            </Button>
                             <Button
                                 className="btn btn-primary"
                                 onClick={() => setCurrentView('createEvent')}
                                 style={{
                                     color: 'white',
                                     backgroundColor: '#0A47A3',
+                                    border: "1px solid #0A47A3",
                                     borderRadius: 8,
                                     minWidth: 140,
+                                    height: 35,
                                 }}
                             >
                                 Create Event
                             </Button>
+
                         </div>
+
+
+
+
+
+
+
                         {showFilters && (
-                            <div className="filter-panel">
+                            <div
+                                style={{
+                                    borderRadius: 16
+                                }}
+                                className="filter-panel"
+                            >
                                 <div className="filter-group">
-                                    <label className="filter-label" htmlFor="location">Location</label>
+                                    <label
+                                        className="filter-label" htmlFor="location"
+                                    >
+                                        Location
+                                    </label>
                                     <input
                                         type="text"
                                         id="location"
@@ -874,13 +939,64 @@ const App = () => {
                                     <label className="filter-label" htmlFor="end-date">To</label>
                                     <input type="date" id="end-date" className="form-input" value={endDateFilter} onChange={(e) => setEndDateFilter(e.target.value)} />
                                 </div>
-                                <button className="btn btn-outline" onClick={clearFilters}>Clear</button>
+                                <Button
+                                    style={{
+                                        color: '#0A47A3',
+                                        backgroundColor: '#ffffff00',
+                                        // border: "1px solid #0A47A3",
+                                        borderRadius: 8,
+                                        minWidth: 90,
+                                        height: 35,
+                                    }}
+                                    className="btn btn-outline" onClick={clearFilters}
+                                >
+                                    Clear
+                                </Button>
                             </div>
                         )}
-                        <div className="tabs">
-                            <button className={`tab ${activeTab === 'discover' ? 'tab-active' : ''}`} onClick={() => setActiveTab('discover')}>Discover</button>
-                            <button className={`tab ${activeTab === 'myEvents' ? 'tab-active' : ''}`} onClick={() => setActiveTab('myEvents')}>My Events</button>
-                            <button className={`tab ${activeTab === 'attending' ? 'tab-active' : ''}`} onClick={() => setActiveTab('attending')}>Attending</button>
+                        {/* <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <Button
+                                className={`tab ${showPastTab ? 'tab-active-past' : ''}`}
+                                onClick={() => { setActiveTab('discover'); setShowPastTab(true); }}
+                                style={{
+                                    marginLeft: 'auto',
+                                    background: 'none',
+                                    border: 'none',
+                                    fontWeight: 500,
+                                    color: showPastTab ? '#FF4081' : '#f06292',
+                                    cursor: 'pointer',
+                                    padding: '10px 12px',
+                                    fontSize: '14px',
+                                    // borderBottom: showPastTab ? '2px solid #FF4081' : '2px solid #FFFFFF',
+                                    position: 'relative',
+                                    top: 2,
+                                    // border: "1px solid #E0E0E0",
+                                    borderRadius: 8,
+                                    height: 40,
+                                    margin: '0 auto',
+                                }}
+                            >
+                                Past Events
+                            </Button> 
+                        </div>*/}
+                        <div className="tabs" style={{ display: 'flex', alignItems: 'center' }}>
+
+                            <button
+                                className={`tab ${activeTab === 'discover' && !showPastTab ? 'tab-active' : ''}`} onClick={() => { setActiveTab('discover'); setShowPastTab(false); }}
+                            >
+                                Discover
+                            </button>
+                            <button
+                                className={`tab ${activeTab === 'myEvents' ? 'tab-active' : ''}`} onClick={() => { setActiveTab('myEvents'); setShowPastTab(false); }}
+                            >
+                                My Events
+                            </button>
+                            <button
+                                className={`tab ${activeTab === 'attending' ? 'tab-active' : ''}`} onClick={() => { setActiveTab('attending'); setShowPastTab(false); }}
+                            >
+                                Attending
+                            </button>
+
                         </div>
                         <div className="events-grid">
                             {activeTab === 'discover' && (

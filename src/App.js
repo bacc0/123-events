@@ -12,7 +12,7 @@ import Video from './components/video';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import EventList from "./components/eventList";
+// import EventList from "./components/eventList";
 
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -135,7 +135,7 @@ function App({ loggedIn, setLoggedIn }) {
                             )
                         }
                     />
-                    <Route
+                    {/* <Route
                         path="/events"
                         element={
                             loggedIn ? (
@@ -146,7 +146,7 @@ function App({ loggedIn, setLoggedIn }) {
                                 <Navigate to="/" />
                             )
                         }
-                    />
+                    /> */}
                 </Routes>
             </AnimatePresence>
         </div>

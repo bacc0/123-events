@@ -106,7 +106,7 @@ body {
 
 .card {
   background-color: var(--bg-primary);
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px solid var(--border-color);
   overflow: hidden;
 }
@@ -354,7 +354,7 @@ body {
 
 .event-card {
   background-color: var(--bg-primary);
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px solid var(--border-color);
   overflow: hidden;
   display: flex;
@@ -1145,7 +1145,7 @@ body {
 /* Responsive Design */
 /* ==================== */
 
-@media (max-width: 900px) {
+@media (max-width: 690px) {
   .profile-grid {
     grid-template-columns: 1fr;
   }
@@ -1213,3 +1213,56 @@ body {
         margin: 0 auto;
     }
 }
+
+
+
+
+
+
+
+
+
+/* card-wrapper-event-list */
+.card-wrapper-event-list {
+    width: 300px;
+    margin: 0 auto;  /* Center the card */
+    transition: width 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    height: 340px;
+    border: 1px solid #E5E7EB;
+    margin: 2px;
+    margin-bottom: 0;
+    
+}
+.card-content {
+ height: 106px;
+  max-height: 106px;
+  padding-bottom: 30px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Responsive design: for screens smaller than 600px */
+@media (max-width: 690px) {
+    .card-wrapper-event-list {
+        width: 100%;
+         height: auto;
+          margin: 0px;
+              margin-bottom: 20px;
+    }
+    .card-content {
+     /* Remove fixed heights */
+    height: auto;
+    max-height: none;
+
+    /* Allow overflow to show, not scroll */
+    overflow-y: visible;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}}

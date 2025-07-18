@@ -2,6 +2,15 @@
 
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import { Timestamp } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -10,7 +19,7 @@ import { ref as dbRef, get, child, set } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth } from 'firebase/auth';
 import { motion } from 'framer-motion';
-import { getDatabase, ref as dbRefRealtime, update, runTransaction, onValue } from 'firebase/database';
+import { getDatabase, ref as dbRefRealtime, update, runTransaction, onValue, remove } from 'firebase/database';
 
 // Reusable Components
 const EventDetailsModal = ({ event, onClose }) => {
@@ -321,8 +330,23 @@ const ConfirmationModal = ({ title, message, onConfirm, onCancel, confirmText })
                 <p style={{ color: 'var(--text-muted)', fontSize: '14px', lineHeight: 1.5 }}>{message}</p>
             </div>
             <div className="modal-footer" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-                <button onClick={onCancel} className="btn btn-outline">Cancel</button>
-                <button onClick={onConfirm} className="btn btn-danger" style={{ color: 'white', backgroundColor: 'var(--danger-color)' }}>{confirmText}</button>
+                <Button
+                    onClick={onCancel} className="btn btn-outline"
+                    style={{ color: '#000000', backgroundColor: '#FFFFFF', borderRadius: 8, border: '1px solid #E0E0E0', minWidth: 120 }}
+                >
+                    Cancel
+                </Button>
+                <Button
+                    onClick={onConfirm} className="btn btn-danger"
+                    style={{
+                        color: 'white',
+                        backgroundColor: '#f50057',
+                        borderRadius: 8,
+                        minWidth: 170
+                    }}
+                >
+                    {confirmText}
+                </Button>
             </div>
         </div>
     </div>
@@ -356,6 +380,15 @@ const App = () => {
                     });
                     console.log("Loaded events from Realtime DB:", eventsArray);
                     setAllEvents(eventsArray);
+                    // After setting events, check which events current user is attending
+                    const auth = getAuth();
+                    const currentUser = auth.currentUser;
+                    if (currentUser) {
+                        const attending = eventsArray.filter(event =>
+                            event.attendees && event.attendees[currentUser.uid]
+                        );
+                        setAttendingEvents(attending);
+                    }
                 } else {
                     console.log("⚠️ No data available in 'events'.");
                 }
@@ -481,14 +514,73 @@ const App = () => {
             return (currentValue || 0) + 1;
         });
 
+        // Immediately update allEvents UI for RSVP
+        setAllEvents(prev => prev.map(e => {
+            if (e.id === eventToRsvp.id) {
+                const updated = { ...e };
+                updated.attendees = {
+                    ...(updated.attendees || {}),
+                    [user.uid]: {
+                        fullName: user.displayName || "Anonymous",
+                        profileImageUrl: user.photoURL || ""
+                    }
+                };
+                updated.attendeesCount = (updated.attendeesCount || 0) + 1;
+                return updated;
+            }
+            return e;
+        }));
+
         setAttendingEvents(prev => [...prev, { ...eventToRsvp, rsvpStatus: 'accepted' }]);
         alert(`You have successfully RSVP'd to "${eventToRsvp.title}"!`);
     };
 
 
-    const handleCancelRsvp = (eventToLeave) => {
-        setAttendingEvents(prev => prev.filter(e => e.id !== eventToLeave.id));
-        setConfirmingAction(null);
+    const handleCancelRsvp = async (eventToLeave) => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) {
+            alert("You must be logged in to cancel RSVP.");
+            return;
+        }
+
+        try {
+            const db = getDatabase();
+            const eventId = eventToLeave.id;
+            const userId = user.uid;
+
+            console.log("Cancelling RSVP for event:", eventId);
+            console.log("Removing attendee:", userId);
+
+            const attendeeRef = dbRefRealtime(db, `events/${eventId}/attendees/${userId}`);
+            const attendeesCountRef = dbRefRealtime(db, `events/${eventId}/attendeesCount`);
+
+            await remove(attendeeRef); // Delete the attendee
+
+            await runTransaction(attendeesCountRef, (currentValue) => {
+                return (currentValue || 1) > 0 ? currentValue - 1 : 0;
+            });
+
+            // Update allEvents for immediate UI feedback
+            setAllEvents(prev => prev.map(e => {
+                if (e.id === eventId) {
+                    const updated = { ...e };
+                    if (updated.attendees) {
+                        delete updated.attendees[userId];
+                    }
+                    updated.attendeesCount = Math.max((updated.attendeesCount || 1) - 1, 0);
+                    return updated;
+                }
+                return e;
+            }));
+
+            setAttendingEvents(prev => prev.filter(e => e.id !== eventId));
+            setConfirmingAction(null);
+            // alert(`You have successfully cancelled your RSVP for "${eventToLeave.title}".`);
+        } catch (error) {
+            console.error("❌ Error cancelling RSVP:", error);
+            alert("There was an error cancelling your RSVP.");
+        }
     };
 
     const handleDeleteEvent = (eventToDelete) => {
@@ -557,6 +649,12 @@ const App = () => {
         const isMyEvent = myEvents.some(e => e.id === event.id);
         const isAttending = attendingEvents.some(e => e.id === event.id);
 
+        // Get current user for attendee check
+        const auth = getAuth();
+        const user = auth.currentUser;
+        // Check if the user is an attendee based on live Firebase data
+        const isUserAttending = event.attendees && event.attendees[user?.uid];
+
         // Use event.dateTime for display if present
         let dateDisplay = "";
         if (event.dateTime && (event.dateTime._seconds || event.dateTime.seconds)) {
@@ -568,6 +666,12 @@ const App = () => {
         } else {
             dateDisplay = "Not available";
         }
+
+        // Helper handlers for Details/RSVP/Cancel
+        const handleDetails = (eventObj) => setSelectedEvent(eventObj);
+        const handleEdit = (eventObj) => setEditingEvent(eventObj);
+        const handleDelete = (eventObj) => setConfirmingAction({ type: 'delete', event: eventObj });
+        const handleCancelRsvpClick = (eventObj) => setConfirmingAction({ type: 'rsvp_cancel', event: eventObj });
 
         return (
             <motion.div
@@ -606,21 +710,112 @@ const App = () => {
                     </div>
                     <div className="event-actions">
                         {isMyEvent ? (
-                            <>
-                                <button className="btn btn-secondary" onClick={() => setSelectedEvent(event)}>Details</button>
-                                <button className="btn btn-primary" onClick={() => setEditingEvent(event)}>Edit</button>
-                                <button className="btn btn-danger" onClick={() => setConfirmingAction({ type: 'delete', event })}>Cancel</button>
-                            </>
-                        ) : isAttending ? (
-                            <>
-                                <button className="btn btn-danger" onClick={() => setConfirmingAction({ type: 'rsvp_cancel', event })}>Cancel RSVP</button>
-                                <button className="btn" style={{ backgroundColor: '#E0E7FF', color: '#3730A3' }} onClick={() => setSelectedEvent(event)}>Details</button>
-                            </>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+                                <Button
+                                    onClick={() => handleDetails(event)}
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: '#eaf3ff',
+                                        color: '#0a47a3',
+                                        marginRight: '8px',
+                                        borderRadius: '12px',
+                                        fontWeight: '500',
+                                        borderRadius: 8,
+
+                                    }}
+                                >
+                                    Details
+                                </Button>
+                                <Button
+                                    onClick={() => handleEdit(event)}
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: '#0a47a3',
+                                        color: 'white',
+                                        marginLeft: '8px',
+                                        marginRight: '8px',
+                                        borderRadius: '12px',
+                                        fontWeight: '500',
+                                        borderRadius: 8,
+                                    }}
+                                >
+                                    Edit
+                                </Button>
+                                <Button
+                                    onClick={() => handleDelete(event)}
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: '#fce4ec',
+                                        color: '#f50057',
+                                        marginLeft: '8px',
+                                        borderRadius: '12px',
+                                        fontWeight: '500',
+                                        borderRadius: 8,
+
+                                    }}
+                                >
+                                    Cancel
+                                </Button>
+                            </div>
                         ) : (
-                            <>
-                                <button className="btn btn-secondary" onClick={() => setSelectedEvent(event)}>Details</button>
-                                <button className="btn btn-primary" onClick={() => handleRsvp(event)}>RSVP</button>
-                            </>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    marginTop: '0rem',
+                                    // backgroundColor: '#50d220ff',
+                                    width: '100%'
+                                }}
+                            >
+                                <Button
+                                    onClick={() => handleDetails(event)}
+                                    style={{
+                                        flex: 1,
+                                        backgroundColor: '#eaf3ff',
+                                        color: '#0a47a3',
+                                        marginRight: '8px',
+                                        borderRadius: '12px',
+                                        fontWeight: '500',
+                                        borderRadius: 8,
+
+                                    }}
+                                >
+                                    Details
+                                </Button>
+                                {isUserAttending ? (
+                                    <Button
+                                        onClick={() => handleCancelRsvpClick(event)}
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: '#fce4ec',
+                                            color: '#f50057',
+                                            marginLeft: '8px',
+                                            borderRadius: '12px',
+                                            fontWeight: '500',
+                                            borderRadius: 8,
+
+                                        }}
+                                    >
+                                        Cancel RSVP
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        onClick={() => handleRsvp(event)}
+                                        style={{
+                                            flex: 1,
+                                            backgroundColor: '#0a47a3',
+                                            color: 'white',
+                                            marginLeft: '8px',
+                                            borderRadius: '12px',
+                                            fontWeight: '500',
+                                            borderRadius: 8,
+
+                                        }}
+                                    >
+                                        RSVP
+                                    </Button>
+                                )}
+                            </div>
                         )}
                     </div>
                 </div>
@@ -645,7 +840,18 @@ const App = () => {
                                 </div>
                                 <button className="btn btn-outline" onClick={() => setShowFilters(!showFilters)}>Filters</button>
                             </div>
-                            <button className="btn btn-primary" onClick={() => setCurrentView('createEvent')}>Create Event</button>
+                            <Button
+                                className="btn btn-primary"
+                                onClick={() => setCurrentView('createEvent')}
+                                style={{
+                                    color: 'white',
+                                    backgroundColor: '#0A47A3',
+                                    borderRadius: 8,
+                                    minWidth: 140,
+                                }}
+                            >
+                                Create Event
+                            </Button>
                         </div>
                         {showFilters && (
                             <div className="filter-panel">
@@ -687,8 +893,12 @@ const App = () => {
                                     : <div className="empty-state"><p>You haven't created any events.</p></div>
                             )}
                             {activeTab === 'attending' && (
-                                attendingEvents.length > 0 ? attendingEvents.map(event => renderEventCard(event)) :
-                                    <div className="empty-state"><p>You are not attending any events.</p></div>
+                                allEvents.filter(event => event.attendees && event.attendees[userInfo?.uid])
+                                    .length > 0
+                                    ? allEvents
+                                        .filter(event => event.attendees && event.attendees[userInfo?.uid])
+                                        .map(event => renderEventCard(event))
+                                    : <div className="empty-state"><p>You are not attending any events.</p></div>
                             )}
                         </div>
                     </div>
@@ -698,13 +908,15 @@ const App = () => {
             )}
             {selectedEvent && <EventDetailsModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
             {editingEvent && <EditEventModal event={editingEvent} onSave={handleUpdateEvent} onClose={() => setEditingEvent(null)} />}
-            {confirmingAction && <ConfirmationModal
-                title={confirmingAction.type === 'delete' ? 'Cancel Event' : 'Cancel RSVP'}
-                message={confirmingAction.type === 'delete' ? `Are you sure you want to permanently cancel and delete "${confirmingAction.event.title}"? This action cannot be undone.` : `Are you sure you want to cancel your RSVP for "${confirmingAction.event.title}"?`}
-                confirmText={confirmingAction.type === 'delete' ? 'Yes, Cancel Event' : 'Yes, Cancel RSVP'}
-                onConfirm={() => confirmingAction.type === 'delete' ? handleDeleteEvent(confirmingAction.event) : handleCancelRsvp(confirmingAction.event)}
-                onCancel={() => setConfirmingAction(null)}
-            />}
+            {
+                confirmingAction && <ConfirmationModal
+                    title={confirmingAction.type === 'delete' ? 'Cancel Event' : 'Cancel RSVP'}
+                    message={confirmingAction.type === 'delete' ? `Are you sure you want to permanently cancel and delete "${confirmingAction.event.title}"? This action cannot be undone.` : `Are you sure you want to cancel your RSVP for "${confirmingAction.event.title}"?`}
+                    confirmText={confirmingAction.type === 'delete' ? 'Yes, Cancel Event' : 'Yes, Cancel RSVP'}
+                    onConfirm={() => confirmingAction.type === 'delete' ? handleDeleteEvent(confirmingAction.event) : handleCancelRsvp(confirmingAction.event)}
+                    onCancel={() => setConfirmingAction(null)}
+                />
+            }
         </div>
     );
 };

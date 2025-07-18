@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import EventList from './eventList';
+import { Grid, Card, CardContent, CardMedia, Button, Typography } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+
+
+
 
 // --- Contact Organizer Modal (mockup) ---
 const ContactOrganizerModal = ({ organizerName, onClose }) => (
@@ -7,11 +13,11 @@ const ContactOrganizerModal = ({ organizerName, onClose }) => (
         <div className="modal-content" style={{ maxWidth: '500px' }} onClick={e => e.stopPropagation()}>
             <div className="modal-header">
                 <h3 className="modal-title" style={{ fontSize: '20px' }}>{`Contact ${organizerName}`}</h3>
-                <button className="close-button" onClick={onClose}>
+                <Button className="close-button" onClick={onClose}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M18 6L6 18M6 6l12 12" />
                     </svg>
-                </button>
+                </Button>
             </div>
             <div style={{ padding: 32, textAlign: "center" }}>Contact form goes here.</div>
         </div>
@@ -59,7 +65,7 @@ const EventDetailsModal = ({ event, onClose }) => (
                     </div>
 
                     <br />
-                    
+
                     <div className="detail-item">
                         <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM4 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1-1H5a1 1 0 0 1-1-1V8z" />
@@ -92,35 +98,35 @@ const EventDetailsModal = ({ event, onClose }) => (
 );
 
 // --- Event Card ---
-const EventCard = ({ event, onViewDetails }) => {
-    const eventDate = new Date(event.date);
-    return (
-        <div className="event-card" style={{ maxWidth: '460px' }}>
-            {event.image ? (
-                <img src={event.image} alt={event.title} className="event-image profile-event-card" />
-            ) : (
-                <div className="event-image-placeholder profile-event-card">
-                    <svg width="40" height="40" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                        <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093L6.5 10.5l-2.777-2.947a.5.5 0 0 0-.577-.093L.002 9.5V3a1 1 0 0 1 1-1h12z" />
-                    </svg>
-                </div>
-            )}
-            <div className="event-content">
-                <h4 className="event-title profile-event-title">{event.title}</h4>
-                <div className="event-meta profile-event-meta">
-                    <span>{eventDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
-                </div>
-                <div className="event-meta profile-event-meta">
-                    <span>{event.location}</span>
-                </div>
-            </div>
-            <div style={{ padding: '0 16px 16px 16px' }}>
-                <button className="btn btn-primary btn-full" onClick={() => onViewDetails(event)}>View Details</button>
-            </div>
-        </div>
-    );
-};
+// const EventCard = ({ event, onViewDetails }) => {
+//     const eventDate = new Date(event.date);
+//     return (
+//         <div className="event-card" style={{ maxWidth: '460px' }}>
+//             {event.image ? (
+//                 <img src={event.image} alt={event.title} className="event-image profile-event-card" />
+//             ) : (
+//                 <div className="event-image-placeholder profile-event-card">
+//                     <svg width="40" height="40" viewBox="0 0 16 16" fill="currentColor">
+//                         <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+//                         <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093L6.5 10.5l-2.777-2.947a.5.5 0 0 0-.577-.093L.002 9.5V3a1 1 0 0 1 1-1h12z" />
+//                     </svg>
+//                 </div>
+//             )}
+//             <div className="event-content">
+//                 <h4 className="event-title profile-event-title">{event.title}</h4>
+//                 <div className="event-meta profile-event-meta">
+//                     <span>{eventDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+//                 </div>
+//                 <div className="event-meta profile-event-meta">
+//                     <span>{event.location}</span>
+//                 </div>
+//             </div>
+//             <div style={{ padding: '0 16px 16px 16px' }}>
+//                 <button className="btn btn-primary btn-full" onClick={() => onViewDetails(event)}>View Details</button>
+//             </div>
+//         </div>
+//     );
+// };
 
 // --- Main Public Profile Page Component ---
 const UserProfilePage = () => {
@@ -184,45 +190,69 @@ const UserProfilePage = () => {
         <div className="app-container" style={{ paddingTop: '24px' }}>
             <link rel="stylesheet" href="universal-styles.css" />
 
-            <div className="profile-grid" style={{ margin: '0 auto', padding: '0 16px', maxWidth: '1200px' }}>
-                <div className="profile-left-panel">
+            <div className="profile-grid"
+                style={{
+                    margin: '0 auto',
+                    padding: '0 16px',
+                    maxWidth: '1200px',
+                    // display: 'flex',
+                }}
+            >
+                <div className="profile-left-panel"
+                    style={{
+                        borderRadius: 16,
+                    }}
+                >
                     <div className="profile-header">
                         <img src={user.profileImageUrl} alt={user.fullName} className="profile-avatar" />
-                        <h2 className="profile-name">{user.fullName}</h2>
+                        <h2 className="profile-name">{user.fullName} </h2>
                         <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: '8px 0 16px 0' }}>
-                            {(events.organized.length + events.past.length)} Total Events Hosted
+                            {/* {(events.organized.length + events.past.length)} Total Events Hosted */}
+                            About
                         </p>
                         <p className="profile-about">{user.about}</p>
-                        <button className="btn btn-primary btn-full" onClick={() => setShowContactModal(true)}>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.803V4.697l-5.803 3.558z" />
-                            </svg>
+                        <Button
+                            onClick={() => setShowContactModal(true)}
+                            variant="contained"
+                            endIcon={<SendIcon />}
+                            style={{
+                                color: 'white',
+                                backgroundColor: '#0A47A3',
+                                borderRadius: 8,
+                                boxShadow: 'none',
+                                height: 38,
+                            }}
+                        >
+
                             Contact Organizer
-                        </button>
+                        </Button>
                     </div>
                 </div>
 
-                <div className="profile-container_card">
+
+
+                <div className="profile-container_card"
+                    style={{
+                        background: '#ffffff',
+                        padding: 16,
+                        borderRadius: 16,
+                        border: '1px solid #E5E7EB',
+                    }}
+                >
                     <h3
                         className="section-title"
                         style={{
                             fontSize: '1.17em',
                             marginBottom: '24px',
                             paddingBottom: '8px',
-                            display: 'inline-block'
+                            display: 'inline-block',
+                            marginLeft: 40
                         }}
                     >
                         Upcoming Events
                     </h3>
-                    <div className="profile-events-grid">
-                        {events.organized.length > 0 ? (
-                            events.organized.map(event => (
-                                <EventCard key={event.id} event={event} onViewDetails={setSelectedEvent} />
-                            ))
-                        ) : (
-                            <div className="empty-state">{user.fullName.split(' ')[0]} has no upcoming events.</div>
-                        )}
-                    </div>
+                    <EventList creatorName={user.fullName} date="upcoming" />
+
 
                     <h3
                         className="section-title"
@@ -230,20 +260,15 @@ const UserProfilePage = () => {
                             fontSize: '1.17em',
                             marginBottom: '24px',
                             paddingBottom: '8px',
-                            display: 'inline-block'
+                            display: 'inline-block',
+                            marginLeft: 40
                         }}
                     >
                         Past Events
                     </h3>
-                    <div className="profile-events-grid">
-                        {events.past.length > 0 ? (
-                            events.past.map(event => (
-                                <EventCard key={event.id} event={event} onViewDetails={setSelectedEvent} />
-                            ))
-                        ) : (
-                            <div className="empty-state">No past events to show.</div>
-                        )}
-                    </div>
+
+                    <EventList creatorName={user.fullName} date="past" />
+
                 </div>
             </div>
 

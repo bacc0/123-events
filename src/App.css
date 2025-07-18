@@ -685,12 +685,15 @@ body {
 }
 
 .profile-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid white;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+   width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Makes the image a perfect circle */
+    border: none; /* Removes the border/line around the image */
+    object-fit: cover; /* Ensures the image covers the circle area */
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .profile-avatar-overlay {
@@ -1196,4 +1199,17 @@ body {
 @keyframes shimmer {
   0% { background-position: -400px 0; }
   100% { background-position: 400px 0; }
+}
+
+
+/* Default style for screens smaller than 400px */
+.profile-container_card {
+    margin: 0 0;
+}
+
+/* Style for screens wider than 400px */
+@media (max-width: 611px) {
+    .profile-container_card {
+        margin: 0 auto;
+    }
 }

@@ -9,9 +9,8 @@ import { database } from "../firebase";
 import { ref as dbRef, get, child, set } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAuth } from 'firebase/auth';
-import { getDatabase, ref as dbRefRealtime, onValue } from 'firebase/database';
-// import { EventDetailsModal, EditEventModal, ConfirmationModal } from './EventModals';
 import { motion } from 'framer-motion';
+import { getDatabase, ref as dbRefRealtime, update, runTransaction, onValue } from 'firebase/database';
 
 // Reusable Components
 const EventDetailsModal = ({ event, onClose }) => {
@@ -33,7 +32,7 @@ const EventDetailsModal = ({ event, onClose }) => {
                         {/* Organiser block */}
                         <div className="detail-item">
                             <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
-                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                             </svg>
                             <div className="detail-content">
                                 <div className="detail-label">Organiser</div>
@@ -455,11 +454,37 @@ const App = () => {
         setEditingEvent(null);
     };
 
-    const handleRsvp = (eventToRsvp) => {
-        if (myEvents.some(e => e.id === eventToRsvp.id) || attendingEvents.some(e => e.id === eventToRsvp.id)) return;
+    // const handleRsvp = (eventToRsvp) => {
+    //     if (myEvents.some(e => e.id === eventToRsvp.id) || attendingEvents.some(e => e.id === eventToRsvp.id)) return;
+    //     setAttendingEvents(prev => [...prev, { ...eventToRsvp, rsvpStatus: 'accepted' }]);
+    //     alert(`You have successfully RSVP'd to "${eventToRsvp.title}"!`);
+    // };
+    const handleRsvp = async (eventToRsvp) => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (!user) {
+            alert("You must be logged in to RSVP.");
+            return;
+        }
+        // For user profile image/full name, check your user DB if needed
+        const userProfile = {
+            fullName: user.displayName || userInfo.fullName || "Anonymous",
+            profileImageUrl: user.photoURL || ""
+        };
+        const db = getDatabase();
+        const attendeeRef = dbRefRealtime(db, `events/${eventToRsvp.id}/attendees/${user.uid}`);
+        const attendeesCountRef = dbRefRealtime(db, `events/${eventToRsvp.id}/attendeesCount`);
+        // Add user as attendee
+        await update(attendeeRef, userProfile);
+        // Increment attendeesCount atomically
+        await runTransaction(attendeesCountRef, (currentValue) => {
+            return (currentValue || 0) + 1;
+        });
+
         setAttendingEvents(prev => [...prev, { ...eventToRsvp, rsvpStatus: 'accepted' }]);
         alert(`You have successfully RSVP'd to "${eventToRsvp.title}"!`);
     };
+
 
     const handleCancelRsvp = (eventToLeave) => {
         setAttendingEvents(prev => prev.filter(e => e.id !== eventToLeave.id));
@@ -519,6 +544,12 @@ const App = () => {
         setLocationFilter(e.target.value);
     };
 
+    // Memoized list of events created by the current user
+    const myCreatedEvents = useMemo(
+        () => allEvents.filter(event => event.organizer && event.organizer.uid === userInfo.uid),
+        [allEvents, userInfo.uid]
+    );
+
     const markAllAsRead = () => setNotifications(prev => prev.map(n => ({ ...n, read: true })));
     const unreadCount = notifications.filter(n => !n.read).length;
 
@@ -543,12 +574,12 @@ const App = () => {
                 key={event.id} className="event-card">
                 {event.imageUrl ? (
                     <motion.img
-                    style={{background: '#E5E5E5'}}
-                        initial={{ opacity: 0, scale : 1, filter: "blur(7px)" }}
-                        animate={{ opacity: 1 ,scale:1, filter: "blur(0px)" }}
+                        style={{ background: '#E5E5E5' }}
+                        initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
+                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                         transition={{ duration: 1.2, delay: 0.0 }}
                         src={event.imageUrl} alt={event.title} className="event-image" onError={(e) => { e.target.onerror = ""; e.target.src = 'https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image'; }}
-                         />
+                    />
                 ) : (
                     <div className="event-image-placeholder">
                         <svg width="40" height="40" viewBox="0 0 16 16" fill="#9CA3AF">
@@ -600,8 +631,6 @@ const App = () => {
     return (
         <div className="app-container">
             <link rel="stylesheet" href="/universal-styles.css" />
-
-
             {currentView === 'dashboard' ? (
                 <main className="main-content">
                     <h3>Events</h3>
@@ -653,8 +682,9 @@ const App = () => {
                                     <div className="empty-state"><p>No events match your criteria.</p></div>
                             )}
                             {activeTab === 'myEvents' && (
-                                myEvents.length > 0 ? myEvents.map(event => renderEventCard(event)) :
-                                    <div className="empty-state"><p>You haven't created any events.</p></div>
+                                myCreatedEvents.length > 0
+                                    ? myCreatedEvents.map(event => renderEventCard(event))
+                                    : <div className="empty-state"><p>You haven't created any events.</p></div>
                             )}
                             {activeTab === 'attending' && (
                                 attendingEvents.length > 0 ? attendingEvents.map(event => renderEventCard(event)) :
@@ -666,7 +696,6 @@ const App = () => {
             ) : (
                 <CreateEventPage onSave={handleCreateEvent} onCancel={() => setCurrentView('dashboard')} />
             )}
-
             {selectedEvent && <EventDetailsModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
             {editingEvent && <EditEventModal event={editingEvent} onSave={handleUpdateEvent} onClose={() => setEditingEvent(null)} />}
             {confirmingAction && <ConfirmationModal
@@ -676,7 +705,6 @@ const App = () => {
                 onConfirm={() => confirmingAction.type === 'delete' ? handleDeleteEvent(confirmingAction.event) : handleCancelRsvp(confirmingAction.event)}
                 onCancel={() => setConfirmingAction(null)}
             />}
-
         </div>
     );
 };

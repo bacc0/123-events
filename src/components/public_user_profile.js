@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // --- Contact Organizer Modal (mockup) ---
@@ -18,46 +18,6 @@ const ContactOrganizerModal = ({ organizerName, onClose }) => (
     </div>
 );
 
-// --- Calendar ---
-const Calendar = ({ events }) => {
-    const [currentDate, setCurrentDate] = useState(new Date(2025, 2));
-    const eventDates = useMemo(
-        () => new Set(events.map(event => new Date(event.date).toDateString())),
-        [events]
-    );
-    const changeMonth = offset => setCurrentDate(prev => new Date(prev.getFullYear(), prev.getMonth() + offset, 1));
-    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
-    const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const renderCells = () => {
-        const cells = [];
-        for (let i = 0; i < firstDayOfMonth; i++) cells.push(<div key={`empty-${i}`} className="calendar-day"></div>);
-        for (let day = 1; day <= daysInMonth; day++) {
-            const fullDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
-            const isEventDay = eventDates.has(fullDate.toDateString());
-            cells.push(
-                <div key={day} className={`calendar-day ${isEventDay ? 'calendar-day-event' : ''}`}>
-                    {day}
-                </div>
-            );
-        }
-        return cells;
-    };
-    return (
-        <div className="calendar-container"  >
-            <div className="calendar-header">
-                <button className="calendar-nav" onClick={() => changeMonth(-1)}>&lt;</button>
-                <h4 className="calendar-title">{currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}</h4>
-                <button className="calendar-nav" onClick={() => changeMonth(1)}>&gt;</button>
-            </div>
-            <div className="calendar-grid">
-                {weekDays.map(day => <div key={day} className="calendar-day-header">{day}</div>)}
-                {renderCells()}
-            </div>
-        </div>
-    );
-};
-
 // --- Event Details Modal ---
 const EventDetailsModal = ({ event, onClose }) => (
     <div className="modal-overlay" onClick={onClose}>
@@ -71,16 +31,61 @@ const EventDetailsModal = ({ event, onClose }) => (
                 </button>
             </div>
             <div className="modal-body">
-                {event.image && <img src={event.image} alt={event.title} className="modal-image" />}
-                <div style={{ marginTop: 24 }}>
-                    <strong>Date:</strong> {event.date} <br />
-                    <strong>Time:</strong> {event.time} <br />
-                    <strong>Location:</strong> {event.location} <br />
-                    <strong>Description:</strong> {event.description}
+                {
+                    event.image &&
+                    <img src={event.image} alt={event.title} className="modal-image" />
+                }
+                <div >
+
+                    <br />
+                    <div className="detail-item">
+                        <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                        </svg>
+                        <div className="detail-content">
+                            <div className="detail-label">Date & Time</div>
+                            <div className="detail-value">{event.date} at {event.time}</div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className="detail-item">
+                        <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                        </svg>
+                        <div className="detail-content">
+                            <div className="detail-label">Location</div>
+                            <div className="detail-value">{event.location}</div>
+                        </div>
+                    </div>
+
+                    <br />
+                    
+                    <div className="detail-item">
+                        <svg className="detail-icon" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM4 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1-1H5a1 1 0 0 1-1-1V8z" />
+                        </svg>
+                        <div className="detail-content">
+                            <div className="detail-label">Description</div>
+                            <div className="detail-value">{event.description}</div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
             <div className="modal-footer">
-                <button className="btn btn-outline" style={{ flex: 1 }} onClick={onClose}>Close</button>
+                {/* <button className="btn btn-outline" style={{ flex: 1 }} onClick={onClose}>Close</button> */}
             </div>
         </div>
     </div>
@@ -90,7 +95,7 @@ const EventDetailsModal = ({ event, onClose }) => (
 const EventCard = ({ event, onViewDetails }) => {
     const eventDate = new Date(event.date);
     return (
-        <div className="event-card" >
+        <div className="event-card" style={{ maxWidth: '460px' }}>
             {event.image ? (
                 <img src={event.image} alt={event.title} className="event-image profile-event-card" />
             ) : (
@@ -136,6 +141,8 @@ const UserProfilePage = () => {
         about: "Passionate about building communities and creating memorable experiences. Specializing in tech and design events that inspire and connect people."
     });
 
+    // If you want to fetch real user events, do it here.
+    // For now, placeholder static data:
     const [events, setEvents] = useState({
         organized: [
             {
@@ -174,10 +181,10 @@ const UserProfilePage = () => {
     const [showContactModal, setShowContactModal] = useState(false);
 
     return (
-        <div className="app-container"  style={{paddingTop: '24px'}}>
+        <div className="app-container" style={{ paddingTop: '24px' }}>
             <link rel="stylesheet" href="universal-styles.css" />
 
-            <div className="profile-grid" >
+            <div className="profile-grid" style={{ margin: '0 auto', padding: '0 16px', maxWidth: '1200px' }}>
                 <div className="profile-left-panel">
                     <div className="profile-header">
                         <img src={user.profileImageUrl} alt={user.fullName} className="profile-avatar" />
@@ -195,33 +202,47 @@ const UserProfilePage = () => {
                     </div>
                 </div>
 
-                <div>
-                    <Calendar events={[...events.organized, ...events.past]} />
-
-                    <h3 className="section-title" style={{
-                        fontSize: '24px', marginBottom: '24px', borderBottom: '2px solid var(--primary-color)',
-                        paddingBottom: '8px', display: 'inline-block'
-                    }}>
+                <div className="profile-container_card">
+                    <h3
+                        className="section-title"
+                        style={{
+                            fontSize: '1.17em',
+                            marginBottom: '24px',
+                            paddingBottom: '8px',
+                            display: 'inline-block'
+                        }}
+                    >
                         Upcoming Events
                     </h3>
                     <div className="profile-events-grid">
-                        {events.organized.length > 0 ?
-                            events.organized.map(event => <EventCard key={event.id} event={event} onViewDetails={setSelectedEvent} />) :
+                        {events.organized.length > 0 ? (
+                            events.organized.map(event => (
+                                <EventCard key={event.id} event={event} onViewDetails={setSelectedEvent} />
+                            ))
+                        ) : (
                             <div className="empty-state">{user.fullName.split(' ')[0]} has no upcoming events.</div>
-                        }
+                        )}
                     </div>
 
-                    <h3 className="section-title" style={{
-                        fontSize: '24px', marginBottom: '24px', borderBottom: '2px solid var(--primary-color)',
-                        paddingBottom: '8px', display: 'inline-block'
-                    }}>
+                    <h3
+                        className="section-title"
+                        style={{
+                            fontSize: '1.17em',
+                            marginBottom: '24px',
+                            paddingBottom: '8px',
+                            display: 'inline-block'
+                        }}
+                    >
                         Past Events
                     </h3>
                     <div className="profile-events-grid">
-                        {events.past.length > 0 ?
-                            events.past.map(event => <EventCard key={event.id} event={event} onViewDetails={setSelectedEvent} />) :
+                        {events.past.length > 0 ? (
+                            events.past.map(event => (
+                                <EventCard key={event.id} event={event} onViewDetails={setSelectedEvent} />
+                            ))
+                        ) : (
                             <div className="empty-state">No past events to show.</div>
-                        }
+                        )}
                     </div>
                 </div>
             </div>

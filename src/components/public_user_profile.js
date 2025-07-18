@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import EventList from './eventList';
-import EventList from './eventList';
+import EventList from './EventList';
 
 import { Grid, Card, CardContent, CardMedia, Button, Typography } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';

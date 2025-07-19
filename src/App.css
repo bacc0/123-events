@@ -1093,8 +1093,8 @@ body {
 
 /* Image Upload */
 .image-upload {
-  border: 2px dashed var(--border-dark);
-  border-radius: 8px;
+  border: 1px dashed #CFD8DD;
+  border-radius: 16px;
   padding: 24px;
   text-align: center;
   cursor: pointer;
@@ -1103,7 +1103,7 @@ body {
 
 .image-upload:hover {
   border-color: var(--primary-color);
-  background-color: var(--bg-secondary);
+  background-color: #eceff1;
 }
 
 .image-preview {

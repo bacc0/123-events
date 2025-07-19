@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { getDatabase, ref, onValue } from 'firebase/database';
-import EventList from './EventList';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getDatabase, ref, onValue } from "firebase/database";
+import EventList from "./EventList";
 
-import { Button } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
+import { Button } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
-import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { motion } from "framer-motion";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// adjust this line to use the named export
-import { app } from '../firebase';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { app } from "../firebase";
+import Modal_Edit_Profile from "./ModalEditProfile";
 
 const db = getDatabase(app);
 
-// --- Contact Organizer Modal (mockup) ---
 const ContactOrganizerModal = ({ organizerName, onClose }) => (
     <div className="modal-overlay" onClick={onClose}>
         <div
             className="modal-content"
-            style={{ maxWidth: '500px' }}
-            onClick={e => e.stopPropagation()}
+            style={{ maxWidth: "500px" }}
+            onClick={(e) => e.stopPropagation()}
         >
             <div className="modal-header">
-                <h3 className="modal-title" style={{ fontSize: '20px' }}>
-                    {`Contact ${organizerName}`}
-                </h3>
+                <h3
+                    className="modal-title"
+                    style={{ fontSize: "20px" }}
+                >{`Contact ${organizerName}`}</h3>
                 <Button className="close-button" onClick={onClose}>
                     <svg
                         width="24"
@@ -40,17 +40,16 @@ const ContactOrganizerModal = ({ organizerName, onClose }) => (
                     </svg>
                 </Button>
             </div>
-            <div style={{ padding: 32, textAlign: 'center' }}>
+            <div style={{ padding: 32, textAlign: "center" }}>
                 Contact form goes here.
             </div>
         </div>
     </div>
 );
 
-// --- Event Details Modal ---
 const EventDetailsModal = ({ event, onClose }) => (
     <div className="modal-overlay" onClick={onClose}>
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
                 <h2 className="modal-title">{event.title}</h2>
                 <button className="close-button" onClick={onClose}>
@@ -81,7 +80,7 @@ const EventDetailsModal = ({ event, onClose }) => (
                         viewBox="0 0 16 16"
                         fill="currentColor"
                     >
-                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z..." />
                     </svg>
                     <div className="detail-content">
                         <div className="detail-label">Date & Time</div>
@@ -111,7 +110,7 @@ const EventDetailsModal = ({ event, onClose }) => (
                         viewBox="0 0 16 16"
                         fill="currentColor"
                     >
-                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM4 8a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1-1H5a1 1 0 0 1-1-1V8z" />
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2z..." />
                     </svg>
                     <div className="detail-content">
                         <div className="detail-label">Description</div>
@@ -129,128 +128,105 @@ const UserProfilePage = () => {
     const navigate = useNavigate();
     const { uid, fullName: nameFromNav } = location.state || {};
 
-    useEffect(() => {
-        if (!uid || !nameFromNav) {
-            navigate('/dashboard');
-        }
-    }, [uid, nameFromNav, navigate]);
-
     const [user, setUser] = useState({
-        uid: uid || '',
-        fullName: nameFromNav || '',
-        profileImageUrl: '',
-        about: ''
+        uid: uid || "",
+        fullName: nameFromNav || "",
+        profileImageUrl: "",
+        about: "",
     });
+
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [showContactModal, setShowContactModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+
+    useEffect(() => {
+        if (!uid || !nameFromNav) navigate("/dashboard");
+    }, [uid, nameFromNav, navigate]);
 
     useEffect(() => {
         if (!uid) return;
         const userRef = ref(db, `users/${uid}`);
-        const unsubscribe = onValue(userRef, snapshot => {
+        const unsubscribe = onValue(userRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 setUser({
                     uid,
-                    fullName: data.fullName || '',
-                    profileImageUrl: data.profileImageUrl || '',
-                    about: data.about || ''
+                    fullName: data.fullName || "",
+                    profileImageUrl: data.profileImageUrl || "",
+                    about: data.about || "",
                 });
             }
         });
         return () => unsubscribe();
     }, [uid]);
 
-    const [selectedEvent, setSelectedEvent] = useState(null);
-    const [showContactModal, setShowContactModal] = useState(false);
-
-    useEffect(() => {
-        window.scrollTo(0, 0); // Scroll to top on page load
-    }, []);
-
-
     return (
-        <div className="app-container" style={{ paddingTop: '24px' }}>
-
+        <div className="app-container" style={{ paddingTop: "24px" }}>
             <link rel="stylesheet" href="universal-styles.css" />
-            <div
-                style={{ maxWidth: 1200, margin: '0 auto 12px' }}
-            >
+            <div style={{ maxWidth: 1200, margin: "0 auto 12px" }}>
                 <div
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate("/")}
                     style={{
-                        display: 'flex',
-                        alignItems: 'center',
+                        display: "flex",
+                        alignItems: "center",
                         maxHeight: 1,
                         paddingBottom: 10,
-                        cursor: 'pointer',
+                        cursor: "pointer",
                         marginLeft: 12,
-                        color: '#78909c'
+                        color: "#78909c",
                     }}
                 >
-                    <  ArrowBackIcon />
-                    <div style={{ fontSize: 12, marginLeft: 6 }}
-                    >
-                        BACK
-                    </div>
+                    <ArrowBackIcon />
+                    <div style={{ fontSize: 12, marginLeft: 6 }}>BACK</div>
                 </div>
             </div>
             <div
                 className="profile-grid"
                 style={{
-                    margin: '0 auto',
-                    padding: '0 16px',
-                    maxWidth: '1200px'
+                    margin: "0 auto",
+                    padding: "0 16px",
+                    maxWidth: "1200px",
                 }}
             >
                 <div
                     className="profile-left-panel"
-                    style={{
-                        borderRadius: 16
-                    }}
+                    style={{ borderRadius: 16 }}
                 >
                     <div className="profile-header">
-
                         <div
                             style={{
                                 width: 120,
                                 height: 120,
-                                borderRadius: '50%',
-                                backgroundColor: '#F3F5F7',
-                                margin: '0 auto 36px',
+                                borderRadius: "50%",
+                                backgroundColor: "#F3F5F7",
+                                margin: "0 auto 36px",
                                 backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                                border:'1px solid #ffffff'
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                                backgroundRepeat: "no-repeat",
+                                border: "1px solid #ffffff",
                             }}
                         >
                             <motion.img
-                                initial={{
-                                    opacity: 0, filter: "blur(7px)",
-                                }}
-                                animate={{
-                                    opacity: 1, filter: "blur(0px)",
-                                }}
+                                initial={{ opacity: 0, filter: "blur(7px)" }}
+                                animate={{ opacity: 1, filter: "blur(0px)" }}
                                 transition={{ duration: 0.6, delay: 1.9 }}
-
                                 src={user.profileImageUrl}
-                                // alt={user.fullName}
                                 className="profile-avatar"
                             />
                         </div>
                         <h2 className="profile-name">{user.fullName}</h2>
                         <p
                             style={{
-                                fontSize: '14px',
-                                color: 'var(--text-muted)',
-                                margin: '16px 0 16px 0'
+                                fontSize: "14px",
+                                color: "var(--text-muted)",
+                                margin: "16px 0 16px 0",
                             }}
                         >
                             About
                         </p>
-
-
-                        {user.about
-                            ? <motion.p
+                        {user.about ? (
+                            <motion.p
                                 initial={{ opacity: 0, filter: "blur(7px)" }}
                                 animate={{ opacity: 1, filter: "blur(0px)" }}
                                 transition={{ duration: 1, delay: 0.2 }}
@@ -258,73 +234,80 @@ const UserProfilePage = () => {
                             >
                                 {user.about}
                             </motion.p>
-                            :
-                            <div style={{ margin: '34px 0 20px' }} >
+                        ) : (
+                            <div style={{ margin: "34px 0 20px" }}>
                                 <Skeleton
                                     className="profile-about"
-                                    count={10}           // three lines of placeholder
+                                    count={10}
                                     width={236}
                                     height={8}
                                     style={{
                                         marginTop: 1,
                                         marginBottom: 1,
-                                         backgroundColor: '#eceff1',
-                                  
+                                        backgroundColor: "#eceff1",
                                     }}
                                     borderRadius={5}
                                 />
                             </div>
-                        }
+                        )}
                         <Button
                             onClick={() => setShowContactModal(true)}
                             variant="contained"
                             endIcon={<SendIcon />}
                             style={{
-                                color: 'white',
-                                backgroundColor: '#0A47A3',
+                                color: "white",
+                                backgroundColor: "#0A47A3",
                                 borderRadius: 8,
-                                boxShadow: 'none',
-                                height: 38
+                                boxShadow: "none",
+                                height: 38,
                             }}
                         >
                             Contact Organizer
                         </Button>
+                        <Button
+                            onClick={() => setShowEditModal(true)}
+                            variant="outlined"
+                            style={{ marginTop: 20, 
+                                color: '#00000000' ,
+                                border: '0px solid',
+                                background: '#00000000'
+                            }}
+                        >
+                            E
+                        </Button>
                     </div>
                 </div>
-
                 <div
                     className="profile-container_card"
                     style={{
-                        background: '#ffffff',
+                        background: "#ffffff",
                         padding: 16,
                         borderRadius: 16,
-                        // border: '1px solid #E5E7EB'
                     }}
                 >
                     <h3
                         className="section-title"
                         style={{
-                            fontSize: '1.17em',
-                            marginBottom: '24px',
-                            paddingBottom: '8px',
-                            display: 'inline-block',
+                            fontSize: "1.17em",
+                            marginBottom: "24px",
+                            paddingBottom: "8px",
+                            display: "inline-block",
                             marginLeft: 40,
-                            color: '#78909c'
+                            color: "#78909c",
                         }}
                     >
                         Upcoming Events
                     </h3>
                     <EventList creatorName={user.fullName} date="upcoming" />
-
                     <h3
                         className="section-title"
                         style={{
-                            fontSize: '1.17em',
-                            marginBottom: '24px',
-                            paddingBottom: '8px',
-                            display: 'inline-block',
+                            fontSize: "1.17em",
+                            marginBottom: "24px",
+                            paddingBottom: "8px",
+                            display: "inline-block",
                             marginLeft: 40,
-                            color: '#78909c'
+                            color: "#78909c",
                         }}
                     >
                         Past Events
@@ -332,7 +315,6 @@ const UserProfilePage = () => {
                     <EventList creatorName={user.fullName} date="past" />
                 </div>
             </div>
-
             {selectedEvent && (
                 <EventDetailsModal
                     event={selectedEvent}
@@ -345,6 +327,16 @@ const UserProfilePage = () => {
                     onClose={() => setShowContactModal(false)}
                 />
             )}
+            <div  style={{ marginLeft: -152, opacity: 0.1}}>
+            {showEditModal && (
+                <Modal_Edit_Profile
+               
+                    userId={user.uid}
+                    refreshUser={() => window.location.reload()}
+                    onClose={() => setShowEditModal(false)}
+                />
+            )}
+            </div>
         </div>
     );
 };

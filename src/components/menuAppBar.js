@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { getAuth } from "firebase/auth";
+import Modal_Edit_Profile from "./ModalEditProfile";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,7 +15,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import { pink } from '@mui/material/colors';
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { motion } from "framer-motion";
 
@@ -54,8 +56,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                          backdropFilter: isLoggedIn ? 'blur(6px)' : 'blur(0px)',
                          WebkitBackdropFilter: isLoggedIn ? 'blur(16px)' : 'blur(0px)',
                          //    background: 'lime',
-                    //    display: 'flex',
-                    //    alignItems: 'center'
+                         //    display: 'flex',
+                         //    alignItems: 'center'
                     }}
                >
                     <Toolbar
@@ -143,7 +145,22 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              </IconButton>
 
                                              {/* Avatar with 5s delay */}
-                                             <IconButton style={{ marginRight: -3, marginLeft: 2 }} color="inherit">
+                                             <IconButton
+                                                  style={{ marginRight: -3, marginLeft: 2 }}
+                                                  color="inherit"
+                                                  onClick={() => {
+                                                       const auth = getAuth();
+                                                       const user = auth.currentUser;
+                                                       if (user) {
+                                                            navigate('/my-profile', {
+                                                                 state: {
+                                                                      uid: user.uid,
+                                                                      fullName: fullName
+                                                                 }
+                                                            });
+                                                       }
+                                                  }}
+                                             >
                                                   {profileImageUrl && showAvatar ? (
                                                        <div
                                                             style={{
@@ -195,6 +212,12 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              </IconButton>
                                         </>
                                    )}
+                                   {/* {isLoggedIn && getAuth().currentUser && (
+                                        <Modal_Edit_Profile
+                                             userId={getAuth().currentUser.uid}
+                                             refreshUser={() => window.location.reload()}
+                                        />
+                                   )} */}
                               </Box>
 
                               <Box
@@ -204,7 +227,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         whiteSpace: 'nowrap',
                                         scrollbarWidth: 'none',
                                         '&::-webkit-scrollbar': { display: 'none' },
-                                     
+
                                    }}
                                    style={{
                                         background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 60%, rgba(217, 217, 217, 0.2) 100%)',
@@ -242,7 +265,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                   .then(() => { window.location.href = '/'; })
                                                   .catch((error) => { console.error('Logout error:', error); });
                                         }}
-                                        sx={{ height: 40, width: 40,        color: '#78909c', }}
+                                        sx={{ height: 40, width: 40, color: '#78909c', }}
                                    >
                                         {isLoggedIn ? (
                                              <div>
@@ -261,6 +284,14 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                </AppBar>
 
                <Toolbar />
+
+               {/* Modal_Edit_Profile rendering with current userId */}
+               {/* {isLoggedIn && getAuth().currentUser && (
+                <Modal_Edit_Profile
+                  userId={getAuth().currentUser.uid}
+                  refreshUser={() => window.location.reload()}
+                />
+              )} */}
 
                {/* {isLoggedIn && (
                     <Box

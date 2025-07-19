@@ -170,6 +170,15 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                     filter: "blur(0px)",
                                 }}
                                 transition={{ duration: 1.2, delay: 0.0 }}
+                                  style={{
+
+                                    backgroundColor: '#F3F5F7',
+                                    backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
+                                    backgroundSize: '66%',         // Scale image to 23% of container
+                                    backgroundPosition: 'center',  // Centre the image
+                                    backgroundRepeat: 'no-repeat'  // Do not repeat the image
+                                }}
+                                 
                             >
                                 <CardMedia
                                     component="img"
@@ -182,6 +191,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                     }}
                                 />
                             </motion.div>
+                            
                             <CardContent>
                                 <div
                                     className="card-content"

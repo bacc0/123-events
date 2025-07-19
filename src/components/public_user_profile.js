@@ -220,6 +220,7 @@ const UserProfilePage = () => {
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
+                                border:'1px solid #ffffff'
                             }}
                         >
                             <motion.img
@@ -267,7 +268,8 @@ const UserProfilePage = () => {
                                     style={{
                                         marginTop: 1,
                                         marginBottom: 1,
-                                        //  backgroundColor: '#DBDCDD'
+                                         backgroundColor: '#eceff1',
+                                  
                                     }}
                                     borderRadius={5}
                                 />

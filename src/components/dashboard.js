@@ -1130,31 +1130,42 @@ const App = () => {
         return (
             <motion.div key={event.id} className="event-card">
                 {event.imageUrl ? (
-                    <motion.img
-                        style={{ background: "#E5E5E5" }}
-                        initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
-                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                        transition={{ duration: 1.2, delay: 0.0 }}
-                        src={event.imageUrl}
-                        alt={event.title}
-                        className="event-image"
-                        onError={(e) => {
-                            e.target.onerror = "";
-                            e.target.src =
-                                "https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image";
-                        }}
-                    />
+                        <motion.img
+                            // style={{ background: "#E5E5E5" }}
+                            style={{
+
+                                backgroundColor: '#F3F5F7',
+                                backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
+                                backgroundSize: '66%',         // Scale image to 23% of container
+                                backgroundPosition: 'center',  // Centre the image
+                                backgroundRepeat: 'no-repeat'  // Do not repeat the image
+                            }}
+                            initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
+                            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                            transition={{ duration: 1.2, delay: 0.0 }}
+                            src={event.imageUrl}
+                            alt={event.title}
+                            className="event-image"
+                            onError={(e) => {
+                                e.target.onerror = "";
+                                e.target.src =
+                                    "https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image";
+                            }}
+                        />
                 ) : (
                     <div className="event-image-placeholder">
-                        <svg
-                            width="40"
-                            height="40"
-                            viewBox="0 0 16 16"
-                            fill="#9CA3AF"
-                        >
-                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                            <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093L6.5 10.5l-2.777-2.947a.5.5 0 0 0-.577-.093L.002 9.5V3a1 1 0 0 1 1-1h12z" />
-                        </svg>
+                        <div
+                            style={{
+                                width: 50,
+                                height: 33.2,
+                                backgroundColor: '#F3F5F7',
+                                backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG.svg)`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                backgroundRepeat: 'no-repeat',
+                            }}
+                        ></div>
+
                     </div>
                 )}
                 <div className="event-content">
@@ -1307,7 +1318,7 @@ const App = () => {
             <link rel="stylesheet" href="/universal-styles.css" />
             {currentView === "dashboard" ? (
                 <main className="main-content">
-                    <h3 style={{color:"#78909c"}}>Events</h3>
+                    <h3 style={{ color: "#78909c" }}>Events</h3>
 
                     <div className="card card-padded">
                         <div
@@ -1471,7 +1482,7 @@ const App = () => {
                                 </Button>
                             </div>
                         )}
-                       
+
                         <div
                             className="tabs"
                             style={{ display: "flex", alignItems: "center" }}

@@ -15,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import { pink } from '@mui/material/colors';
 import { getAuth, signOut } from "firebase/auth";
 import { getDatabase, ref, onValue } from 'firebase/database';
+import { motion } from "framer-motion";
+
 
 
 export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
@@ -151,9 +153,9 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                   </Badge>
                                              </IconButton>
 
-                                             <IconButton 
-                                             style={{ marginRight: -3, marginLeft: 2 }}
-                                             color="inherit"
+                                             <IconButton
+                                                  style={{ marginRight: -3, marginLeft: 2 }}
+                                                  color="inherit"
                                              >
                                                   <PersonIcon />
                                              </IconButton>
@@ -172,7 +174,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         }
                                    }}
                                    style={{
-                                        background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 60%, rgba(217, 217, 217, 0.4) 100%)',
+                                        background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 60%, rgba(217, 217, 217, 0.2) 100%)',
 
                                         position: 'relative', top: 1.2,
 
@@ -180,9 +182,15 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    }}
                               >
                                    {isLoggedIn &&
-                                        <Typography variant="subtitle2" sx={{ fontWeight: '600' }}>
-                                             {fullName || getAuth().currentUser?.email || 'User'}
-                                        </Typography>
+                                        <motion.div
+                                             initial={{   x:90 }}
+                                             animate={{  x:0 }}
+                                             transition={{ duration: 1.6, delay: 0.7 }}
+                                        >
+                                             <Typography variant="subtitle2" sx={{ fontWeight: '600' }}>
+                                                  {fullName || getAuth().currentUser?.email || 'User'}
+                                             </Typography>
+                                        </motion.div>
                                    }
                               </Box>
                               <Box

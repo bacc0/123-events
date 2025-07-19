@@ -1156,8 +1156,8 @@ const App = () => {
                     <div className="event-image-placeholder">
                         <div
                             style={{
-                                width: 50,
-                                height: 33.2,
+                                width: 33,
+                                height: 33,
                                 backgroundColor: '#F3F5F7',
                                 backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG.svg)`,
                                 backgroundSize: 'cover',

@@ -176,7 +176,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                             width: 25,
                                                             height: 25,
                                                             borderRadius: '50%',
-                                                            backgroundColor: '#F8F9FA',
+                                                            backgroundColor: '#F3F5F7',
                                                             // margin: '0 auto 36px',
                                                             backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
                                                             backgroundSize: 'cover',

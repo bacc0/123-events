@@ -213,7 +213,7 @@ const UserProfilePage = () => {
                                 width: 120,
                                 height: 120,
                                 borderRadius: '50%',
-                                backgroundColor: '#F8F9FA',
+                                backgroundColor: '#F3F5F7',
                                 margin: '0 auto 36px',
                                 backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
                                 backgroundSize: 'cover',
@@ -264,7 +264,8 @@ const UserProfilePage = () => {
                                     width={236}
                                     height={8}
                                     style={{
-                                        marginTop: 1, marginBottom: 1,
+                                        marginTop: 1, 
+                                        marginBottom: 1,
                                         //  backgroundColor: '#DBDCDD'
                                     }}
                                     borderRadius={5}
@@ -294,7 +295,7 @@ const UserProfilePage = () => {
                         background: '#ffffff',
                         padding: 16,
                         borderRadius: 16,
-                        border: '1px solid #E5E7EB'
+                        // border: '1px solid #E5E7EB'
                     }}
                 >
                     <h3

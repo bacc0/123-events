@@ -1468,9 +1468,9 @@ const App = () => {
                                 </div>
                                 <Button
                                     style={{
-                                        color: "#0A47A3",
-                                        backgroundColor: "#ffffff00",
-                                        // border: "1px solid #0A47A3",
+                                        color: "#90a4ae",
+                                        backgroundColor: "#ffffff",
+                                        border: "1px solid #b0bec5",
                                         borderRadius: 8,
                                         minWidth: 90,
                                         height: 35,

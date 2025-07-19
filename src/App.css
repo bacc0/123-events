@@ -171,17 +171,19 @@ body {
 .form-input,
 .form-textarea {
   padding: 10px 12px;
-  border: 1px solid var(--border-dark);
+  border: 1px solid #ffffff;
   border-radius: 8px;
   font-size: 14px;
   outline: none;
   transition: all 0.3s ease;
+  height: 35px;
+  color:#263238;
 }
 
 .form-input:focus,
 .form-textarea:focus {
-  border-color: var(--primary-color) !important;
-  box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1) !important;
+  border-color: #0A47A3 !important;
+  /* box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1) !important; */
 }
 
 .form-input-error {
@@ -207,7 +209,7 @@ body {
 
 .search-input {
   padding: 8px 12px 8px 36px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #cfd8dc;
   border-radius: 8px;
   font-size: 14px;
   width: 240px;
@@ -215,6 +217,7 @@ body {
   min-height: 36px;
   outline: none;
   margin-right: 6px;
+  font-size: 12px;
 }
 
 .search-icon {
@@ -325,7 +328,8 @@ body {
   display: flex;
   gap: 4px;
   margin-bottom: 24px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #eceff1;
+
 }
 
 .tab {
@@ -335,14 +339,15 @@ body {
   border-bottom: 2px solid transparent;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-muted);
+    color: #78909C;
+
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .tab-active {
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--primary-color);
+  color: #0A47A3;
+  border-bottom: 1px solid #0A47A3;
 }
 
 /* ==================== */
@@ -1062,10 +1067,10 @@ body {
 
 /* Filter Panel */
 .filter-panel {
-  background-color: var(--bg-tertiary);
+  background-color: #F3F5F7;
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  /* border: 1px solid var(--border-color); */
   margin-bottom: 16px;
   display: flex;
   gap: 16px;
@@ -1083,7 +1088,7 @@ body {
 .filter-label {
   font-size: 12px;
   font-weight: 500;
-  color: var(--text-muted);
+  color: #78909c;
 }
 
 /* Image Upload */

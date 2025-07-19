@@ -131,10 +131,11 @@ body {
 }
 
 .page-title {
-  font-size: 28px;
+  font-size: 1.17em;
   font-weight: 700;
   border: none;
   padding: 0;
+  color: #78909C;
 }
 
 /* ==================== */

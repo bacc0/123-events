@@ -478,7 +478,12 @@ const CreateEventPage = ({ onSave, onCancel }) => {
     return (
         <main className="main-content" style={{ maxWidth: "678px" }}>
             <div className="section-header">
-                <h1 className="section-title page-title">Create New Event</h1>
+                <h1
+                  
+                    className="section-title page-title"
+                >
+                    Create New Event
+                </h1>
                 <button className="btn btn-outline" onClick={onCancel}>
                     <svg
                         width="16"
@@ -635,7 +640,7 @@ const CreateEventPage = ({ onSave, onCancel }) => {
                     </div>
                 </form>
             </div>
-        </main>
+        </main >
     );
 };
 
@@ -1130,28 +1135,28 @@ const App = () => {
         return (
             <motion.div key={event.id} className="event-card">
                 {event.imageUrl ? (
-                        <motion.img
-                            // style={{ background: "#E5E5E5" }}
-                            style={{
+                    <motion.img
+                        // style={{ background: "#E5E5E5" }}
+                        style={{
 
-                                backgroundColor: '#F3F5F7',
-                                backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
-                                backgroundSize: '66%',         // Scale image to 23% of container
-                                backgroundPosition: 'center',  // Centre the image
-                                backgroundRepeat: 'no-repeat'  // Do not repeat the image
-                            }}
-                            initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
-                            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                            transition={{ duration: 1.2, delay: 0.0 }}
-                            src={event.imageUrl}
-                            alt={event.title}
-                            className="event-image"
-                            onError={(e) => {
-                                e.target.onerror = "";
-                                e.target.src =
-                                    "https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image";
-                            }}
-                        />
+                            backgroundColor: '#F3F5F7',
+                            backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
+                            backgroundSize: '66%',         // Scale image to 23% of container
+                            backgroundPosition: 'center',  // Centre the image
+                            backgroundRepeat: 'no-repeat'  // Do not repeat the image
+                        }}
+                        initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
+                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                        transition={{ duration: 1.2, delay: 0.0 }}
+                        src={event.imageUrl}
+                        alt={event.title}
+                        className="event-image"
+                        onError={(e) => {
+                            e.target.onerror = "";
+                            e.target.src =
+                                "https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image";
+                        }}
+                    />
                 ) : (
                     <div className="event-image-placeholder">
                         <div

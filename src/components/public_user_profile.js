@@ -162,9 +162,9 @@ const UserProfilePage = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showContactModal, setShowContactModal] = useState(false);
 
-      useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to top on page load
-  }, []);
+    useEffect(() => {
+        window.scrollTo(0, 0); // Scroll to top on page load
+    }, []);
 
 
     return (
@@ -172,7 +172,7 @@ const UserProfilePage = () => {
 
             <link rel="stylesheet" href="universal-styles.css" />
             <div
-                style={{ maxWidth: 1200, margin: '0 auto 12px'}}
+                style={{ maxWidth: 1200, margin: '0 auto 12px' }}
             >
                 <div
                     onClick={() => navigate('/')}
@@ -183,7 +183,7 @@ const UserProfilePage = () => {
                         paddingBottom: 10,
                         cursor: 'pointer',
                         marginLeft: 12,
-                        color:'#78909c'
+                        color: '#78909c'
                     }}
                 >
                     <  ArrowBackIcon />
@@ -265,7 +265,7 @@ const UserProfilePage = () => {
                                     width={236}
                                     height={8}
                                     style={{
-                                        marginTop: 1, 
+                                        marginTop: 1,
                                         marginBottom: 1,
                                         //  backgroundColor: '#DBDCDD'
                                     }}
@@ -306,7 +306,8 @@ const UserProfilePage = () => {
                             marginBottom: '24px',
                             paddingBottom: '8px',
                             display: 'inline-block',
-                            marginLeft: 40
+                            marginLeft: 40,
+                            color: '#78909c'
                         }}
                     >
                         Upcoming Events
@@ -320,7 +321,8 @@ const UserProfilePage = () => {
                             marginBottom: '24px',
                             paddingBottom: '8px',
                             display: 'inline-block',
-                            marginLeft: 40
+                            marginLeft: 40,
+                            color: '#78909c'
                         }}
                     >
                         Past Events

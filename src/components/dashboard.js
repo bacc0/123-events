@@ -1307,7 +1307,7 @@ const App = () => {
             <link rel="stylesheet" href="/universal-styles.css" />
             {currentView === "dashboard" ? (
                 <main className="main-content">
-                    <h3>Events</h3>
+                    <h3 style={{color:"#78909c"}}>Events</h3>
 
                     <div className="card card-padded">
                         <div

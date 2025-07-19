@@ -53,6 +53,9 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                          backgroundColor: isLoggedIn ? '#ffffffbb' : '#ffffff00',
                          backdropFilter: isLoggedIn ? 'blur(6px)' : 'blur(0px)',
                          WebkitBackdropFilter: isLoggedIn ? 'blur(16px)' : 'blur(0px)',
+                         //    background: 'lime',
+                    //    display: 'flex',
+                    //    alignItems: 'center'
                     }}
                >
                     <Toolbar
@@ -60,6 +63,10 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               display: 'flex',
                               justifyContent: 'space-between',
                               alignItems: 'center',
+                              // background: 'red',
+                              // maxWidth:1230,
+                              // width: 1230,
+                              // margin: '0 auto'
                          }}
                     >
                          {/* Left container */}

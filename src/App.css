@@ -360,10 +360,11 @@ body {
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
+  /* width: 300px; */
 }
 
 .event-card:hover {
-  transform: translateY(-1px);
+  transform: translateY(-0.2px);
   box-shadow: 0 0 16px rgba(0,0,0,0.08);
 }
 
@@ -1235,6 +1236,11 @@ body {
     margin: 2px;
     margin-bottom: 0;
     
+}
+
+.card-wrapper-event-list:hover {
+  transform: translateY(-0.2px);
+  box-shadow: 0 0 16px rgba(0,0,0,0.08);
 }
 .card-content {
  height: 106px;

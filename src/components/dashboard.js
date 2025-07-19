@@ -1371,10 +1371,10 @@ const App = () => {
                                     setShowPastTab((prev) => !prev);
                                 }}
                                 style={{
-                                    color: showPastTab ? "#0A47A3" : "#A0C3FF",
+                                    color: showPastTab ? "#0A47A3" : "#90a4ae",
                                     border: showPastTab
                                         ? "1px solid #0A47A3"
-                                        : "1px solid #A0C3FF",
+                                        : "1px solid #cfd8dc",
                                     borderRadius: 8,
                                     height: 35,
                                     minWidth: 138,

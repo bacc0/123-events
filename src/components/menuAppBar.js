@@ -67,7 +67,11 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                          >
                               {isLoggedIn && (
                                    <IconButton onClick={() => navigate(isLoggedIn ? '/dashboard' : '/')} sx={{ p: 0 }}>
-                                        <div
+                                        <motion.div
+                                             initial={{ y: -100, opacity: 0 }}
+                                             animate={{ y: 0, opacity: 1 }}
+                                             transition={{ duration: 1, delay: 1.3 }}
+
                                              style={{
                                                   display: 'flex',
                                                   alignItems: 'center',
@@ -83,7 +87,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              <img src="/appLogoEvents.svg" alt="App Logo" width="50" height="50" />
 
 
-                                        </div>
+                                        </motion.div>
                                    </IconButton>
                               )}
                               {isLoggedIn && (
@@ -140,17 +144,28 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    {isLoggedIn &&
                                         <>
                                              <IconButton color="inherit">
-                                                  <Badge
-                                                       badgeContent={3}
-                                                       sx={{
-                                                            '& .MuiBadge-badge': {
-                                                                 backgroundColor: pink.A200,
-                                                                 color: 'white',
-                                                            }
+                                                  <NotificationsIcon />
+                                                  <motion.div
+                                                       initial={{ y: -16, opacity: 0, scale: 5 }}
+                                                       animate={{ y: -16, opacity: 1, scale: 1 }}
+                                                       transition={{
+                                                            type: "spring",
+                                                            stiffness: 300,
+                                                            damping: 20,
+                                                           delay: 0.6
                                                        }}
                                                   >
-                                                       <NotificationsIcon />
-                                                  </Badge>
+                                                       <Badge
+                                                            badgeContent={3}
+                                                            sx={{
+                                                                 '& .MuiBadge-badge': {
+                                                                      backgroundColor: pink.A200,
+                                                                      color: 'white',
+                                                                 }
+                                                            }}
+                                                       >
+                                                       </Badge>
+                                                  </motion.div>
                                              </IconButton>
 
                                              <IconButton
@@ -183,8 +198,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               >
                                    {isLoggedIn &&
                                         <motion.div
-                                             initial={{   x:90 }}
-                                             animate={{  x:0 }}
+                                             initial={{ x: 90 }}
+                                             animate={{ x: 0 }}
                                              transition={{ duration: 1.6, delay: 0.7 }}
                                         >
                                              <Typography variant="subtitle2" sx={{ fontWeight: '600' }}>

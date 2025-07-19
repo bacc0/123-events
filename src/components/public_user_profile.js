@@ -9,7 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { motion } from "framer-motion";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 // adjust this line to use the named export
 import { app } from '../firebase';
 
@@ -162,10 +162,36 @@ const UserProfilePage = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showContactModal, setShowContactModal] = useState(false);
 
+      useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top on page load
+  }, []);
+
+
     return (
         <div className="app-container" style={{ paddingTop: '24px' }}>
-            <link rel="stylesheet" href="universal-styles.css" />
 
+            <link rel="stylesheet" href="universal-styles.css" />
+            <div
+                style={{ maxWidth: 1200, margin: '0 auto 12px'}}
+            >
+                <div
+                    onClick={() => navigate('/')}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        maxHeight: 1,
+                        paddingBottom: 10,
+                        cursor: 'pointer',
+                        marginLeft: 12
+                    }}
+                >
+                    <  ArrowBackIcon />
+                    <div style={{ fontSize: 12, marginLeft: 6 }}
+                    >
+                        BACK
+                    </div>
+                </div>
+            </div>
             <div
                 className="profile-grid"
                 style={{
@@ -220,11 +246,11 @@ const UserProfilePage = () => {
                             About
                         </p>
 
-                       
+
                         {user.about
                             ? <motion.p
-                                initial={{ opacity: 0, filter: "blur(7px)"  }}
-                                animate={{  opacity: 1, filter: "blur(0px)"  }}
+                                initial={{ opacity: 0, filter: "blur(7px)" }}
+                                animate={{ opacity: 1, filter: "blur(0px)" }}
                                 transition={{ duration: 1, delay: 0.2 }}
                                 className="profile-about"
                             >
@@ -240,7 +266,7 @@ const UserProfilePage = () => {
                                     style={{
                                         marginTop: 1, marginBottom: 1,
                                         //  backgroundColor: '#DBDCDD'
-                                    }}  
+                                    }}
                                     borderRadius={5}
                                 />
                             </div>

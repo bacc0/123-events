@@ -182,7 +182,8 @@ const UserProfilePage = () => {
                         maxHeight: 1,
                         paddingBottom: 10,
                         cursor: 'pointer',
-                        marginLeft: 12
+                        marginLeft: 12,
+                        color:'#78909c'
                     }}
                 >
                     <  ArrowBackIcon />

@@ -103,7 +103,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         overflowX: 'auto',
                                         whiteSpace: 'nowrap',
                                         mx: 1,
-                                        color: '#757575',
+                                        color: '#78909c',
                                         paddingRight: '2px',
                                         paddingLeft: 1,
                                         paddingTop: '2px',
@@ -196,7 +196,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         overflowX: 'auto',
                                         whiteSpace: 'nowrap',
                                         scrollbarWidth: 'none',
-                                        '&::-webkit-scrollbar': { display: 'none' }
+                                        '&::-webkit-scrollbar': { display: 'none' },
+                                     
                                    }}
                                    style={{
                                         background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 60%, rgba(217, 217, 217, 0.2) 100%)',
@@ -234,7 +235,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                   .then(() => { window.location.href = '/'; })
                                                   .catch((error) => { console.error('Logout error:', error); });
                                         }}
-                                        sx={{ height: 40, width: 40 }}
+                                        sx={{ height: 40, width: 40,        color: '#78909c', }}
                                    >
                                         {isLoggedIn ? (
                                              <div>

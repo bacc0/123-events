@@ -686,6 +686,7 @@ body {
   height: 120px;
   margin: 0 auto 16px;
   cursor: pointer;
+
 }
 
 .profile-avatar {
@@ -698,6 +699,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     display: block;
+      margin-top: -1.7px;
+      border: 1px solid #ffffff;
 }
 
 .profile-avatar-overlay {

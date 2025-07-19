@@ -1,16 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+
 import { Timestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { database } from "../firebase";
 import { ref as dbRef, get, child, set } from "firebase/database";
 import {
@@ -345,7 +337,7 @@ const EditEventModal = ({ event, onSave, onClose }) => {
                                     id="image-upload-edit"
                                     accept="image/*"
                                     onChange={handleImageChange}
-                                    className="hidden"
+                                    // className="hidden"
                                     className="form-group"
                                 />
                                 <label
@@ -1092,13 +1084,13 @@ const App = () => {
         [allEvents, userInfo.uid],
     );
 
-    const markAllAsRead = () =>
-        setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-    const unreadCount = notifications.filter((n) => !n.read).length;
+    // const markAllAsRead = () =>
+    //     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+    // const unreadCount = notifications.filter((n) => !n.read).length;
 
     const renderEventCard = (event) => {
         const isMyEvent = myEvents.some((e) => e.id === event.id);
-        const isAttending = attendingEvents.some((e) => e.id === event.id);
+        // const isAttending = attendingEvents.some((e) => e.id === event.id);
 
         // Get current user for attendee check
         const auth = getAuth();
@@ -1479,31 +1471,7 @@ const App = () => {
                                 </Button>
                             </div>
                         )}
-                        {/* <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Button
-                                className={`tab ${showPastTab ? 'tab-active-past' : ''}`}
-                                onClick={() => { setActiveTab('discover'); setShowPastTab(true); }}
-                                style={{
-                                    marginLeft: 'auto',
-                                    background: 'none',
-                                    border: 'none',
-                                    fontWeight: 500,
-                                    color: showPastTab ? '#FF4081' : '#f06292',
-                                    cursor: 'pointer',
-                                    padding: '10px 12px',
-                                    fontSize: '14px',
-                                    // borderBottom: showPastTab ? '2px solid #FF4081' : '2px solid #FFFFFF',
-                                    position: 'relative',
-                                    top: 2,
-                                    // border: "1px solid #E0E0E0",
-                                    borderRadius: 8,
-                                    height: 40,
-                                    margin: '0 auto',
-                                }}
-                            >
-                                Past Events
-                            </Button> 
-                        </div>*/}
+                       
                         <div
                             className="tabs"
                             style={{ display: "flex", alignItems: "center" }}

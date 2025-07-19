@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 import EventNote from '@mui/icons-material/EventNote';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -19,20 +20,20 @@ import { getDatabase, ref, onValue } from 'firebase/database';
 export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
      const navigate = useNavigate();
      const [fullName, setFullName] = React.useState('');
-  
+
      React.useEffect(() => {
-       const auth = getAuth();
-       const user = auth.currentUser;
-       if (user) {
-         const db = getDatabase();
-         const userRef = ref(db, 'users/' + user.uid);
-         onValue(userRef, (snapshot) => {
-           const data = snapshot.val();
-           if (data && data.fullName) {
-             setFullName(data.fullName);
-           }
-         });
-       }
+          const auth = getAuth();
+          const user = auth.currentUser;
+          if (user) {
+               const db = getDatabase();
+               const userRef = ref(db, 'users/' + user.uid);
+               onValue(userRef, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data && data.fullName) {
+                         setFullName(data.fullName);
+                    }
+               });
+          }
      }, []);
      return (
           <Box sx={{ flexGrow: 1 }}>
@@ -135,21 +136,31 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    }}
                               >
                                    {isLoggedIn &&
-                                        <IconButton color="inherit">
-                                             <Badge
-                                                  badgeContent={3}
-                                                  sx={{
-                                                       '& .MuiBadge-badge': {
-                                                            backgroundColor: pink.A200,
-                                                            color: 'white',
-                                                       }
-                                                  }}
+                                        <>
+                                             <IconButton color="inherit">
+                                                  <Badge
+                                                       badgeContent={3}
+                                                       sx={{
+                                                            '& .MuiBadge-badge': {
+                                                                 backgroundColor: pink.A200,
+                                                                 color: 'white',
+                                                            }
+                                                       }}
+                                                  >
+                                                       <NotificationsIcon />
+                                                  </Badge>
+                                             </IconButton>
+
+                                             <IconButton 
+                                             style={{ marginRight: -3, marginLeft: 2 }}
+                                             color="inherit"
                                              >
-                                                  <NotificationsIcon />
-                                             </Badge>
-                                        </IconButton>
+                                                  <PersonIcon />
+                                             </IconButton>
+                                        </>
                                    }
                               </Box>
+
                               <Box
                                    sx={{
                                         maxWidth: 78,
@@ -157,14 +168,14 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                         whiteSpace: 'nowrap',
                                         scrollbarWidth: 'none', // For Firefox
                                         '&::-webkit-scrollbar': {
-                                          display: 'none', // For Chrome, Safari
+                                             display: 'none', // For Chrome, Safari
                                         }
                                    }}
                                    style={{
                                         background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 60%, rgba(217, 217, 217, 0.4) 100%)',
 
                                         position: 'relative', top: 1.2,
-                                      
+
 
                                    }}
                               >
@@ -247,7 +258,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               padding: "10px 20px",
                               textAlign: "left",
                               fontFamily: "Arial, sans-serif",
-                              border: "2px solid #0D47A1",
+                              border: "0.3px solid #0D47A1",
                               borderRadius: "16px",
                               margin: "0 auto 10px auto",
                               maxWidth: "80%",
@@ -257,8 +268,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               left: 0,
                               right: 0,
                               zIndex: 1111,
-                              backdropFilter: 'blur(6px)',
-                              WebkitBackdropFilter: 'blur(6px)',
+                              backdropFilter: 'blur(10px)',
+                              WebkitBackdropFilter: 'blur(10px)',
                               textAlignLast: "center",
                               boxShadow: "0 0 26px #00000033",
                          

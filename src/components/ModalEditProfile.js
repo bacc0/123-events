@@ -198,7 +198,11 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
 
                                    <label
                                         htmlFor="about"
-                                        style={{ fontSize: 14, color: "#78909C" }}
+                                        style={{
+                                             fontSize: 14,
+                                             color: "#78909C",
+
+                                        }}
                                    >
                                         About
                                    </label>
@@ -220,6 +224,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                              marginTop: 12,
                                              marginBottom: 17,
                                              fontSize: 14,
+                                             lineHeight: "1.42"
                                         }}
                                    />
 
@@ -293,12 +298,8 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                         <div
                                              style={{
                                                   border: '1px dotted #cfd8dc',
-                                                  padding: 23,
-                                                  borderRadius: 16,
-                                                  width: 280,
-                                                  marginTop:11
-
                                              }}
+                                             className="form-group-upload"
                                         >
                                              <input
                                                   style={{
@@ -306,7 +307,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                                        left: 11,
                                                        color: '#90a4ae',
                                                        // background: 'red'
-
+                                                       cursor: 'pointer'
 
                                                   }}
 

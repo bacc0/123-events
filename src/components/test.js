@@ -21,9 +21,6 @@ import {
 } from "firebase/database";
 import { database } from "../firebase";
 
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-
-
 const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
 
      // State for controlling the modal open/close
@@ -31,10 +28,6 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
 
      // State to hold the user's data
      const [userData, setUserData] = useState({});
-
-
-     const [imageFile, setImageFile] = useState(null);
-     const [imagePreview, setImagePreview] = useState(userData.profileImageUrl || "");
 
      // This effect runs when the component mounts or when userId changes
      // It fetches the user's data from the Firebase Realtime Database 
@@ -69,14 +62,14 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
      const handleUpdate = async () => {
           if (!userId) return;
 
+          const userRef = dbRef(database, "users/" + userId);
+
           try {
-               const updatedData = { ...userData };
+               // 1. Update user profile in /users
+               await dbSet(userRef, userData);
+               console.log("User data fully updated");
 
-               const userRef = dbRef(database, "users/" + userId);
-               await dbSet(userRef, updatedData);
-               console.log("✅ User profile updated");
-
-               // Update organizer name in all events
+               // 2. Get all events and find the ones created by this user
                const eventsSnapshot = await get(dbRef(database, "events"));
                if (eventsSnapshot.exists()) {
                     const events = eventsSnapshot.val();
@@ -84,21 +77,20 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
 
                     Object.entries(events).forEach(([eventId, eventData]) => {
                          if (eventData.organizer?.uid === userId) {
-                              updates[`events/${eventId}/organizer/fullName`] = updatedData.fullName;
+                              updates[`events/${eventId}/organizer/fullName`] = userData.fullName;
                          }
                     });
 
                     if (Object.keys(updates).length > 0) {
                          await dbUpdate(dbRef(database), updates);
-                         console.log("✅ Events updated with new full name");
+                         console.log("Organizer name updated in events");
                     }
                }
 
-               refreshUser();
-               setOpen(false);
+               refreshUser(); // Optional callback to refresh user info in the UI
+               setOpen(false); // close modal
           } catch (error) {
-               console.error("❌ Error updating profile:", error);
-               alert("Failed to update profile.");
+               console.error("Error updating user info:", error);
           }
      };
 
@@ -209,7 +201,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                         }}
                                    />
 
-                                   {/* <div className="form-group">
+                                   <div className="form-group">
                                         <label
                                              className="form-label"
                                              style={{
@@ -243,104 +235,9 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                                   </span>
                                              </>
                                         </label>
-                                   </div> */}
-
-
-
-
-                                   <div className="form-group"
-                                   >
-
-                                        <label
-                                             className="image-upload"
-                                             className="form-label"
-                                             style={{
-                                                  fontSize: 14,
-                                                  color: "#78909C",
-                                                  marginBottom: 4,
-                                                  // paddingBottom: 10,
-                                                  fontWeight: 400,
-
-                                                  // borderBottom: '0.1px solid #b0bec5'
-                                             }}
-                                        >
-                                             Profile Image
-                                             <span
-                                                  style={{
-                                                       fontSize: "0.62rem",
-                                                       color: "#b0bec5",
-                                                       marginLeft: 10
-                                                  }}
-                                             >
-                                                  Suggested Aspect Ratio 1:1
-                                             </span>
-                                        </label>
-                                        <div
-                                             style={{
-                                                  border: '1px dotted #cfd8dc',
-                                                  padding: 10,
-                                                  borderRadius: 16
-                                             }}
-                                        >
-                                             <input
-                                                  style={{
-                                                       position: ' relative',
-                                                       left: 113,
-                                                       color: '#90a4ae'
-                                                  }}                  
-
-
-                                                  type="file"
-                                                  accept="image/*"
-                                                  onChange={async (e) => {
-                                                       const file = e.target.files[0];
-                                                       if (!file) return;
-
-                                                       setImageFile(file);
-                                                       const reader = new FileReader();
-                                                       reader.onloadend = () => setImagePreview(reader.result);
-                                                       reader.readAsDataURL(file);
-
-                                                       // Upload image immediately
-                                                       try {
-                                                            const storage = getStorage();
-                                                            const imageRef = storageRef(storage, `profile_images/${Date.now()}_${file.name}`);
-                                                            await uploadBytes(imageRef, file);
-                                                            const url = await getDownloadURL(imageRef);
-                                                            console.log("✅ Image uploaded and URL set:", url);
-
-                                                            setUserData((prev) => ({ ...prev, profileImageUrl: url }));
-                                                       } catch (err) {
-                                                            console.error("❌ Failed to upload image:", err);
-                                                            alert("Image upload failed. Please try again.");
-                                                       }
-                                                  }}
-                                             />
-
-                                        </div>
-
-                                        {imagePreview && (
-                                             <div
-                                                  style={{
-                                                       display: 'flex',
-                                                       justifyContent:'center'
-                                                  }}
-                                             >
-                                                  <img
-                                                       src={imagePreview}
-                                                       alt="Preview"
-                                                       style={{
-                                                            maxHeight: "100px",
-                                                            maxWidth: "100px",
-                                                            marginTop: "10px",
-                                                            borderRadius: 16
-                                                       }}
-                                                  />
-                                             </div>
-                                        )}
                                    </div>
 
-                                   <div style={{ textAlign: "center" }}>
+                                   <div style={{ textAlign: "right" }}>
                                         <Button
                                              onClick={handleUpdate}
                                              style={{

@@ -337,7 +337,7 @@ body {
   padding: 12px 24px;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-bottom: 1px solid transparent;
   font-size: 14px;
   font-weight: 500;
   color: #78909C;
@@ -349,6 +349,7 @@ body {
 .tab-active {
   color: #0A47A3;
   border-bottom: 1px solid #0A47A3;
+   font-weight: 500;
 }
 
 /* ==================== */

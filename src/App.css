@@ -510,6 +510,7 @@ body {
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 24px;
+ 
 }
 
 .close-button {
@@ -692,6 +693,7 @@ body {
   height: 120px;
   margin: 0 auto 16px;
   cursor: pointer;
+ 
 
 }
 
@@ -710,6 +712,7 @@ body {
   display: block;
   margin-top: -1.7px;
   border: 1px solid #ffffff;
+   border: 0.1px solid  #cfd8dc
 }
 
 .profile-avatar-overlay {

@@ -147,6 +147,7 @@ function App({ loggedIn, setLoggedIn }) {
                             )
                         }
                     /> */}
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </AnimatePresence>
         </div>

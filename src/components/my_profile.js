@@ -131,7 +131,7 @@ const UserProfilePage = () => {
                 <div className="profile-left-panel" style={{ borderRadius: 16 }}>
                     <div className="profile-header">
                         <div style={{ width: 120, height: 120, borderRadius: '50%', backgroundColor: '#F3F5F7', margin: '0 auto 36px', backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', border: '1px solid #ffffff' }}>
-                            <motion.img initial={{ opacity: 0, filter: "blur(7px)" }} animate={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 1.9 }} src={user.profileImageUrl} className="profile-avatar" />
+                            <motion.img initial={{ opacity: 0, filter: "blur(7px)" }} animate={{ opacity: 1, filter: "blur(0px)" }} transition={{ duration: 0.6, delay: 0.6 }} src={user.profileImageUrl} className="profile-avatar" />
                         </div>
                         <h2 className="profile-name">{user.fullName}</h2>
                         <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: '16px 0 16px 0' }}>About</p>

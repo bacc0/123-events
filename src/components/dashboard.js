@@ -479,7 +479,7 @@ const CreateEventPage = ({ onSave, onCancel }) => {
         <main className="main-content" style={{ maxWidth: "678px" }}>
             <div className="section-header">
                 <h1
-                  
+
                     className="section-title page-title"
                 >
                     Create New Event
@@ -1134,46 +1134,61 @@ const App = () => {
 
         return (
             <motion.div key={event.id} className="event-card">
-                {event.imageUrl ? (
-                    <motion.img
-                        // style={{ background: "#E5E5E5" }}
-                        style={{
+                <div
+                    style={{
 
-                            backgroundColor: '#F3F5F7',
-                            backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
-                            backgroundSize: '66%',         // Scale image to 23% of container
-                            backgroundPosition: 'center',  // Centre the image
-                            backgroundRepeat: 'no-repeat' , // Do not repeat the image
-                          
-                        }}
-                        initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
-                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                        transition={{ duration: 1.2, delay: 0.0 }}
-                        src={event.imageUrl}
-                        alt={event.title}
-                        className="event-image"
-                        onError={(e) => {
-                            e.target.onerror = "";
-                            e.target.src =
-                                "https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image";
-                        }}
-                    />
-                ) : (
-                    <div className="event-image-placeholder">
-                        <div
+                        backgroundColor: '#F3F5F7',
+                        backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
+                        backgroundSize: '66%',         // Scale image to 23% of container
+                        backgroundPosition: 'center',  // Centre the image
+                        backgroundRepeat: 'no-repeat', // Do not repeat the image
+
+                    }}
+                >
+                    {event.imageUrl ? (
+
+                        <motion.img
+                            // style={{ background: "#E5E5E5" }}
                             style={{
-                                width: 33,
-                                height: 33,
-                                backgroundColor: '#F3F5F7',
-                                backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG.svg)`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                            }}
-                        ></div>
 
-                    </div>
-                )}
+                                backgroundColor: '#F3F5F7',
+                                backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
+                                backgroundSize: '66%',         // Scale image to 23% of container
+                                backgroundPosition: 'center',  // Centre the image
+                                backgroundRepeat: 'no-repeat', // Do not repeat the image
+
+                            }}
+                            initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
+                            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                            transition={{ duration: 0.6, delay: 0.0 }}
+                            src={event.imageUrl}
+                            alt={event.title}
+                            className="event-image"
+                            onError={(e) => {
+                                e.target.onerror = "";
+                                e.target.src =
+                                    "https://placehold.co/400x240/f8f9fa/9ca3af?text=No+Image";
+                            }}
+                        />
+                    ) : (
+                        <div className="event-image-placeholder">
+                            <div
+                                style={{
+                                    width: 33,
+                                    height: 33,
+                                    backgroundColor: '#F3F5F7',
+                                    backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG.svg)`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                }}
+                            >
+                            </div>
+
+
+                        </div>
+                    )}
+                </div>
                 <div className="event-content">
                     <div>
                         <h3 className="event-title">{event.title}</h3>

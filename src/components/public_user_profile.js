@@ -192,7 +192,9 @@ const UserProfilePage = () => {
                     className="profile-left-panel"
                     style={{ borderRadius: 16 }}
                 >
-                    <div className="profile-header">
+                    <div
+                        className="profile-header"
+                    >
                         <div
                             style={{
                                 width: 120,
@@ -210,7 +212,7 @@ const UserProfilePage = () => {
                             <motion.img
                                 initial={{ opacity: 0, filter: "blur(7px)" }}
                                 animate={{ opacity: 1, filter: "blur(0px)" }}
-                                transition={{ duration: 0.6, delay: 1.9 }}
+                                transition={{ duration: 0.6, delay: 0.6 }}
                                 src={user.profileImageUrl}
                                 className="profile-avatar"
                             />
@@ -267,8 +269,9 @@ const UserProfilePage = () => {
                         <Button
                             onClick={() => setShowEditModal(true)}
                             variant="outlined"
-                            style={{ marginTop: 20, 
-                                color: '#00000000' ,
+                            style={{
+                                marginTop: 20,
+                                color: '#00000000',
                                 border: '0px solid',
                                 background: '#00000000'
                             }}
@@ -327,15 +330,15 @@ const UserProfilePage = () => {
                     onClose={() => setShowContactModal(false)}
                 />
             )}
-            <div  style={{ marginLeft: -152, opacity: 0.1}}>
-            {showEditModal && (
-                <Modal_Edit_Profile
-               
-                    userId={user.uid}
-                    refreshUser={() => window.location.reload()}
-                    onClose={() => setShowEditModal(false)}
-                />
-            )}
+            <div style={{ marginLeft: -152, opacity: 0.1 }}>
+                {showEditModal && (
+                    <Modal_Edit_Profile
+
+                        userId={user.uid}
+                        refreshUser={() => window.location.reload()}
+                        onClose={() => setShowEditModal(false)}
+                    />
+                )}
             </div>
         </div>
     );

@@ -177,7 +177,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                 >
                                     <CardMedia
                                         component="img"
-                                        alt={event.title}
+                                        // alt={event.title}
                                         image={event.imageUrl}
                                         sx={{
                                             objectFit: "cover",
@@ -575,7 +575,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                 />
                                 <span
                                     style={{
-                                        margin: "-107px 5px 0 0",
+                                        margin: "-15px 5px 0 0",
                                         color: "#6B7280",
                                         fontSize: 13,
                                         marginBottom: 4,

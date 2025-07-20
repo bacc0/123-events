@@ -143,14 +143,14 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                     <DialogContent>
                          <div style={{ display: "flex", justifyContent: "center" }}>
                               <div>
-                                   <div style={{ display: "flex", justifyContent: "center" }}>
+                                   {/* <div style={{ display: "flex", justifyContent: "center" }}>
                                         <img
                                              src="/appLogoEvents.svg"
                                              alt="App Logo"
                                              width="54"
                                              height="54"
                                         />
-                                   </div>
+                                   </div> */}
                                    <h1 style={{ textAlign: "center" }}>Update Account</h1>
 
                                    <label
@@ -171,7 +171,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                         onChange={handleInputChange}
                                         style={{
                                              borderRadius: 16,
-                                             width: 330,
+                                             width: 280,
                                              height: 30,
                                              border: "1px solid #CFD8DD",
                                              padding: "12px 20px",
@@ -199,7 +199,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                         onChange={handleInputChange}
                                         style={{
                                              borderRadius: 16,
-                                             width: 330,
+                                             width: 280,
                                              height: 97,
                                              border: "1px solid #CFD8DD",
                                              padding: 20,
@@ -248,7 +248,8 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
 
 
 
-                                   <div className="form-group"
+                                   <div 
+                                   // className="form-group"
                                    >
 
                                         <label
@@ -285,8 +286,10 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                              <input
                                                   style={{
                                                        position: ' relative',
-                                                       left: 113,
-                                                       color: '#90a4ae'
+                                                       left: 11,
+                                                       color: '#90a4ae',
+                                                       // background: 'red'
+                                                       
                                                   }}                  
 
 

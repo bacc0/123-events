@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getAuth } from "firebase/auth";
-import Modal_Edit_Profile from "./ModalEditProfile";
+import Modal_Edit_Profile from "./_ModalEditProfile";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -201,7 +201,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                             height: 25,
                                                             borderRadius: '50%',
                                                             backgroundColor: '#F3F5F7',
-                                                            // margin: '0 auto 36px',
+
                                                             backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
                                                             backgroundSize: 'cover',
                                                             backgroundPosition: 'center',
@@ -232,6 +232,20 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                    style={{
                                         background: 'linear-gradient(90deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 60%, rgba(217, 217, 217, 0.2) 100%)',
                                         position: 'relative', top: 1.2,
+                                        cursor: 'pointer'
+                                   }}
+
+                                   onClick={() => {
+                                        const auth = getAuth();
+                                        const user = auth.currentUser;
+                                        if (user) {
+                                             navigate('/my-profile', {
+                                                  state: {
+                                                       uid: user.uid,
+                                                       fullName: fullName
+                                                  }
+                                             });
+                                        }
                                    }}
                               >
                                    {isLoggedIn && (
@@ -239,6 +253,8 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              initial={{ x: 90 }}
                                              animate={{ x: 0 }}
                                              transition={{ duration: 1.6, delay: 0.7 }}
+
+
                                         >
                                              <Typography variant="subtitle2" sx={{ fontWeight: '600' }}>
                                                   {fullName || getAuth().currentUser?.email || 'User'}

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import MenuAppBar from './components/menuAppBar';
-import Dashboard from './components/dashboard';
+
+import Dashboard from './components/____Dashboard';
+import MyProfile from './components/___My_profile';
+import PublicUPser_profile from './components/___Public_User_Profile';
+
 import Signup from './components/signup';
+import Navbar from './components/__Navbar';
 import Login from './components/login';
 import ForgotPass from './components/forgot_password';
-import MyProfile from './components/my_profile';
-import PublicUPser_profile from './components/public_user_profile';
-import Video from './components/video';
+import Video from './components/_Video';
 
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -50,7 +52,7 @@ function App({ loggedIn, setLoggedIn }) {
                     top: 110, left: 0, right: 0, zIndex: 1000,
                 }}
             >
-                <MenuAppBar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
+                <Navbar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
             </div>
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>

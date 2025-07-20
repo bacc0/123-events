@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-import EventList from "./EventList";
+import EventList from "./__EventList";
 
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
@@ -11,7 +11,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { motion } from "framer-motion";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { app } from "../firebase";
-import Modal_Edit_Profile from "./ModalEditProfile";
+import Modal_Edit_Profile from "./_ModalEditProfile";
 
 const db = getDatabase(app);
 
@@ -192,9 +192,7 @@ const UserProfilePage = () => {
                     className="profile-left-panel"
                     style={{ borderRadius: 16 }}
                 >
-                    <div
-                        className="profile-header"
-                    >
+                    <div className="profile-header">
                         <div
                             style={{
                                 width: 120,
@@ -227,57 +225,43 @@ const UserProfilePage = () => {
                         >
                             About
                         </p>
-                        {user.about ? (
-                            <motion.p
-                                initial={{ opacity: 0, filter: "blur(7px)" }}
-                                animate={{ opacity: 1, filter: "blur(0px)" }}
-                                transition={{ duration: 1, delay: 0.2 }}
-                                className="profile-about"
-                            >
-                                {user.about}
-                            </motion.p>
-                        ) : (
-                            <div style={{ margin: "34px 0 20px" }}>
-                                <Skeleton
-                                    className="profile-about"
-                                    count={10}
-                                    width={236}
-                                    height={8}
-                                    style={{
-                                        marginTop: 1,
-                                        marginBottom: 1,
-                                        backgroundColor: "#eceff1",
-                                    }}
-                                    borderRadius={5}
-                                />
-                            </div>
+                        {selectedEvent && (
+                            <EventDetailsModal
+                                event={selectedEvent}
+                                onClose={() => setSelectedEvent(null)}
+                            />
                         )}
-                        <Button
-                            onClick={() => setShowContactModal(true)}
-                            variant="contained"
-                            endIcon={<SendIcon />}
-                            style={{
-                                color: "white",
-                                backgroundColor: "#0A47A3",
-                                borderRadius: 8,
-                                boxShadow: "none",
-                                height: 38,
-                            }}
-                        >
+
+                        <Modal_Edit_Profile
+                            userId={uid}
+                        // refreshUser={() => window.location.reload()}
+                        />
+
+                        {selectedEvent && (
+                            <EventDetailsModal
+                                event={selectedEvent}
+                                onClose={() => setSelectedEvent(null)}
+                            />
+                        )}
+                        {showContactModal && (
+                            <ContactOrganizerModal
+                                organizerName={user.fullName}
+                                onClose={() => setShowContactModal(false)}
+                            />
+                        )}
+                        {showEditModal && (
+                            <Modal_Edit_Profile
+                                userId={user.uid}
+                                refreshUser={() => window.location.reload()}
+                                onClose={() => setShowEditModal(false)}
+                            />
+                        )}
+
+                        <br />
+
+                        {/* <Button onClick={() => setShowContactModal(true)} variant="contained" endIcon={<SendIcon />} style={{ color: 'white', backgroundColor: '#0A47A3', borderRadius: 8, boxShadow: 'none', height: 38 }}>
                             Contact Organizer
-                        </Button>
-                        <Button
-                            onClick={() => setShowEditModal(true)}
-                            variant="outlined"
-                            style={{
-                                marginTop: 20,
-                                color: '#00000000',
-                                border: '0px solid',
-                                background: '#00000000'
-                            }}
-                        >
-                            E
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
                 <div
@@ -317,28 +301,6 @@ const UserProfilePage = () => {
                     </h3>
                     <EventList creatorName={user.fullName} date="past" />
                 </div>
-            </div>
-            {selectedEvent && (
-                <EventDetailsModal
-                    event={selectedEvent}
-                    onClose={() => setSelectedEvent(null)}
-                />
-            )}
-            {showContactModal && (
-                <ContactOrganizerModal
-                    organizerName={user.fullName}
-                    onClose={() => setShowContactModal(false)}
-                />
-            )}
-            <div style={{ marginLeft: -152, opacity: 0.1 }}>
-                {showEditModal && (
-                    <Modal_Edit_Profile
-
-                        userId={user.uid}
-                        refreshUser={() => window.location.reload()}
-                        onClose={() => setShowEditModal(false)}
-                    />
-                )}
             </div>
         </div>
     );

@@ -1143,7 +1143,8 @@ const App = () => {
                             backgroundImage: `url(${process.env.PUBLIC_URL}/imageBG_s.svg)`,
                             backgroundSize: '66%',         // Scale image to 23% of container
                             backgroundPosition: 'center',  // Centre the image
-                            backgroundRepeat: 'no-repeat'  // Do not repeat the image
+                            backgroundRepeat: 'no-repeat' , // Do not repeat the image
+                          
                         }}
                         initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
                         animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}

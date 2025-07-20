@@ -95,6 +95,9 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                }
 
                refreshUser();
+
+               setImagePreview("");
+
                setOpen(false);
           } catch (error) {
                console.error("❌ Error updating profile:", error);
@@ -151,7 +154,18 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                              height="54"
                                         />
                                    </div> */}
-                                   <h1 style={{ textAlign: "center" }}>Update Account</h1>
+                                   <h1
+                                        style={{
+                                             textAlign: "center",
+                                             fontSize: '1.5rem',
+                                             fontWeight: 600,
+                                             color: '#455a64',
+                                             marginBottom: 35
+                                        }}
+                                   >
+                                        Update Account
+
+                                   </h1>
 
                                    <label
                                         htmlFor="fullName"
@@ -248,7 +262,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
 
 
 
-                                   <div 
+                                   <div
                                    // className="form-group"
                                    >
 
@@ -279,8 +293,11 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                         <div
                                              style={{
                                                   border: '1px dotted #cfd8dc',
-                                                  padding: 10,
-                                                  borderRadius: 16
+                                                  padding: 23,
+                                                  borderRadius: 16,
+                                                  width: 280,
+                                                  marginTop:11
+
                                              }}
                                         >
                                              <input
@@ -289,8 +306,9 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                                        left: 11,
                                                        color: '#90a4ae',
                                                        // background: 'red'
-                                                       
-                                                  }}                  
+
+
+                                                  }}
 
 
                                                   type="file"
@@ -326,7 +344,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                                              <div
                                                   style={{
                                                        display: 'flex',
-                                                       justifyContent:'center'
+                                                       justifyContent: 'center'
                                                   }}
                                              >
                                                   <img

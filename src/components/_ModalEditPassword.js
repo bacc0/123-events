@@ -4,176 +4,188 @@ import CloseIcon from '@mui/icons-material/Close';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { getAuth, updatePassword, signOut } from 'firebase/auth';
+import UpdateIcon from "@mui/icons-material/Update";
+import LogoutIcon from '@mui/icons-material/Logout';
+
 
 const getPasswordStrength = (password) => {
-    if (!password) return { strength: 0, text: '', color: '#E5E7EB' };
+     if (!password) return { strength: 0, text: '', color: '#E5E7EB' };
 
-    const hasMinLength = password.length >= 7;
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
+     const hasMinLength = password.length >= 7;
+     const hasUppercase = /[A-Z]/.test(password);
+     const hasLowercase = /[a-z]/.test(password);
 
-    if (hasMinLength && hasUppercase && hasLowercase) {
-        return { strength: 3, text: 'Good', color: '#3B82F6' };
-    } else {
-        return { strength: 1, text: 'Weak', color: '#DC2626' };
-    }
+     if (hasMinLength && hasUppercase && hasLowercase) {
+          return { strength: 3, text: 'Good', color: '#3B82F6' };
+     } else {
+          return { strength: 1, text: 'Weak', color: '#DC2626' };
+     }
 };
 
 const ModalEditPassword = ({ open, onClose }) => {
-    const auth = getAuth();
-    const user = auth.currentUser;
+     const auth = getAuth();
+     const user = auth.currentUser;
 
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [message, setMessage] = useState('');
-    const [showLogout, setShowLogout] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirm, setShowConfirm] = useState(false);
+     const [newPassword, setNewPassword] = useState('');
+     const [confirmPassword, setConfirmPassword] = useState('');
+     const [message, setMessage] = useState('');
+     const [showLogout, setShowLogout] = useState(false);
+     const [showPassword, setShowPassword] = useState(false);
+     const [showConfirm, setShowConfirm] = useState(false);
 
-    const strength = getPasswordStrength(newPassword);
+     const strength = getPasswordStrength(newPassword);
 
-    useEffect(() => {
-        if (message.includes("Password changed")) {
-            const timer = setTimeout(() => {
-                onClose();
-                setMessage('');
-            }, 3500);
-            return () => clearTimeout(timer);
-        }
-    }, [message, onClose]);
+     useEffect(() => {
+          if (message.includes("Password changed")) {
+               const timer = setTimeout(() => {
+                    onClose();
+                    setMessage('');
+               }, 3500);
+               return () => clearTimeout(timer);
+          }
+     }, [message, onClose]);
 
-    const handleChangePassword = async () => {
-        if (newPassword !== confirmPassword) {
-            setMessage("❌ Passwords don't match");
-            return;
-        }
+     const handleChangePassword = async () => {
+          if (newPassword !== confirmPassword) {
+               setMessage("❌ Passwords don't match");
+               return;
+          }
 
-        try {
-            await updatePassword(user, newPassword);
-            setMessage("✅ Password changed!");
-            setNewPassword('');
-            setConfirmPassword('');
-        } catch (error) {
-            if (error.code === 'auth/requires-recent-login') {
-                setShowLogout(true);
-            }
-            setMessage("❌ Error: " + error.message);
-        }
-    };
+          try {
+               await updatePassword(user, newPassword);
+               setMessage("✅ Password changed!");
+               setNewPassword('');
+               setConfirmPassword('');
+          } catch (error) {
+               if (error.code === 'auth/requires-recent-login') {
+                    setShowLogout(true);
+               }
+               setMessage("❌ Error: " + error.message);
+          }
+     };
 
-    const handleLogout = () => {
-        signOut(auth).then(() => {
-            window.location.reload();
-        });
-    };
+     const handleLogout = () => {
+          signOut(auth).then(() => {
+               window.location.reload();
+          });
+     };
 
-    return (
-        <Dialog 
-            open={open} 
-            onClose={onClose} 
-            fullWidth 
-            maxWidth="sm"
-            PaperProps={{
-                style: {
-                    borderRadius: 16,
-                    padding: '60px 50px'
-                }
-            }} >
-            <DialogTitle style={{ fontWeight: 600, fontSize: 22, color: '#37474F', textAlign: 'center', paddingBottom: 0 }}>
-                Update Password
-                <IconButton onClick={onClose} sx={{ position: 'absolute', right: 8, top: 8 }}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <div style={{ padding: 16 }}>
-                    <label style={{ fontSize: 14, color: 'rgb(120, 144, 156)', marginBottom: 4 }}>New Password</label>
-                    <div style={{ position: 'relative' }}>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            placeholder="Create a strong password"
-                            style={{
-                                fontSize: 14,
-                                color: 'rgb(33, 33, 33)',
-                                fontWeight: 500,
-                                width: '100%',
-                                padding: '10px 40px 10px 12px',
-                                border: '1px solid rgb(207, 216, 221)',
-                                borderRadius: 16,
-                                marginBottom: 6
-                            }}
-                        />
-                        <IconButton
-                            onClick={() => setShowPassword(!showPassword)}
-                            style={{ position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)' }}
-                        >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
+     return (
+          <Dialog
+               open={open}
+               onClose={onClose}
+               fullWidth
+               maxWidth="sm"
+               PaperProps={{
+                    style: {
+                         borderRadius: 16,
+                         padding: '60px 50px'
+                    }
+               }} >
+               <DialogTitle style={{ fontWeight: 600, fontSize: 22, color: '#37474F', textAlign: 'center', paddingBottom: 0 }}>
+                    Update Password
+                    <IconButton onClick={onClose} sx={{ position: 'absolute', right: 8, top: 8 }}>
+                         <CloseIcon />
+                    </IconButton>
+               </DialogTitle>
+               <DialogContent>
+                    <div style={{ padding: 16 }}>
+                         <label style={{ fontSize: 14, color: 'rgb(120, 144, 156)', marginBottom: 4 }}>New Password</label>
+                         <div style={{ position: 'relative' }}>
+                              <input
+                                   type={showPassword ? "text" : "password"}
+                                   value={newPassword}
+                                   onChange={(e) => setNewPassword(e.target.value)}
+                                   placeholder="Create a strong password"
+                                   style={{
+                                        fontSize: 14,
+                                        color: 'rgb(33, 33, 33)',
+                                        fontWeight: 500,
+                                        width: '100%',
+                                        padding: '10px 40px 10px 12px',
+                                        border: '1px solid rgb(207, 216, 221)',
+                                        borderRadius: 16,
+                                        marginBottom: 6
+                                   }}
+                              />
+                              <IconButton
+                                   onClick={() => setShowPassword(!showPassword)}
+                                   style={{ position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)' }}
+                              >
+                                   {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                         </div>
+                         <div style={{ fontSize: 12, color: strength.color, marginBottom: 10 }}>{strength.text}</div>
+
+                         <label style={{ fontSize: 14, color: 'rgb(120, 144, 156)', marginBottom: 4 }}>Confirm Password</label>
+                         <div style={{ position: 'relative' }}>
+                              <input
+                                   type={showConfirm ? "text" : "password"}
+                                   value={confirmPassword}
+                                   onChange={(e) => setConfirmPassword(e.target.value)}
+                                   placeholder="Confirm your password"
+                                   style={{
+                                        fontSize: 14,
+                                        color: 'rgb(33, 33, 33)',
+                                        fontWeight: 500,
+                                        width: '100%',
+                                        padding: '10px 40px 10px 12px',
+                                        border: '1px solid rgb(207, 216, 221)',
+                                        borderRadius: 16
+                                   }}
+                              />
+                              <IconButton
+                                   onClick={() => setShowConfirm(!showConfirm)}
+                                   style={{ position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)' }}
+                              >
+                                   {showConfirm ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                         </div>
+                         <div style={{ textAlign: 'center' }}>
+
+                              <Button
+                                   onClick={handleChangePassword}
+                                   variant="contained"
+                                   endIcon={<UpdateIcon />}
+                                   style={{
+                                        borderRadius: 8,
+                                        background: "#0A47A3",
+                                        color: "#ffffff",
+                                        height: 35,
+                                        minWidth: 190,
+                                        // marginBottom: 12,
+                                        marginTop: 48,
+                                   }}
+                              >
+                                   Update Password
+                              </Button>
+                         </div>
+                         <div style={{ textAlign: 'center' }}>
+                              <p style={{ marginTop: 24, fontSize: 14, color: '#f48fb1' }}>{message}</p>
+                         </div>
+                         <div style={{ textAlign: 'center' }}>
+                              {showLogout && (
+                                   <Button
+                                        onClick={handleLogout}
+                                        variant="outlined"
+                                        endIcon={<LogoutIcon />}
+                                        style={{
+                                             marginTop: 10,
+                                             height: 35,
+                                             minWidth: 190,
+                                             borderColor: '#ec407a',
+                                             color: '#ec407a',
+                                             borderRadius: 8
+                                        }}
+                                   >
+                                        Log out and sign in again
+                                   </Button>
+                              )}
+                         </div>
                     </div>
-                    <div style={{ fontSize: 12, color: strength.color, marginBottom: 10 }}>{strength.text}</div>
-
-                    <label style={{ fontSize: 14, color: 'rgb(120, 144, 156)', marginBottom: 4 }}>Confirm Password</label>
-                    <div style={{ position: 'relative' }}>
-                        <input
-                            type={showConfirm ? "text" : "password"}
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            placeholder="Confirm your password"
-                            style={{
-                                fontSize: 14,
-                                color: 'rgb(33, 33, 33)',
-                                fontWeight: 500,
-                                width: '100%',
-                                padding: '10px 40px 10px 12px',
-                                border: '1px solid rgb(207, 216, 221)',
-                                borderRadius: 16
-                            }}
-                        />
-                        <IconButton
-                            onClick={() => setShowConfirm(!showConfirm)}
-                            style={{ position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)' }}
-                        >
-                            {showConfirm ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </div>
-
-                    <Button
-                        onClick={handleChangePassword}
-                        variant="contained"
-                        style={{
-                            marginTop: 20,
-                            width: '100%',
-                            borderRadius: 8,
-                            fontWeight: 600,
-                            backgroundColor: '#0A47A3'
-                        }}
-                    >
-                        Update Password
-                    </Button>
-
-                    <p style={{ marginTop: 12 }}>{message}</p>
-
-                    {showLogout && (
-                        <Button
-                            onClick={handleLogout}
-                            variant="outlined"
-                            style={{
-                                marginTop: 10,
-                                width: '100%',
-                                borderColor: '#DC2626',
-                                color: '#DC2626',
-                                borderRadius: 8
-                            }}
-                        >
-                            Log out and sign in again
-                        </Button>
-                    )}
-                </div>
-            </DialogContent>
-        </Dialog>
-    );
+               </DialogContent>
+          </Dialog>
+     );
 };
 
 export default ModalEditPassword;

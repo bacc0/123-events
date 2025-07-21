@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-import Dashboard from './components/____Dashboard';
-import MyProfile from './components/___My_profile_LOGGED_USER';
-import PublicUPser_profile from './components/Public_USER_Profile';
-
-import Signup from './components/signup';
-import Navbar from './components/__Navbar';
-import Login from './components/login';
-import ForgotPass from './components/forgot_password';
+import Navbar from './components/_Navbar';
 import Video from './components/_Video';
+
+import Dashboard from './components/1__Dashboard_HOME';
+import PublicUPser_profile from './components/2__Public_USER_Profile';
+import MyProfile from './components/3__My_Profile_LOGGED_USER';
+
+import Signup from './components/I__Signup';
+import Login from './components/II__Login';
+import ForgotPass from './components/III__Forgot_Password';
 
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';

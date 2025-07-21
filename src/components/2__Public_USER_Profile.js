@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-import EventList from "./__EventList";
+import EventList from "./5__EventL_Lst";
 
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
@@ -11,7 +11,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { motion } from "framer-motion";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { app } from "../firebase";
-import Modal_Edit_Profile from "./_ModalEditProfile";
+import Modal_Edit_Profile from "./C__Modal_Edit_Profile";
 
 const db = getDatabase(app);
 
@@ -315,7 +315,7 @@ const UserProfilePage = () => {
                     >
                         Past Events
                     </h3>
-                    <div style={{ opacity: 0.5, filter: 'grayscale(100%) contrast(0.92) '}}>
+                    <div style={{ opacity: 0.5, filter: 'grayscale(100%) contrast(0.92) ' }}>
                         <EventList creatorName={user.fullName} date="past" />
                     </div>
                 </div>

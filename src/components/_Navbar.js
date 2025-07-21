@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getAuth } from "firebase/auth";
-import Modal_Edit_Profile from "./_ModalEditProfile";
+import Modal_Edit_Profile from "./C__Modal_Edit_Profile";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';

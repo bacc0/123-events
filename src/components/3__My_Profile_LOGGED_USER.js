@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-import EventList from "./__EventList_LOGGED_USER";
+import EventList from "./4__EventList_LOGGED_USER";
 import PasswordIcon from '@mui/icons-material/Password';
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
@@ -11,8 +11,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { motion } from "framer-motion";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { app } from "../firebase";
-import Modal_Edit_Profile from "./_ModalEditProfile";
-import ModalEditPassword from './_ModalEditPassword';
+import Modal_Edit_Profile from "./C__Modal_Edit_Profile";
+import ModalEditPassword from './B__Modal_Edit_Password';
 
 const db = getDatabase(app);
 
@@ -185,9 +185,9 @@ const UserProfilePage = () => {
             <div className="profile-grid" style={{ margin: "0 auto", padding: "0 16px", maxWidth: "1200px" }}>
                 <div className="profile-left-panel" style={{ borderRadius: 16 }}>
                     <div className="profile-header">
-                         <h2
+                        <h2
                             className="profile-name"
-                            style={{ margin: "0 0 35px 0",     color: "#78909C",fontSize: '1.5rem' }}
+                            style={{ margin: "0 0 35px 0", color: "#78909C", fontSize: '1.5rem' }}
                         >
                             My Profile
                         </h2>

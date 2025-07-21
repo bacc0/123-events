@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import Dashboard from './components/____Dashboard';
-import MyProfile from './components/___My_profile';
-import PublicUPser_profile from './components/___Public_User_Profile';
+import MyProfile from './components/___My_profile_LOGGED_USER';
+import PublicUPser_profile from './components/___Public_USER_Profile';
 
 import Signup from './components/signup';
 import Navbar from './components/__Navbar';

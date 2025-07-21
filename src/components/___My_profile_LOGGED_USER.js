@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-import EventList from "./__EventList";
-
+import EventList from "./__EventList_LOGGED_USER";
+import PasswordIcon from '@mui/icons-material/Password';
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
@@ -185,6 +185,12 @@ const UserProfilePage = () => {
             <div className="profile-grid" style={{ margin: "0 auto", padding: "0 16px", maxWidth: "1200px" }}>
                 <div className="profile-left-panel" style={{ borderRadius: 16 }}>
                     <div className="profile-header">
+                         <h2
+                            className="profile-name"
+                            style={{ margin: "0 0 35px 0",     color: "#78909C",fontSize: '1.5rem' }}
+                        >
+                            My Profile
+                        </h2>
                         <div style={{
                             width: 120,
                             height: 120,
@@ -215,15 +221,6 @@ const UserProfilePage = () => {
                             {user.fullName}
                         </h2>
 
-                        {/* <p 
-                        style={{ 
-                            fontSize: "14px", 
-                            color: "var(--text-muted)", 
-                            margin: "16px 0 18px 0" 
-                            }}
-                            >
-                                About
-                                </p> */}
 
 
                         <Modal_Edit_Profile userId={uid} />
@@ -231,13 +228,15 @@ const UserProfilePage = () => {
                         <Button
                             variant="outlined"
                             onClick={() => setShowPasswordModal(true)}
+                            endIcon={<PasswordIcon />}
+
                             style={{
                                 marginTop: 21,
                                 borderRadius: 8,
                                 color: '#0A47A3',
                                 borderColor: '#0A47A3',
                                 height: 35,
-                                width: 186,
+                                width: 210,
 
                             }}
                         >

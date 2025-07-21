@@ -118,7 +118,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                     style={{
                          borderRadius: 8,
                          background: "#0A47A3",
-                         width: 186
+                         width: 210
                     }}
                     endIcon={<BuildIcon />}
                >

@@ -21,9 +21,9 @@ const getPasswordStrength = (password) => {
     const hasLowercase = /[a-z]/.test(password);
 
     if (hasMinLength && hasUppercase && hasLowercase) {
-        return { strength: 3, text: "Good", color: "#3B82F6" };
+        return { strength: 3, text: "Good", color: "#26a69a" };
     } else {
-        return { strength: 1, text: "Weak", color: "#DC2626" };
+        return { strength: 1, text: "Weak", color: "#e91e63" };
     }
 };
 
@@ -65,7 +65,7 @@ const ModalEditPassword = ({ open, onClose }) => {
             if (error.code === "auth/requires-recent-login") {
                 setShowLogout(true);
             }
-            setMessage("Error: " + error.message);
+            setMessage( error.message);
         }
     };
 
@@ -84,7 +84,7 @@ const ModalEditPassword = ({ open, onClose }) => {
             PaperProps={{
                 style: {
                     borderRadius: 16,
-                    padding: "60px 50px",
+                    padding: "60px 0px",
                 },
             }}
         >
@@ -107,97 +107,139 @@ const ModalEditPassword = ({ open, onClose }) => {
             </DialogTitle>
             <DialogContent>
                 <div style={{ padding: 16 }}>
-                    <label
+                 
+                    <div
                         style={{
-                            fontSize: 14,
-                            color: "rgb(120, 144, 156)",
-                            marginBottom: 4,
+                            display: 'flex',
+                            justifyContent: 'center'
                         }}
                     >
-                        New Password
-                    </label>
-                    <div style={{ position: "relative", textAlign: "center" }}>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            placeholder="Create a strong password"
+
+                        <div
                             style={{
-                                fontSize: 14,
-                                color: "rgb(33, 33, 33)",
-                                fontWeight: 500,
-                                width: "100%",
-                                padding: "10px 40px 10px 12px",
-                                border: "1px solid #CFD8DD",
-                                borderRadius: 16,
-                                marginBottom: 6,
-                                height: 42,
-                                width: 280,
-                            }}
-                        />
-                        <IconButton
-                            onClick={() => setShowPassword(!showPassword)}
-                            style={{
-                                position: "absolute",
-                                right: 70,
-                                top: "42%",
-                                transform: "translateY(-50%)",
-                                color: "#cfd8dc",
+                                position: "relative",
+                                textAlign: "center",
+                                width: 300,
                             }}
                         >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
+                            <div style={{ textAlign: "start" }} >
+                                <label
+                                    style={{
+                                        fontSize: 14,
+                                        color: "rgb(120, 144, 156)",
+                                        marginBottom: 4,
+                                        marginLeft: 12
+                                    }}
+                                >
+                                    New Password
+                                </label>
+                            </div>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                placeholder="Create a strong password"
+                                style={{
+                                    fontSize: 14,
+                                    color: "rgb(33, 33, 33)",
+                                    fontWeight: 500,
+                                    width: "100%",
+                                    padding: "10px 40px 10px 12px",
+                                    border: "1px solid #CFD8DD",
+                                    borderRadius: 16,
+                                    marginBottom: 6,
+                                    marginTop: 12,
+                                    height: 42,
+                                    width: 280,
+                                }}
+                            />
+                            <IconButton
+                                onClick={() => setShowPassword(!showPassword)}
+                                style={{
+                                    position: "absolute",
+                                    right: 10,
+                                    top: 50,
+                                    transform: "translateY(-50%)",
+                                    color: "#cfd8dc",
+                                }}
+                            >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </div>
+
                     </div>
                     <div
                         style={{
                             fontSize: 12,
                             color: strength.color,
                             marginBottom: 10,
+                            textAlign: 'center'
                         }}
                     >
                         {strength.text}
                     </div>
 
-                    <label
+                 
+                    <div
                         style={{
-                            fontSize: 14,
-                            color: "rgb(120, 144, 156)",
-                            marginBottom: 4,
+                            display: 'flex',
+                            justifyContent: 'center'
                         }}
                     >
-                        Confirm Password
-                    </label>
-                    <div style={{ position: "relative", textAlign: "center" }}>
-                        <input
-                            type={showConfirm ? "text" : "password"}
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            placeholder="Confirm your password"
+                        <div
                             style={{
-                                fontSize: 14,
-                                color: "rgb(33, 33, 33)",
-                                fontWeight: 500,
-                                width: "100%",
-                                padding: "10px 40px 10px 12px",
-                                border: "1px solid #CFD8DD",
-                                borderRadius: 16,
-                                height: 42,
-                                width: 280,
-                            }}
-                        />
-                        <IconButton
-                            onClick={() => setShowConfirm(!showConfirm)}
-                            style={{
-                                position: "absolute",
-                                right: 70,
-                                top: "50%",
-                                transform: "translateY(-50%)",
-                                color: "#cfd8dc",
+                                position: "relative",
+                                textAlign: "center",
+                                width: 300,
                             }}
                         >
-                            {showConfirm ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
+                            <div style={{ textAlign: "start" }} >
+                                <label
+                                    style={{
+                                        fontSize: 14,
+                                        color: "rgb(120, 144, 156)",
+                                        marginBottom: 4,
+                                        fontWeight: 400,
+                                        marginLeft: 12
+                                    }}
+                                >
+                                    Confirm Password
+                                </label>
+                            </div>
+                            <input
+                                type={showConfirm ? "text" : "password"}
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                placeholder="Confirm your password"
+                                style={{
+                                    fontSize: 14,
+                                    color: "rgb(33, 33, 33)",
+                                    fontWeight: 500,
+                                    width: "100%",
+                                    padding: "10px 40px 10px 12px",
+                                    border: "1px solid #CFD8DD",
+                                    borderRadius: 16,
+
+                                    height: 42,
+                                    width: 280,
+                                    marginTop: 12,
+                                }}
+                            />
+                            <IconButton
+                                onClick={() => setShowConfirm(!showConfirm)}
+                                style={{
+                                    position: "absolute",
+                                    right: 10,
+                                    top: 50,
+                                    transform: "translateY(-50%)",
+                                    color: "#cfd8dc",
+                                }}
+                            >
+                                {showConfirm ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </div>
                     </div>
+
                     <div style={{ textAlign: "center" }}>
                         <Button
                             onClick={handleChangePassword}
@@ -209,8 +251,9 @@ const ModalEditPassword = ({ open, onClose }) => {
                                 color: "#ffffff",
                                 height: 35,
                                 minWidth: 190,
-                                // marginBottom: 12,
+                                fontWeight: 400,
                                 marginTop: 48,
+                                marginBottom: 22,
                             }}
                         >
                             Update Password
@@ -224,6 +267,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                                 color: "#f48fb1",
                             }}
                         >
+                        
                             {message}
                         </p>
                     </div>
@@ -248,7 +292,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                     </div>
                 </div>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     );
 };
 

@@ -65,7 +65,7 @@ const ModalEditPassword = ({ open, onClose }) => {
             if (error.code === "auth/requires-recent-login") {
                 setShowLogout(true);
             }
-            setMessage( error.message);
+            setMessage(error.message);
         }
     };
 
@@ -91,10 +91,12 @@ const ModalEditPassword = ({ open, onClose }) => {
             <DialogTitle
                 style={{
                     fontWeight: 600,
-                    fontSize: 22,
-                     color: '#455a64',
+                    fontSize: '1.5rem',
+                    color: '#455a64',
                     textAlign: "center",
                     paddingBottom: 0,
+                    fontWeight: 600,
+                    marginBottom: 16
                 }}
             >
                 Update Password
@@ -107,7 +109,7 @@ const ModalEditPassword = ({ open, onClose }) => {
             </DialogTitle>
             <DialogContent>
                 <div style={{ padding: 16 }}>
-                 
+
                     <div
                         style={{
                             display: 'flex',
@@ -179,7 +181,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                         {strength.text}
                     </div>
 
-                 
+
                     <div
                         style={{
                             display: 'flex',
@@ -267,7 +269,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                                 color: "#f48fb1",
                             }}
                         >
-                        
+
                             {message}
                         </p>
                     </div>

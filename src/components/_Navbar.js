@@ -25,25 +25,34 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
      const [profileImageUrl, setProfileImageUrl] = React.useState('');
      const [showAvatar, setShowAvatar] = React.useState(false); // ⬅️ new
 
+     const [reload, setReload] = React.useState(true); // ⬅️ new
+
      React.useEffect(() => {
           const auth = getAuth();
-          const user = auth.currentUser;
-          if (user) {
-               const db = getDatabase();
-               const userRef = ref(db, 'users/' + user.uid);
-               onValue(userRef, (snapshot) => {
-                    const data = snapshot.val();
-                    if (data) {
-                         if (data.fullName) setFullName(data.fullName);
-                         if (data.profileImageUrl) {
-                              setProfileImageUrl(data.profileImageUrl);
-                              setShowAvatar(false); // reset
-                              setTimeout(() => setShowAvatar(true), 5000); // ⬅️ delay
+          const unsubscribe = auth.onAuthStateChanged((user) => {
+               if (user) {
+                    const db = getDatabase();
+                    const userRef = ref(db, 'users/' + user.uid);
+                    onValue(userRef, (snapshot) => {
+                         const data = snapshot.val();
+                         if (data) {
+                              if (data.fullName) setFullName(data.fullName);
+                              if (data.profileImageUrl) {
+                                   setProfileImageUrl(data.profileImageUrl);
+                                   setShowAvatar(false); // reset
+                                   setTimeout(() => setShowAvatar(true), 2000); // delay
+                              }
                          }
-                    }
-               });
-          }
+                    });
+               }
+          });
+
+          return () => unsubscribe();
      }, []);
+
+    
+
+
 
      return (
           <Box sx={{ flexGrow: 1 }}>
@@ -55,9 +64,6 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                          backgroundColor: isLoggedIn ? '#ffffffbb' : '#ffffff00',
                          backdropFilter: isLoggedIn ? 'blur(6px)' : 'blur(0px)',
                          WebkitBackdropFilter: isLoggedIn ? 'blur(16px)' : 'blur(0px)',
-                         //    background: 'lime',
-                         //    display: 'flex',
-                         //    alignItems: 'center'
                     }}
                >
                     <Toolbar
@@ -65,10 +71,6 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                               display: 'flex',
                               justifyContent: 'space-between',
                               alignItems: 'center',
-                              // background: 'red',
-                              // maxWidth:1230,
-                              // width: 1230,
-                              // margin: '0 auto'
                          }}
                     >
                          {/* Left container */}
@@ -185,8 +187,9 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                                                       initial={{ opacity: 0, filter: "blur(8px)" }}
                                                                       animate={{ opacity: 1, filter: "blur(0px)" }}
                                                                       transition={{ duration: 1.2 }}
+
                                                                       src={profileImageUrl}
-                                                                      alt={fullName}
+                                                                      // alt={fullName}
                                                                       style={{
                                                                            width: '100%',
                                                                            height: '100%',
@@ -212,12 +215,7 @@ export default function MenuAppBar({ isLoggedIn, onToggleLogin }) {
                                              </IconButton>
                                         </>
                                    )}
-                                   {/* {isLoggedIn && getAuth().currentUser && (
-                                        <Modal_Edit_Profile
-                                             userId={getAuth().currentUser.uid}
-                                             refreshUser={() => window.location.reload()}
-                                        />
-                                   )} */}
+
                               </Box>
 
                               <Box

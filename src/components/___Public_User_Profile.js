@@ -296,7 +296,7 @@ const UserProfilePage = () => {
                             paddingBottom: "8px",
                             display: "inline-block",
                             marginLeft: 40,
-                            color: "#78909c",
+                            color: "#1565c0",
                         }}
                     >
                         Upcoming Events
@@ -315,9 +315,12 @@ const UserProfilePage = () => {
                     >
                         Past Events
                     </h3>
-                    <EventList creatorName={user.fullName} date="past" />
+                    <div style={{ opacity: 0.5, filter: 'grayscale(100%) contrast(0.92) '}}>
+                        <EventList creatorName={user.fullName} date="past" />
+                    </div>
                 </div>
             </div>
+
             {selectedEvent && (
                 <EventDetailsModal
                     event={selectedEvent}
@@ -340,6 +343,7 @@ const UserProfilePage = () => {
                     />
                 )}
             </div>
+
         </div>
     );
 };

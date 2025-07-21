@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { app } from "../firebase";
 import Modal_Edit_Profile from "./_ModalEditProfile";
+import ModalEditPassword from './_ModalEditPassword';
 
 const db = getDatabase(app);
 
@@ -138,6 +139,7 @@ const UserProfilePage = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showContactModal, setShowContactModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
 
     useEffect(() => {
         if (!uid || !nameFromNav) navigate("/dashboard");
@@ -180,33 +182,21 @@ const UserProfilePage = () => {
                     <div style={{ fontSize: 12, marginLeft: 6 }}>BACK</div>
                 </div>
             </div>
-            <div
-                className="profile-grid"
-                style={{
-                    margin: "0 auto",
-                    padding: "0 16px",
-                    maxWidth: "1200px",
-                }}
-            >
-                <div
-                    className="profile-left-panel"
-                    style={{ borderRadius: 16 }}
-                >
+            <div className="profile-grid" style={{ margin: "0 auto", padding: "0 16px", maxWidth: "1200px" }}>
+                <div className="profile-left-panel" style={{ borderRadius: 16 }}>
                     <div className="profile-header">
-                        <div
-                            style={{
-                                width: 120,
-                                height: 120,
-                                borderRadius: "50%",
-                                backgroundColor: "#F3F5F7",
-                                margin: "0 auto 36px",
-                                backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
-                                backgroundSize: "cover",
-                                backgroundPosition: "center",
-                                backgroundRepeat: "no-repeat",
-                                border: "1px solid #ffffff",
-                            }}
-                        >
+                        <div style={{
+                            width: 120,
+                            height: 120,
+                            borderRadius: "50%",
+                            backgroundColor: "#F3F5F7",
+                            margin: "0 auto 36px",
+                            backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            backgroundRepeat: "no-repeat",
+                            border: "1px solid #ffffff",
+                        }}>
                             <motion.img
                                 initial={{ opacity: 0, filter: "blur(7px)" }}
                                 animate={{ opacity: 1, filter: "blur(0px)" }}
@@ -215,90 +205,66 @@ const UserProfilePage = () => {
                                 className="profile-avatar"
                             />
                         </div>
-                        <h2 className="profile-name">{user.fullName}</h2>
-                        <p
-                            style={{
-                                fontSize: "14px",
-                                color: "var(--text-muted)",
-                                margin: "16px 0 16px 0",
+                        <h2
+                            className="profile-name"
+                             style={{ 
+                          
+                            margin: "0 0 35px 0" 
                             }}
                         >
-                            About
-                        </p>
-                        {selectedEvent && (
-                            <EventDetailsModal
-                                event={selectedEvent}
-                                onClose={() => setSelectedEvent(null)}
-                            />
-                        )}
+                            {user.fullName}
+                        </h2>
 
-                        <Modal_Edit_Profile
-                            userId={uid}
-                        // refreshUser={() => window.location.reload()}
-                        />
+                        {/* <p 
+                        style={{ 
+                            fontSize: "14px", 
+                            color: "var(--text-muted)", 
+                            margin: "16px 0 18px 0" 
+                            }}
+                            >
+                                About
+                                </p> */}
+
+
+                        <Modal_Edit_Profile userId={uid} />
+
+                        <Button
+                            variant="outlined"
+                            onClick={() => setShowPasswordModal(true)}
+                            style={{
+                                marginTop: 21,
+                                borderRadius: 8,
+                                color: '#0A47A3',
+                                borderColor: '#0A47A3',
+                                height: 35,
+                                width: 186,
+
+                            }}
+                        >
+                            Change Password
+                        </Button>
+
+                        {/* <Modal_Edit_Profile userId={uid} /> */}
 
                         {selectedEvent && (
-                            <EventDetailsModal
-                                event={selectedEvent}
-                                onClose={() => setSelectedEvent(null)}
-                            />
+                            <EventDetailsModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
                         )}
                         {showContactModal && (
-                            <ContactOrganizerModal
-                                organizerName={user.fullName}
-                                onClose={() => setShowContactModal(false)}
-                            />
+                            <ContactOrganizerModal organizerName={user.fullName} onClose={() => setShowContactModal(false)} />
                         )}
                         {showEditModal && (
-                            <Modal_Edit_Profile
-                                userId={user.uid}
-                                refreshUser={() => window.location.reload()}
-                                onClose={() => setShowEditModal(false)}
-                            />
+                            <Modal_Edit_Profile userId={user.uid} refreshUser={() => window.location.reload()} onClose={() => setShowEditModal(false)} />
                         )}
-
+                        {showPasswordModal && (
+                            <ModalEditPassword open={showPasswordModal} onClose={() => setShowPasswordModal(false)} />
+                        )}
                         <br />
-
-                        {/* <Button onClick={() => setShowContactModal(true)} variant="contained" endIcon={<SendIcon />} style={{ color: 'white', backgroundColor: '#0A47A3', borderRadius: 8, boxShadow: 'none', height: 38 }}>
-                            Contact Organizer
-                        </Button> */}
                     </div>
                 </div>
-                <div
-                    className="profile-container_card"
-                    style={{
-                        background: "#ffffff",
-                        padding: 16,
-                        borderRadius: 16,
-                    }}
-                >
-                    <h3
-                        className="section-title"
-                        style={{
-                            fontSize: "1.17em",
-                            marginBottom: "24px",
-                            paddingBottom: "8px",
-                            display: "inline-block",
-                            marginLeft: 40,
-                            color: "#78909c",
-                        }}
-                    >
-                        Upcoming Events
-                    </h3>
+                <div className="profile-container_card" style={{ background: "#ffffff", padding: 16, borderRadius: 16 }}>
+                    <h3 className="section-title" style={{ fontSize: "1.17em", marginBottom: "24px", paddingBottom: "8px", display: "inline-block", marginLeft: 40, color: "#78909c" }}>Upcoming Events</h3>
                     <EventList creatorName={user.fullName} date="upcoming" />
-                    <h3
-                        className="section-title"
-                        style={{
-                            fontSize: "1.17em",
-                            marginBottom: "24px",
-                            paddingBottom: "8px",
-                            display: "inline-block",
-                            marginLeft: 40,
-                            color: "#78909c",
-                        }}
-                    >
-                        Past Events
-                    </h3>
+                    <h3 className="section-title" style={{ fontSize: "1.17em", marginBottom: "24px", paddingBottom: "8px", display: "inline-block", marginLeft: 40, color: "#78909c" }}>Past Events</h3>
                     <EventList creatorName={user.fullName} date="past" />
                 </div>
             </div>

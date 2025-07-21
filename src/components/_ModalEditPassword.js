@@ -92,7 +92,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                 style={{
                     fontWeight: 600,
                     fontSize: 22,
-                    color: "#37474F",
+                     color: '#455a64',
                     textAlign: "center",
                     paddingBottom: 0,
                 }}

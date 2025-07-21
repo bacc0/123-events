@@ -341,7 +341,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                                             borderRadius: 8,
                                                             boxShadow: "none",
                                                             boxShadow:
-                                                                "6px-6px 20px rgba(255, 255, 255, 1)",
+                                                                "0 0 0px rgba(255, 255, 255, 1)",
                                                         }}
                                                     >
                                                         Cancel

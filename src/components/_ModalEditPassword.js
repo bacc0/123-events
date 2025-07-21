@@ -23,7 +23,7 @@ const getPasswordStrength = (password) => {
     if (hasMinLength && hasUppercase && hasLowercase) {
         return { strength: 3, text: "Good", color: "#26a69a" };
     } else {
-        return { strength: 1, text: "Weak", color: "#e91e63" };
+        return { strength: 1, text: "Weak", color: "#f48fb1" };
     }
 };
 
@@ -51,6 +51,11 @@ const ModalEditPassword = ({ open, onClose }) => {
     }, [message, onClose]);
 
     const handleChangePassword = async () => {
+        if (!newPassword || !confirmPassword) {
+            setMessage("Please fill in both fields");
+            return;
+        }
+
         if (newPassword !== confirmPassword) {
             setMessage("Passwords don't match");
             return;
@@ -172,7 +177,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                     </div>
                     <div
                         style={{
-                            fontSize: 12,
+                           fontSize: 14, 
                             color: strength.color,
                             marginBottom: 10,
                             textAlign: 'center'

@@ -20,6 +20,8 @@ import {
      update as dbUpdate,
 } from "firebase/database";
 import { database } from "../firebase";
+import Progress from "./Progress"
+
 
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -342,24 +344,31 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
 
                                         </div>
 
+
+
                                         {imagePreview && (
-                                             <div
-                                                  style={{
-                                                       display: 'flex',
-                                                       justifyContent: 'center'
-                                                  }}
-                                             >
-                                                  <img
-                                                       src={imagePreview}
-                                                       alt="Preview"
+                                             <>
+                                                  <div style={{ textAlign: 'center', marginTop: 20 }}  >
+                                                       <Progress />
+                                                  </div>
+                                                  <div
                                                        style={{
-                                                            maxHeight: "100px",
-                                                            maxWidth: "100px",
-                                                            marginTop: "10px",
-                                                            borderRadius: 16
+                                                            display: 'flex',
+                                                            justifyContent: 'center'
                                                        }}
-                                                  />
-                                             </div>
+                                                  >
+                                                       <img
+                                                            src={imagePreview}
+                                                            alt="Preview"
+                                                            style={{
+                                                                 maxHeight: "100px",
+                                                                 maxWidth: "100px",
+                                                                 marginTop: "10px",
+                                                                 borderRadius: 16
+                                                            }}
+                                                       />
+                                                  </div>
+                                             </>
                                         )}
                                    </div>
 

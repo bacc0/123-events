@@ -301,7 +301,15 @@ const UserProfilePage = () => {
                     >
                         Upcoming Events
                     </h3>
+
                     <EventList creatorName={user.fullName} date="upcoming" />
+
+                    <div
+                        style={{
+                            margin: '30px 0 0',
+                            borderTop: '0.3px solid #eceff1'
+                        }}
+                    />
                     <h3
                         className="section-title"
                         style={{

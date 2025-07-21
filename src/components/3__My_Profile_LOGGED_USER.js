@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-import EventList from "./4__EventList_LOGGED_USER";
+import EventList from "./4__Event_List_LOGGED_USER";
 import PasswordIcon from '@mui/icons-material/Password';
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
@@ -263,8 +263,28 @@ const UserProfilePage = () => {
                 <div className="profile-container_card" style={{ background: "#ffffff", padding: 16, borderRadius: 16 }}>
                     <h3 className="section-title" style={{ fontSize: "1.17em", marginBottom: "24px", paddingBottom: "8px", display: "inline-block", marginLeft: 40, color: "#1565c0" }}>Upcoming Events</h3>
 
+
                     <EventList creatorName={user.fullName} date="upcoming" />
-                    <h3 className="section-title" style={{ fontSize: "1.17em", marginBottom: "24px", paddingBottom: "8px", display: "inline-block", marginLeft: 40, color: "#78909c" }}>Past Events</h3>
+
+                    <div
+                        style={{
+                            margin: '30px 0 0',
+                            borderTop: '0.3px solid #eceff1'
+                        }}
+                    />
+                    
+                    <h3 className="section-title"
+                        style={{
+                            fontSize: "1.17em",
+                            marginBottom: "24px",
+                            paddingBottom: "8px",
+                            display: "inline-block",
+                            marginLeft: 40,
+                            color: "#78909c",
+                        }}
+                    >
+                        Past Events
+                    </h3>
                     <div style={{ opacity: 0.5, filter: 'grayscale(100%)  contrast(0.92)' }}>
                         <EventList creatorName={user.fullName} date="past" />
                     </div>

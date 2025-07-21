@@ -469,12 +469,12 @@ const DiscoverOnly = ({ creatorName, date }) => {
                             >
                                 <PersonIcon
                                     fontSize="small"
-                                    sx={{ color: "#6B7280" }}
+                                    sx={{ color: "#b0bec5" }}
                                 />
                                 <span
                                     style={{
                                         margin: "5px 15px 0 0",
-                                        color: "#6B7280",
+                                        color: "#78909c",
                                         fontSize: 13,
                                         marginBottom: 4,
                                     }}
@@ -496,12 +496,12 @@ const DiscoverOnly = ({ creatorName, date }) => {
                             >
                                 <CalendarTodayIcon
                                     fontSize="small"
-                                    sx={{ color: "#6B7280" }}
+                                    sx={{ color: "#b0bec5" }}
                                 />
                                 <span
                                     style={{
                                         margin: "2px 0 0 0",
-                                        color: "#6B7280",
+                                        color: "#78909c",
                                         fontSize: 13,
                                         marginBottom: 4,
                                     }}
@@ -542,12 +542,12 @@ const DiscoverOnly = ({ creatorName, date }) => {
                             >
                                 <LocationOnIcon
                                     fontSize="small"
-                                    sx={{ color: "#6B7280" }}
+                                    sx={{ color: "#b0bec5" }}
                                 />
                                 <span
                                     style={{
                                         margin: "2px 21px 0 0",
-                                        color: "#6B7280",
+                                        color: "#78909c",
                                         fontSize: 13,
                                         marginBottom: 4,
                                     }}
@@ -569,14 +569,14 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                 <InfoIcon
                                     fontSize="small"
                                     sx={{
-                                        color: "#6B7280",
-                                        margin: "-107px 0 0 0",
+                                        color: "#b0bec5",
+                                        margin: "-18px 0 0 0",
                                     }}
                                 />
                                 <span
                                     style={{
                                         margin: "-15px 5px 0 0",
-                                        color: "#6B7280",
+                                        color: "#78909c",
                                         fontSize: 13,
                                         marginBottom: 4,
 

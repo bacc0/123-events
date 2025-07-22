@@ -1613,14 +1613,14 @@ const App = () => {
                                                                 style={{
                                                                     // backgroundColor: '#F3F5F7',
                                                                     backgroundImage: `url(${process.env.PUBLIC_URL}/pastEvents.svg)`,
-                                                                    backgroundSize: '66%',         // Scale image to 23% of container
+                                                                    backgroundSize: '47%',         // Scale image to 23% of container
                                                                     backgroundPosition: 'center',  // Centre the image
                                                                     backgroundRepeat: 'no-repeat', // Do not repeat the image
 
                                                                     minWidth: 160,
                                                                     minHeight: 160,
                                                                     opacity: 0.5,
-                                                                    marginTop: -26
+                                                                    marginTop: -40
                                                                 }}
 
                                                             />

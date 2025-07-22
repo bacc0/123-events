@@ -1619,7 +1619,7 @@ const App = () => {
 
                                                                     minWidth: 160,
                                                                     minHeight: 160,
-                                                                    opacity: 0.5,
+                                                                    opacity: 0.45,
                                                                     marginTop: -40
                                                                 }}
 

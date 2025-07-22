@@ -1292,40 +1292,51 @@ const App = () => {
                                 >
                                     Details
                                 </Button>
-                                {!showPastTab &&
-                                    (isUserAttending ? (
-                                        <Button
-                                            onClick={() =>
-                                                handleCancelRsvpClick(event)
-                                            }
-                                            style={{
-                                                flex: 1,
-                                                backgroundColor: "#fce4ec",
-                                                color: "#f50057",
-                                                marginLeft: "8px",
-                                                borderRadius: "12px",
-                                                fontWeight: "500",
-                                                borderRadius: 8,
-                                            }}
-                                        >
-                                            Cancel RSVP
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            onClick={() => handleRsvp(event)}
-                                            style={{
-                                                flex: 1,
-                                                backgroundColor: "#0a47a3",
-                                                color: "white",
-                                                marginLeft: "8px",
-                                                borderRadius: "12px",
-                                                fontWeight: "500",
-                                                borderRadius: 8,
-                                            }}
-                                        >
-                                            RSVP
-                                        </Button>
-                                    ))}
+                                {(() => {
+                                    let eventDate = null;
+                                    if (event.dateTime?._seconds || event.dateTime?.seconds) {
+                                        const seconds = event.dateTime._seconds || event.dateTime.seconds;
+                                        eventDate = new Date(seconds * 1000);
+                                    } else if (event.date) {
+                                        eventDate = new Date(event.date);
+                                    }
+                                    const isPast = eventDate && eventDate.getTime() < new Date().getTime();
+
+                                    if (!isPast) {
+                                        return isUserAttending ? (
+                                            <Button
+                                                onClick={() => handleCancelRsvpClick(event)}
+                                                style={{
+                                                    flex: 1,
+                                                    backgroundColor: "#fce4ec",
+                                                    color: "#f50057",
+                                                    marginLeft: "8px",
+                                                    borderRadius: "12px",
+                                                    fontWeight: "500",
+                                                    borderRadius: 8,
+                                                }}
+                                            >
+                                                Cancel RSVP
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => handleRsvp(event)}
+                                                style={{
+                                                    flex: 1,
+                                                    backgroundColor: "#0a47a3",
+                                                    color: "white",
+                                                    marginLeft: "8px",
+                                                    borderRadius: "12px",
+                                                    fontWeight: "500",
+                                                    borderRadius: 8,
+                                                }}
+                                            >
+                                                RSVP
+                                            </Button>
+                                        );
+                                    }
+                                    return null;
+                                })()}
                             </div>
                         )}
                     </div>
@@ -1548,16 +1559,81 @@ const App = () => {
                                     </div>
                                 ))}
                             {activeTab === "myEvents" &&
-                                (myCreatedEvents.length > 0 ? (
-                                    myCreatedEvents.map((event) =>
-                                        renderEventCard(event),
-                                    )
-                                ) : (
-                                    <div className="empty-state">
-                                        <p>You haven't created any events.</p>
-                                    </div>
-                                ))}
-                            {activeTab === "attending" &&
+                                (() => {
+                                    const now = new Date();
+                                    const upcomingCreatedEvents = myCreatedEvents.filter((event) => {
+                                        let eventDate = null;
+                                        if (event.dateTime?._seconds || event.dateTime?.seconds) {
+                                            const seconds = event.dateTime._seconds || event.dateTime.seconds;
+                                            eventDate = new Date(seconds * 1000);
+                                        } else if (event.date) {
+                                            eventDate = new Date(event.date);
+                                        }
+                                        return eventDate && eventDate.getTime() >= now.getTime();
+                                    });
+
+                                    const pastCreatedEvents = myCreatedEvents.filter((event) => {
+                                        let eventDate = null;
+                                        if (event.dateTime?._seconds || event.dateTime?.seconds) {
+                                            const seconds = event.dateTime._seconds || event.dateTime.seconds;
+                                            eventDate = new Date(seconds * 1000);
+                                        } else if (event.date) {
+                                            eventDate = new Date(event.date);
+                                        }
+                                        return eventDate && eventDate.getTime() < now.getTime();
+                                    });
+
+                                    return (
+                                        <>
+                                            <>
+                                                {upcomingCreatedEvents.length > 0 ? (
+                                                    upcomingCreatedEvents.map((event) => renderEventCard(event))
+                                                ) : (
+                                                    <div className="empty-state">
+                                                        <p>You haven't created any upcoming events.</p>
+                                                    </div>
+                                                )}
+
+                                            </>
+
+                                            <>
+
+                                                {pastCreatedEvents.length > 0 && (
+                                                    <>
+                                                        <div style={{
+                                                            color: "#90a4ae",
+                                                            marginTop: "40px",
+                                                            marginBottom: "12px",
+                                                            // border: '1px solid',
+                                                            display: 'flex',
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center'
+                                                        }}>
+                                                            <div
+                                                                style={{
+                                                                    // backgroundColor: '#F3F5F7',
+                                                                    backgroundImage: `url(${process.env.PUBLIC_URL}/pastEvents.svg)`,
+                                                                    backgroundSize: '66%',         // Scale image to 23% of container
+                                                                    backgroundPosition: 'center',  // Centre the image
+                                                                    backgroundRepeat: 'no-repeat', // Do not repeat the image
+
+                                                                    minWidth: 160,
+                                                                    minHeight: 160,
+                                                                    opacity: 0.5,
+                                                                    marginTop: -26
+                                                                }}
+
+                                                            />
+                                                        </div>
+
+                                                        {pastCreatedEvents.map((event) => renderEventCard(event))}
+                                                    </>
+                                                )}
+                                            </>
+                                        </>
+                                    );
+                                })()}
+                            {/* {activeTab === "attending" &&
                                 (allEvents.filter(
                                     (event) =>
                                         event.attendees &&
@@ -1574,7 +1650,38 @@ const App = () => {
                                     <div className="empty-state">
                                         <p>You are not attending any events.</p>
                                     </div>
-                                ))}
+                                ))} */}
+
+                            {activeTab === "attending" &&
+                                (() => {
+                                    const now = new Date();
+                                    const upcomingAttendingEvents = allEvents.filter((event) => {
+                                        const isAttending =
+                                            event.attendees && event.attendees[userInfo?.uid];
+
+                                        let eventDate = null;
+                                        if (event.dateTime?._seconds || event.dateTime?.seconds) {
+                                            const seconds =
+                                                event.dateTime._seconds || event.dateTime.seconds;
+                                            eventDate = new Date(seconds * 1000);
+                                        } else if (event.date) {
+                                            eventDate = new Date(event.date);
+                                        }
+
+                                        const isFuture =
+                                            eventDate && eventDate.getTime() >= now.getTime();
+
+                                        return isAttending && isFuture;
+                                    });
+
+                                    return upcomingAttendingEvents.length > 0 ? (
+                                        upcomingAttendingEvents.map((event) => renderEventCard(event))
+                                    ) : (
+                                        <div className="empty-state">
+                                            <p>You are not attending any upcoming events.</p>
+                                        </div>
+                                    );
+                                })()}
                         </div>
                     </div>
                 </main>

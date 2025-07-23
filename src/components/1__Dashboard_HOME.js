@@ -1304,7 +1304,7 @@ const App = () => {
                                 borderRadius: "12px",
                                 fontWeight: "500",
                                 borderRadius: 8,
-                                width: '48%',
+                                width: '100%',
                                 height: 36,
                                 maxHeight: 36
                             }}
@@ -1323,7 +1323,9 @@ const App = () => {
                                         color: '#f50057',
                                         marginLeft: "2%",
                                         borderRadius: 8,
-                                        width: '48%',
+                                        width: '47.5%',
+                                        minWidth: '47.5%',
+                                        maxWidth: '47.5%',
                                         borderColor: '#fce4ec',
                                         height: 36,
                                         maxHeight: 36
@@ -1394,9 +1396,12 @@ const App = () => {
                                                     backgroundColor: "#fce4ec",
                                                     color: "#f50057",
                                                     borderRadius: 8,
-                                                    width: '48%',
+                                                    width: '47.5%',
+                                                    minWidth: '47.5%',
+                                                    maxWidth: '47.5%',
                                                     height: 36,
                                                     maxHeight: 36
+
                                                 }}
                                                 endIcon={<RsvpIcon />}
                                             >
@@ -1412,10 +1417,13 @@ const App = () => {
                                                     marginLeft: "2%",
                                                     marginLeft: "8px",
                                                     borderRadius: 8,
-                                                    width: '48%',
+                                                    width: '47.5%',
+                                                    minWidth: '47.5%',
+                                                    maxWidth: '47.5%',
                                                     height: 36,
                                                     maxHeight: 36
                                                 }}
+
 
                                             >
                                                 RSVP

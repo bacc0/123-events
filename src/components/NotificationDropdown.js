@@ -767,9 +767,14 @@ const NotificationDropdown = () => {
                                                         lineHeight: '1.4',
                                                         fontWeight: notification.read ? '400' : '500'
                                                     }}>
+                                                        
                                                         {
-                                                            notification.text
-                                                            // console.log(notification.eventId)
+                                                        //    notification.text
+                                                            console.log('A ',notification)
+                                                        }
+                                                        {
+                                                           notification.text
+                                                            // console.log('A ',notification)
                                                         }
                                                     </p>
                                                     <p style={{

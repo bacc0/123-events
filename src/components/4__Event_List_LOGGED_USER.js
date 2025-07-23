@@ -204,6 +204,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                                 // display: 'flex',
                                                 // flexDirection: 'column',
                                                 // justifyContent: 'center',
+                                           
                                             }
                                         }
                                     >

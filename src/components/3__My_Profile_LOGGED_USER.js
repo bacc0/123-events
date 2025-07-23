@@ -163,7 +163,7 @@ const UserProfilePage = () => {
     }, [uid]);
 
     return (
-        <div className="app-container" style={{ paddingTop: "24px" }}>
+        <div className="app-container" style={{ paddingTop: "110px" }}>
             <link rel="stylesheet" href="universal-styles.css" />
             <div style={{ maxWidth: 1200, margin: "0 auto 12px" }}>
                 <div
@@ -243,6 +243,7 @@ const UserProfilePage = () => {
                             Change Password
                         </Button>
 
+
                         {/* <Modal_Edit_Profile userId={uid} /> */}
 
                         {selectedEvent && (
@@ -258,6 +259,20 @@ const UserProfilePage = () => {
                             <ModalEditPassword open={showPasswordModal} onClose={() => setShowPasswordModal(false)} />
                         )}
                         <br />
+                        <br />
+                      
+                        <p
+                            style={{
+                                fontSize: "14px",
+                                color: "var(--text-muted)",
+                                margin: "16px 0 16px 0",
+                            }}
+                        >
+                            About Me
+                        </p>
+                        <div className="profile-about" >
+                            {user.about}
+                        </div>
                     </div>
                 </div>
                 <div className="profile-container_card" style={{ background: "#ffffff", padding: 16, borderRadius: 16 }}>
@@ -272,7 +287,7 @@ const UserProfilePage = () => {
                             borderTop: '0.3px solid #eceff1'
                         }}
                     />
-                    
+
                     <h3 className="section-title"
                         style={{
                             fontSize: "1.17em",

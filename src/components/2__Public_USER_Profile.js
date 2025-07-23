@@ -161,7 +161,7 @@ const UserProfilePage = () => {
     }, [uid]);
 
     return (
-        <div className="app-container" style={{ paddingTop: "24px" }}>
+        <div className="app-container" style={{ paddingTop: "110px" }}>
             <link rel="stylesheet" href="universal-styles.css" />
             <div style={{ maxWidth: 1200, margin: "0 auto 12px" }}>
                 <div

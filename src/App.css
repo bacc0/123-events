@@ -1259,7 +1259,7 @@ body {
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  height: 340px;
+  height: 360px;
   border: 1px solid #eceff1;
   margin: 2px;
   margin-bottom: 0;
@@ -1272,8 +1272,8 @@ body {
 }
 
 .card-content {
-  height: 106px;
-  max-height: 106px;
+  height: 124px;
+  max-height: 124px;
   padding-bottom: 30px;
   overflow-y: auto;
   display: flex;

@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 
 
 import LogoutIcon from '@mui/icons-material/Logout';
-import AddIcon from '@mui/icons-material/Add';
+
 import PersonIcon from '@mui/icons-material/Person';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
@@ -127,6 +127,10 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: 0.1 }}
+                                   style={{
+                                         color:'#455a64'
+                                   }}
+                                
                             >
                                 <NotificationDropdown />
                             </motion.div>
@@ -264,7 +268,7 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                                             </button>
                                         </div>
 
-                                        <div style={{ padding: '8px', borderTop: '0.3px solid #cfd8dc' }}>
+                                        <div style={{ padding: '8px', borderTop: '0.3px solid #cfd8dc', color:'#455a64' }}>
                                             <button
                                                 onClick={() => {
                                                     const auth = getAuth();

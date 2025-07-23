@@ -14,6 +14,12 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import PersonIcon from "@mui/icons-material/Person";
+import GroupIcon from '@mui/icons-material/Group';
+
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import UpdateIcon from '@mui/icons-material/Update';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 
 
@@ -231,18 +237,17 @@ const NotificationDropdown = () => {
 
     const getNotificationIcon = (type) => {
         switch (type) {
-            case 'rsvp':
-            case 'rsvp_cancelled':
-                return '👥';
+            case 'group':
+                return <GroupIcon style={{ color: '#455a64' }} />;
             case 'invitation':
             case 'invitation_accepted':
-                return '📧';
+                return <MailOutlineIcon style={{ color: '#0A47A3' }} />;
             case 'contact':
-                return '💬';
+                return <ChatBubbleOutlineIcon style={{ color: '#455a64' }} />;
             case 'update':
-                return '🔄';
+                return <UpdateIcon style={{ color: '#455a64' }} />;
             default:
-                return '🔔';
+                return <NotificationsNoneIcon style={{ color: '#455a64' }} />;
         }
     };
 
@@ -712,7 +717,7 @@ const NotificationDropdown = () => {
                                 ) : (
                                     notifications
                                         // ✅ Only show unread ones
-                                        .filter(notification => !notification.read) 
+                                        .filter(notification => !notification.read)
                                         .map((notification, index) => (
                                             <motion.div
                                                 key={notification.id}
@@ -725,15 +730,15 @@ const NotificationDropdown = () => {
                                                     gap: '12px',
                                                     padding: '16px 24px',
                                                     borderBottom: index < notifications.length - 1 ? '1px solid #f3f4f6' : 'none',
-                                                    backgroundColor: notification.read ? 'white' : '#f8fafc',
+                                                    backgroundColor: notification.read ? 'white' : '#ffffffcc',
                                                     cursor: 'pointer',
                                                     transition: 'background-color 0.2s'
                                                 }}
                                                 onMouseEnter={(e) => {
                                                     if (notification.read) {
-                                                        e.currentTarget.style.backgroundColor = '#f9fafb';
+                                                        e.currentTarget.style.backgroundColor = '#F3F5F7';
                                                     } else {
-                                                        e.currentTarget.style.backgroundColor = '#f1f5f9';
+                                                        e.currentTarget.style.backgroundColor = '#F3F5F7';
                                                     }
                                                 }}
                                                 onMouseLeave={(e) => {
@@ -747,7 +752,7 @@ const NotificationDropdown = () => {
                                                     width: '40px',
                                                     height: '40px',
                                                     borderRadius: '8px',
-                                                    backgroundColor: notification.read ? '#eceff1' : '#cfd8dc',
+                                                    backgroundColor: notification.read ? '#eceff100' : '#EDEFF1',
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
@@ -767,13 +772,13 @@ const NotificationDropdown = () => {
                                                         lineHeight: '1.4',
                                                         fontWeight: notification.read ? '400' : '500'
                                                     }}>
-                                                        
+
                                                         {
-                                                        //    notification.text
-                                                            console.log('A ',notification)
+                                                            //    notification.text
+                                                            console.log('A ', notification)
                                                         }
                                                         {
-                                                           notification.text
+                                                            notification.text
                                                             // console.log('A ',notification)
                                                         }
                                                     </p>

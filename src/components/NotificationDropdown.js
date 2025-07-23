@@ -712,7 +712,7 @@ const NotificationDropdown = () => {
                                 ) : (
                                     notifications
                                         // ✅ Only show unread ones
-                                        // .filter(notification => !notification.read) 
+                                        .filter(notification => !notification.read) 
                                         .map((notification, index) => (
                                             <motion.div
                                                 key={notification.id}

@@ -26,6 +26,8 @@ const getUidFromEmail = async (email) => {
      return emailKey;
 };
 
+
+
 export default function CreateEventPage({ onSave, onCancel }) {
 
      const [formData, setFormData] = useState({

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getDatabase, ref as dbRef, onValue } from 'firebase/database';
-import NotificationDropdown from './NotificationDropdown';
+import NotificationDropdown from '../__Notification/NotificationDropdown';
 import { motion } from 'framer-motion';
 
 import IconButton from '@mui/material/IconButton';
@@ -127,10 +127,10 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3, delay: 0.1 }}
-                                   style={{
-                                         color:'#455a64'
-                                   }}
-                                
+                                style={{
+                                    color: '#455a64'
+                                }}
+
                             >
                                 <NotificationDropdown />
                             </motion.div>
@@ -173,16 +173,17 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                                                 width: '32px',
                                                 height: '32px',
                                                 borderRadius: '50%',
-                                                backgroundColor: '#0d47a1',
+                                                backgroundColor: '#cfd8dc',
+                                                color: '#78909c',
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
-                                                color: 'white',
-                                                fontSize: '14px',
-                                                fontWeight: 'bold'
+                                                fontSize: '10px',
+                                                fontWeight: 'bold',
+                                                fontWeight: 500
                                             }}
                                         >
-                                            {userProfile?.fullName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U'}
+                                            user {/* {userProfile?.fullName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U'} */}
                                         </div>
                                     )}
                                     <span style={{ color: '#455a64', fontWeight: '500', backgroundColor: 'rgba(47, 199, 52, 0)' }}>
@@ -268,7 +269,7 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                                             </button>
                                         </div>
 
-                                        <div style={{ padding: '8px', borderTop: '0.3px solid #cfd8dc', color:'#455a64' }}>
+                                        <div style={{ padding: '8px', borderTop: '0.3px solid #cfd8dc', color: '#455a64' }}>
                                             <button
                                                 onClick={() => {
                                                     const auth = getAuth();

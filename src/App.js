@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-import Navbar from './components/_Navbar';
-import Video from './components/_Video';
+import Navbar from './components/___Site_Base/_Navbar';
+import Footer from './components/___Site_Base/_Footer'
+import Video from './components/___Site_Base/Welcome_Page';
 
 import Dashboard from './components/1__Dashboard_HOME';
 import PublicUPser_profile from './components/2__Public_USER_Profile';
@@ -153,6 +154,7 @@ function App({ loggedIn, setLoggedIn }) {
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </AnimatePresence>
+            <Footer />
         </div>
     );
 }

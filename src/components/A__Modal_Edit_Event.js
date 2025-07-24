@@ -16,7 +16,7 @@ import {
      uploadBytes,
      getDownloadURL,
 } from "firebase/storage";
-import Progress from "./_Progress";
+import Progress from "./___Site_Base/_Progress";
 
 const Modal_Edit_Event = ({
      eventId = "",

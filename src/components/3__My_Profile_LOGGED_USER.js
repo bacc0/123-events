@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "firebase/database";
-import EventList from "./4__Event_List_LOGGED_USER";
+import EventList from "./5__Event_List_LOGGED_USER";
 import PasswordIcon from '@mui/icons-material/Password';
 import { Button } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";

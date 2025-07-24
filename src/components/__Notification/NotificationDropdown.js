@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getDatabase, ref as dbRef, onValue, update } from 'firebase/database';
+import { push, set } from "firebase/database";
+
 import { getAuth } from 'firebase/auth';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -20,9 +22,9 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import UpdateIcon from '@mui/icons-material/Update';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
 
-
-
+import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 
 import {
     Dialog, DialogTitle, DialogContent, DialogActions,
@@ -237,15 +239,17 @@ const NotificationDropdown = () => {
 
     const getNotificationIcon = (type) => {
         switch (type) {
+            case 'rsvp_cancelled':
+                return <NotificationsNoneIcon style={{ color: '#f48fb1' }} />;
             case 'group':
                 return <GroupIcon style={{ color: '#455a64' }} />;
             case 'invitation':
             case 'invitation_accepted':
-                return <MailOutlineIcon style={{ color: '#0A47A3' }} />;
+                return <NotificationsNoneIcon style={{ color: '#26a69a' }} />;
             case 'contact':
                 return <ChatBubbleOutlineIcon style={{ color: '#455a64' }} />;
             case 'update':
-                return <UpdateIcon style={{ color: '#455a64' }} />;
+                return <UpdateIcon style={{ color: '#f48fb1' }} />;
             default:
                 return <NotificationsNoneIcon style={{ color: '#455a64' }} />;
         }
@@ -306,6 +310,40 @@ const NotificationDropdown = () => {
 
 
 
+    // const handleRSVP = async () => {
+    //     const auth = getAuth();
+    //     const user = auth.currentUser;
+
+    //     if (!user || !selectedEvent?.id) {
+    //         console.log("❌ Missing user or event ID");
+    //         return;
+    //     }
+
+    //     const db = getDatabase();
+    //     const attendeeRef = dbRef(db, `events/${selectedEvent.id}/attendees/${user.uid}`);
+
+    //     try {
+    //         const userData = {
+    //             fullName: user.displayName || "Anonymous",
+    //             profileImageUrl: user.photoURL || ""
+    //         };
+
+    //         await update(attendeeRef, userData);
+    //         console.log("✅ RSVP saved with full user data");
+    //         setIsAttending(true);
+    //         setShowEventModal(false);
+    //         navigate('/dashboard', {
+    //             state: {
+    //                 eventId: selectedEvent.id,
+    //                 highlightEvent: true
+    //             }
+    //         });
+    //     } catch (error) {
+    //         console.error("❌ RSVP failed:", error);
+    //     }
+    // };
+
+
     const handleRSVP = async () => {
         const auth = getAuth();
         const user = auth.currentUser;
@@ -326,6 +364,26 @@ const NotificationDropdown = () => {
 
             await update(attendeeRef, userData);
             console.log("✅ RSVP saved with full user data");
+
+            // 🔔 SEND NOTIFICATION with type "invitation_accepted"
+            const organizerUid = selectedEvent.organizer?.uid;
+            if (organizerUid) {
+                const notificationRef = dbRef(db, `notifications/${organizerUid}`);
+                const newNotificationRef = push(notificationRef);
+                const timestamp = Date.now();
+
+                await set(newNotificationRef, {
+                    id: newNotificationRef.key,
+                    read: false,
+                    type: "invitation_accepted",
+                    text: `${user.displayName || "Someone"} accepted the invitation to ${selectedEvent.title}.`,
+                    timestamp,
+                    senderName: user.displayName || "Anonymous",
+                    senderEmail: user.email || "",
+                    message: "" // optional
+                });
+            }
+
             setIsAttending(true);
             setShowEventModal(false);
             navigate('/dashboard', {
@@ -671,7 +729,7 @@ const NotificationDropdown = () => {
                                         style={{
                                             background: 'none',
                                             border: 'none',
-                                            color: '#0d47a1',
+                                            color: '#FF4081',
                                             fontSize: '14px',
                                             fontWeight: '500',
                                             cursor: 'pointer',
@@ -701,13 +759,24 @@ const NotificationDropdown = () => {
                                         <p style={{ margin: 0, fontSize: '16px' }}>Loading notifications...</p>
                                     </div>
                                 ) : notifications.length === 0 ? (
-                                    <div style={{
-                                        padding: '40px 24px',
-                                        textAlign: 'center',
-                                        color: '#6b7280'
-                                    }}>
-                                        <div style={{ fontSize: '48px', marginBottom: '12px' }}>🔔</div>
-                                        <p style={{ margin: 0, fontSize: '16px', fontWeight: '500' }}>
+                                    <div
+                                        style={{
+                                            padding: '40px 24px',
+                                            textAlign: 'center',
+                                            color: '#6b7280'
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                fontSize: '48px',
+                                                marginBottom: '12px',
+                                                color: '#6b7280'
+                                            }}
+                                        >
+                                            <NotificationsNoneIcon />
+                                        </div>
+                                        <p
+                                            style={{ margin: 0, fontSize: '16px', fontWeight: '500' }}>
                                             No notifications yet
                                         </p>
                                         <p style={{ margin: '4px 0 0', fontSize: '14px' }}>
@@ -764,14 +833,16 @@ const NotificationDropdown = () => {
 
 
                                                 {/* Content */}
-                                                <div style={{ flex: 1, minWidth: 0 }}>
+                                                <div
+                                                    style={{ flex: 1, minWidth: 0 }}>
                                                     <p style={{
                                                         margin: 0,
                                                         fontSize: '14px',
                                                         color: '#374151',
                                                         lineHeight: '1.4',
                                                         fontWeight: notification.read ? '400' : '500'
-                                                    }}>
+                                                    }}
+                                                    >
 
                                                         {
                                                             //    notification.text
@@ -793,13 +864,15 @@ const NotificationDropdown = () => {
 
                                                 {/* Unread indicator */}
                                                 {!notification.read && (
-                                                    <div style={{
-                                                        flexShrink: 0,
-                                                        width: '12px',
-                                                        height: '12px',
-                                                        borderRadius: '50%',
-                                                        backgroundColor: '#FF4081',
-                                                        marginTop: '6px'
+                                                    <div 
+                                                    style={{
+                                                        // flexShrink: 0,
+                                                        // width: '6px',
+                                                        // height: '6px',
+                                                        // borderRadius: '50%',
+                                                        // backgroundColor: '#FF4081',
+                                                        // marginTop: 'px'
+
                                                     }} />
                                                 )}
                                             </motion.div>

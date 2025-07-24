@@ -126,7 +126,7 @@ export default function CreateEventPage({ onSave, onCancel }) {
                     eventTitle: formData.title.trim(),
                     read: false,
                     type: "rsvp",
-                    text: `Admin RSVP'd to ${formData.title.trim()}.`,
+                    text: `You’ve been invited to ${formData.title.trim()}.`,
                     timestamp,
                });
           }));

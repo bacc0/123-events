@@ -32,7 +32,7 @@ class NotificationService {
     async sendRsvpNotification(eventId, eventTitle, organizerUid, rsvpUserName, type = 'rsvp') {
         const message = type === 'rsvp' 
             ? `${rsvpUserName} RSVP'd to ${eventTitle}.`
-            : `${rsvpUserName} cancelled their RSVP to ${eventTitle}.`;
+            : `${rsvpUserName} has Cancelled their RSVP for ${eventTitle}.`;
 
         return this.sendNotification(organizerUid, {
             type: type === 'rsvp' ? 'rsvp' : 'rsvp_cancelled',

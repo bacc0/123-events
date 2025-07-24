@@ -13,39 +13,44 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { app } from "../firebase";
 import Modal_Edit_Profile from "./C__Modal_Edit_Profile";
 
+import ContactOrganizerModal from "./2a_Public_USER_Contact_Modal"
+
 const db = getDatabase(app);
 
-const ContactOrganizerModal = ({ organizerName, onClose }) => (
-    <div className="modal-overlay" onClick={onClose}>
-        <div
-            className="modal-content"
-            style={{ maxWidth: "500px" }}
-            onClick={(e) => e.stopPropagation()}
-        >
-            <div className="modal-header">
-                <h3
-                    className="modal-title"
-                    style={{ fontSize: "20px" }}
-                >{`Contact ${organizerName}`}</h3>
-                <Button className="close-button" onClick={onClose}>
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                    >
-                        <path d="M18 6L6 18M6 6l12 12" />
-                    </svg>
-                </Button>
-            </div>
-            <div style={{ padding: 32, textAlign: "center" }}>
-                Contact form goes here.
-            </div>
-        </div>
-    </div>
-);
+// const ContactOrganizerModal = ({ organizerName, onClose }) => (
+//     <div className="modal-overlay" onClick={onClose}>
+//         <div
+//             className="modal-content"
+//             style={{ maxWidth: "500px" }}
+//             onClick={(e) => e.stopPropagation()}
+//         >
+//             <div className="modal-header">
+//                 <h3
+//                     className="modal-title"
+//                     style={{ fontSize: "20px" }}
+//                 >{`Contact ${organizerName}`}</h3>
+//                 <Button className="close-button" onClick={onClose}>
+//                     <svg
+//                         width="24"
+//                         height="24"
+//                         viewBox="0 0 24 24"
+//                         fill="none"
+//                         stroke="currentColor"
+//                         strokeWidth="2"
+//                     >
+//                         <path d="M18 6L6 18M6 6l12 12" />
+//                     </svg>
+//                 </Button>
+//             </div>
+//             <div style={{ padding: 32, textAlign: "center" }}>
+//                 Contact form goes here.
+//             </div>
+//         </div>
+//     </div>
+// );
+
+
+
 
 const EventDetailsModal = ({ event, onClose }) => (
     <div className="modal-overlay" onClick={onClose}>
@@ -338,6 +343,7 @@ const UserProfilePage = () => {
             {showContactModal && (
                 <ContactOrganizerModal
                     organizerName={user.fullName}
+                    organizerUid={user.uid}
                     onClose={() => setShowContactModal(false)}
                 />
             )}

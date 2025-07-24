@@ -291,28 +291,6 @@ export default function CreateEventPage({ onSave, onCancel }) {
                               />
                          </div>
 
-
-
-
-                         {/* <div className="form-group">
-                        <label className="form-label" htmlFor=" inviteUsers">
-                            Invite Users
-                        </label>
-                        <input
-                            className="form-input"
-                            type="text"
-                            id="inviteUsers"
-                            name="inviteUsers"
-                            value={formData.inviteUsers}
-                            onChange={handleChange}
-                            placeholder="e.g., user_1@mail.com, user_2@mail.com"
-                            required
-                        />
-
-</div> */}
-
-
-
                          <div className="form-group">
                               <label className="form-label" htmlFor="inviteEmails">Invite Users</label>
                               <input

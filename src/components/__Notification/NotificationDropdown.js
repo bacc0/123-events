@@ -240,18 +240,18 @@ const NotificationDropdown = () => {
     const getNotificationIcon = (type) => {
         switch (type) {
             case 'rsvp_cancelled':
-                return <NotificationsNoneIcon style={{ color: '#f48fb1' }} />;
+                return <NotificationsNoneIcon style={{ color: '#d81b60' }} />;
             case 'group':
-                return <GroupIcon style={{ color: '#455a64' }} />;
+                return <GroupIcon style={{ color: '#546e7a' }} />;
             case 'invitation':
             case 'invitation_accepted':
-                return <NotificationsNoneIcon style={{ color: '#26a69a' }} />;
+                return <NotificationsNoneIcon style={{ color: '#0097a7' }} />;
             case 'contact':
-                return <ChatBubbleOutlineIcon style={{ color: '#455a64' }} />;
+                return <ChatBubbleOutlineIcon style={{ color: '#546e7a' }} />;
             case 'update':
-                return <UpdateIcon style={{ color: '#f48fb1' }} />;
+                return <UpdateIcon style={{ color: '#6d4c41' }} />;
             default:
-                return <NotificationsNoneIcon style={{ color: '#455a64' }} />;
+                return <NotificationsNoneIcon style={{ color: '#546e7a' }} />;
         }
     };
 
@@ -864,16 +864,16 @@ const NotificationDropdown = () => {
 
                                                 {/* Unread indicator */}
                                                 {!notification.read && (
-                                                    <div 
-                                                    style={{
-                                                        // flexShrink: 0,
-                                                        // width: '6px',
-                                                        // height: '6px',
-                                                        // borderRadius: '50%',
-                                                        // backgroundColor: '#FF4081',
-                                                        // marginTop: 'px'
+                                                    <div
+                                                        style={{
+                                                            // flexShrink: 0,
+                                                            // width: '6px',
+                                                            // height: '6px',
+                                                            // borderRadius: '50%',
+                                                            // backgroundColor: '#FF4081',
+                                                            // marginTop: 'px'
 
-                                                    }} />
+                                                        }} />
                                                 )}
                                             </motion.div>
                                         ))

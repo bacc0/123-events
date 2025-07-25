@@ -257,20 +257,26 @@ const UserProfilePage = () => {
                                 />
                             </div>
                         )}
-                        <Button
-                            onClick={() => setShowContactModal(true)}
-                            variant="contained"
-                            endIcon={<SendIcon />}
-                            style={{
-                                color: "white",
-                                backgroundColor: "#0A47A3",
-                                borderRadius: 8,
-                                boxShadow: "none",
-                                height: 38,
-                            }}
+                        <div
+                        // style={{background: 'pink', width:'100%'}}
                         >
-                            Contact Organizer
-                        </Button>
+                            <Button
+                                onClick={() => setShowContactModal(true)}
+                                variant="contained"
+                                endIcon={<SendIcon />}
+
+                                style={{
+                                    color: "white",
+                                    backgroundColor: "#0A47A3",
+                                    borderRadius: 8,
+                                    boxShadow: "none",
+                                    height: 38,
+                                    // margin: '0 auto'
+                                }}
+                            >
+                                Contact Organizer
+                            </Button>
+                        </div>
                         <Button
                             onClick={() => setShowEditModal(true)}
                             variant="outlined"

@@ -14,7 +14,7 @@ const NotificationOnTop = ({ notifications }) => {
 
      const filteredNotifications = [...new Set(notifications)];
 
-     
+
 
      // console.log("Original Notifications:", notifications);
      // console.log("Filtered Notifications:", filteredNotifications);
@@ -48,6 +48,7 @@ const NotificationOnTop = ({ notifications }) => {
                top: 0,
                left: 0,
                right: 0,
+               zIndex: 3000
           }}>
                {filteredNotifications.length > 0 ? (
                     filteredNotifications.slice(0, 1).map((notification) => (
@@ -55,23 +56,23 @@ const NotificationOnTop = ({ notifications }) => {
 
 
 
-                               <motion.div
-                                                  initial={{ y: -160, opacity: 1, scale: 1 }}
-                                                  animate={{ y: -4, opacity: 1, scale: 1 }}
-                                                  transition={{
-                                                      type: "spring",
-                                                      stiffness: 500,
-                                                      damping: 16,
-                                                      delay: 1.9,
-                                                      duration: 0.7
-                                                  }}
+                              <motion.div
+                                   initial={{ y: -160, opacity: 1, scale: 1 }}
+                                   animate={{ y: -4, opacity: 1, scale: 1 }}
+                                   transition={{
+                                        type: "spring",
+                                        stiffness: 500,
+                                        damping: 16,
+                                        delay: 1.9,
+                                        duration: 0.7
+                                   }}
                                    key={0}
                                    style={{
                                         height: 50,
                                         minHeight: 50,
                                         width: 280,
                                         minWidth: 280,
-                                        background: '#FFFFFF99',
+                                        background: '#FFFFFF',
                                         margin: '20px auto',
                                         borderRadius: 16,
                                         boxShadow: '0 0 32px #00000033',

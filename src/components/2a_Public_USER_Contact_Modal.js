@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { getDatabase, ref, push, set } from "firebase/database";
 import { get as dbGet } from "firebase/database";
@@ -7,6 +7,9 @@ import { Button, IconButton, } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
 import ForwardToInboxOutlinedIcon from '@mui/icons-material/ForwardToInboxOutlined';
+import emailjs from '@emailjs/browser';
+
+import ContactUs from './ContactUs';
 
 const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
 
@@ -23,14 +26,80 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
     };
 
 
-    const handleSubmit_EmailJS = async (organizerEmail, messageText) => {
+    // const EmailJS_service = (message, organizerEmail, senderEmail, senderName) => {
+
+    //     alert('message: ', message)
+    //     alert('organizerEmail: ', organizerEmail)
+    //     alert('senderEmail: ', senderEmail)
+    //     alert('senderName: ', senderName)
+
+
+    //     const form = useRef();
+
+    //     const sendEmail = (e) => {
+    //         e.preventDefault();
+
+    //         // {{message}}   {{from_email=senderEmail}}   {from_name=senderName}}   {{to_name=organizerEmail}}
+
+
+    //         emailjs
+    //             .sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, {
+    //                 publicKey: 'YOUR_PUBLIC_KEY',
+    //             })
+    //             .then(
+    //                 () => {
+    //                     console.log('SUCCESS!');
+    //                 },
+    //                 (error) => {
+    //                     console.log('FAILED...', error.text);
+    //                 },
+    //             );
+    //     };
+
+    //     return (
+    //         <form ref={form} onSubmit={sendEmail}>
+    //             <label>Name</label>
+    //             <input type="text" name="user_name" />
+    //             <label>Email</label>
+    //             <input type="email" name="user_email" />
+    //             <label>Message</label>
+    //             <textarea name="message" />
+    //             <input type="submit" value="Send" />
+    //         </form>
+    //     );
+    // };
+
+
+
+
+    const handleSubmit_EmailJS = async (message, organizerEmail, senderEmail, senderName) => {
         try {
-            alert(`UPDATE Email.JS\n\n
-                    Email would be sent to:\n
-                    ${organizerEmail}\n\n
-                    Message:\n
-                    ${messageText}`);
+            const templateParams = {
+                message: message,
+                to_email: organizerEmail,   // or whatever variable name you use in EmailJS template
+                from_email: senderEmail,
+                from_name: senderName,
+            };
+
+            // Call emailjs.send (not sendForm)
+            await emailjs.send(
+                process.env.REACT_APP_EMAILJS_SERVICE_ID,
+                process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+                templateParams,
+                process.env.REACT_APP_EMAILJS_PUBLIC_KEY
+            )
+
+
+            alert("✅ Email.js sent successfully! ✉️");
+
+
             // You can later use EmailJS or other APIs here
+
+            <ContactUs />
+
+
+
+
         } catch (error) {
             console.error("EmailJS error:", error);
         }
@@ -68,7 +137,9 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
             const organizerEmail = await getEmailFromUid(organizerUid);
 
             // ✅ Call your custom handler
-            await handleSubmit_EmailJS(organizerEmail, message);
+            await (
+                handleSubmit_EmailJS(message, organizerEmail, senderEmail, senderName)
+            )
 
             alert("✅ Your message was sent successfully!");
         } catch (error) {
@@ -103,7 +174,7 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
                                 color: '#455a64',
                                 marginBottom: 35,
                                 position: 'relative',
-                                left:40,
+                                left: 40,
                                 // background: 'red',
                                 minWidth: '120%'
                             }}
@@ -198,7 +269,7 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
                             >
                                 Message
                             </label>
-                           
+
                             <textarea
                                 id="message"
                                 value={message}
@@ -237,7 +308,7 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
                                     height: 35,
                                     minWidth: 190,
                                     marginBottom: 12,
-                                    marginTop:18,
+                                    marginTop: 18,
                                 }}
                                 endIcon={<ForwardToInboxOutlinedIcon />}
                             >

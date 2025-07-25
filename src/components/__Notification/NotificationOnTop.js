@@ -19,6 +19,22 @@ const NotificationOnTop = ({ notifications }) => {
      // console.log("Original Notifications:", notifications);
      // console.log("Filtered Notifications:", filteredNotifications);
 
+     const formatTimestamp = (timestamp) => {
+          const now = Date.now();
+          const diff = now - timestamp;
+
+          const minutes = Math.floor(diff / (1000 * 60));
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+          if (minutes < 1) return 'Just now';
+          if (minutes < 60) return `${minutes}m ago`;
+          if (hours < 24) return `${hours}h ago`;
+          if (days < 7) return `${days}d ago`;
+
+          return new Date(timestamp).toLocaleDateString();
+     };
+
 
 
      const getNotificationIcon = (type) => {
@@ -52,7 +68,7 @@ const NotificationOnTop = ({ notifications }) => {
           }}>
                {filteredNotifications.length > 0 ? (
                     filteredNotifications.slice(0, 1).map((notification) => (
-                         <>
+                         <div>
 
 
 
@@ -109,7 +125,8 @@ const NotificationOnTop = ({ notifications }) => {
                                              fontSize: 11,
                                              fontWeight: 500,
                                              textAlign: 'left',
-                                             marginLeft: 10
+                                             marginLeft: 10,
+                                             // background: '#222fff44',
 
                                         }}
                                    >
@@ -117,16 +134,29 @@ const NotificationOnTop = ({ notifications }) => {
                                              {notification.text.charAt(0).toUpperCase()}
                                              {/* {notification.text.slice(1)} */}
                                              {
-                                                  notification.text.length > 36
-                                                       ? notification.text.slice(1, 33) + '...'
+                                                  notification.text.length > 29
+                                                       ? notification.text.slice(1, 26) + '...'
                                                        : notification.text.slice(1)
                                              }
                                         </div>
 
                                         {/* {console.log('notification', notification)} */}
                                    </h4>
+                                   <div>
+                                        <p
+                                             style={{
+                                                  margin: '4px 0 0',
+                                                  fontSize: '12px',
+                                                  color: '#9ca3af',
+                                                  // background: '#345aaa55',
+                                                  margin: '-0.2px 0 0 9px'
+                                             }}>
+                                             {formatTimestamp(notification.timestamp)}
+                                        </p>
+                                   </div>
+
                               </motion.div>
-                         </>
+                         </div>
                     ))
                ) : (
                     <div
@@ -135,7 +165,7 @@ const NotificationOnTop = ({ notifications }) => {
                               minHeight: 50,
                               width: 280,
                               minWidth: 280,
-                              background: '#FFFFFF99',
+                              // background: '#FFFFFF99',
                               margin: '20px auto',
                               borderRadius: 16,
                               boxShadow: '0 0 32px #00000033',
@@ -150,12 +180,12 @@ const NotificationOnTop = ({ notifications }) => {
                          }}
                     >
                          <h4 style={{
-                              color: '#546e7a',
+                              color: '#9ca3af',
                               // background: 'lime',
 
                          }}
                          >
-                              NEW NOTIFICATION!
+                              NOTIFICATION!
                          </h4>
 
                     </div>

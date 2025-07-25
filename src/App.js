@@ -51,19 +51,19 @@ function App({ loggedIn, setLoggedIn }) {
 
     return (
         <div className="App">
-        
-          <div
+
+            <div
                 style={{
                     position: loggedIn ? "static" : "absolute",
                     top: 110, left: 0, right: 0, zIndex: 1000,
                 }}
             >
-                 {/* <NotificationOnTop/> 
+                {/* <NotificationOnTop/> 
                     <div>dddd</div> */}
                 <Navbar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
-                
+
             </div>
-                   
+
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
                     <Route
@@ -180,12 +180,31 @@ export default function AppWrapper() {
     }, []);
 
     if (checkingAuth) {
-        return <div>Loading...</div>;
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: '100vh',
+
+                    backgroundImage: `url(${process.env.PUBLIC_URL}/loading.svg)`,
+                    backgroundSize: "55px", // Scale image to 23% of container
+                    backgroundPosition: "center", // Centre the image
+                    backgroundRepeat: "no-repeat", // Do not repeat the image
+                    opacity: 0.7,
+                    animation: 'spin3600 12s linear infinite'
+                }}
+            >
+
+            </div>
+        );
     }
 
     return (
         <Router>
             <App loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </Router>
+
     );
 }

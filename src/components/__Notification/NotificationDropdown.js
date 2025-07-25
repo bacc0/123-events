@@ -938,7 +938,8 @@ const NotificationDropdown = () => {
                                                             // backgroundColor: '#FF4081',
                                                             // marginTop: 'px'
 
-                                                        }} />
+                                                        }}
+                                                    />
                                                 )}
                                             </motion.div>
                                         ))

@@ -1328,3 +1328,12 @@ body {
 .form-group-upload:hover {
   background-color: #eceff1;
 }
+
+@keyframes spin3600 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(3600deg); /* 3600 degrees = 10 full rotations */
+  }
+}

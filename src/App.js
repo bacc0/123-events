@@ -192,7 +192,7 @@ export default function AppWrapper() {
                     backgroundSize: "55px", // Scale image to 23% of container
                     backgroundPosition: "center", // Centre the image
                     backgroundRepeat: "no-repeat", // Do not repeat the image
-                    opacity: 0.7,
+                    opacity: 0.5,
                     animation: 'spin3600 12s linear infinite'
                 }}
             >

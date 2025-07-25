@@ -149,9 +149,11 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                                         padding: '8px 12px',
                                         borderRadius: '16px',
                                         border: 'none',
-                                        backgroundColor: '#cfd8dc66',
+                                        backgroundColor: '#EBEFF1',
+                                        border:'0.1px solid #DADEE0',
                                         cursor: 'pointer',
-                                        transition: 'background-color 0.2s'
+                                        transition: 'background-color 0.2s',
+                                        borderRadius: 32
                                     }}
                                     onMouseEnter={(e) => e.target.style.backgroundColor = '#b0bec566'}
                                     onMouseLeave={(e) => e.target.style.backgroundColor = '#cfd8dc66'}
@@ -225,69 +227,73 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                                             // background: '#ffffffbb',
                                             // backdropFilter: isLoggedIn ? 'blur(6px)' : 'blur(0px)',
                                             // WebkitBackdropFilter: isLoggedIn ? 'blur(16px)' : 'blur(0px)',
+                                            borderRadius: 32,
+                                            display: 'flex',
+                                            justifyContent: 'center'
                                         }}
                                     >
-                                        <div style={{ padding: '16px', borderBottom: '0.3px solid #cfd8dc' }}>
-                                            <p style={{ margin: 0, fontWeight: '600', color: '#1f2937' }}>
-                                                {userProfile?.fullName || user?.displayName || 'User'}
-                                            </p>
-                                            <p style={{ margin: 0, fontSize: '14px', color: '#546e7a' }}>
-                                                {user?.email}
-                                            </p>
-                                        </div>
+                                        <div>
+                                            <div style={{ padding: '16px', borderBottom: '0.3px solid #cfd8dc' }}>
+                                                <p style={{ margin: 0, fontWeight: '600', color: '#1f2937' }}>
+                                                    {userProfile?.fullName || user?.displayName || 'User'}
+                                                </p>
+                                                <p style={{ margin: 0, fontSize: '14px', color: '#546e7a' }}>
+                                                    {user?.email}
+                                                </p>
+                                            </div>
 
-                                        <div style={{ padding: '8px' }}>
-                                            <button
-                                                onClick={handleProfileClick}
-                                                style={buttonStyle}
-                                                onMouseEnter={(e) => e.target.style.backgroundColor = '#eceff1'}
-                                                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                                            >
-                                                <PersonIcon />
-                                                My Profile
-                                            </button>
+                                            <div style={{ padding: '8px' }}>
+                                                <button
+                                                    onClick={handleProfileClick}
+                                                    style={buttonStyle}
+                                                    onMouseEnter={(e) => e.target.style.backgroundColor = '#eceff1'}
+                                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                                >
+                                                    <PersonIcon />
+                                                    My Profile
+                                                </button>
 
-                                            <button
-                                                onClick={() => {
-                                                    setShowProfileMenu(false);
-                                                    if (user) {
-                                                        navigate('/dashboard', {
-                                                            state: {
-                                                                uid: user.uid,
-                                                                fullName: userProfile?.fullName || user?.displayName || ''
-                                                            }
-                                                        });
-                                                    }
-                                                }}
-                                                style={buttonStyle}
-                                                onMouseEnter={(e) => e.target.style.backgroundColor = '#eceff1'}
-                                                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                                            >
-                                                <DashboardIcon />
+                                                <button
+                                                    onClick={() => {
+                                                        setShowProfileMenu(false);
+                                                        if (user) {
+                                                            navigate('/dashboard', {
+                                                                state: {
+                                                                    uid: user.uid,
+                                                                    fullName: userProfile?.fullName || user?.displayName || ''
+                                                                }
+                                                            });
+                                                        }
+                                                    }}
+                                                    style={buttonStyle}
+                                                    onMouseEnter={(e) => e.target.style.backgroundColor = '#eceff1'}
+                                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                                >
+                                                    <DashboardIcon />
 
-                                                Dashboard
-                                            </button>
-                                        </div>
+                                                    Dashboard
+                                                </button>
+                                            </div>
 
-                                        <div style={{ padding: '8px', borderTop: '0.3px solid #cfd8dc', color: '#455a64' }}>
-                                            <button
-                                                onClick={() => {
-                                                    const auth = getAuth();
-                                                    signOut(auth)
-                                                        .then(() => { window.location.href = '/'; })
-                                                        .catch((error) => { console.error('Logout error:', error); });
-                                                }}
-                                                style={{
-                                                    ...buttonStyle,
-                                                    color: '#FF4081'
-                                                }}
-                                                onMouseEnter={(e) => e.target.style.backgroundColor = '#FCEEF3'}
-                                                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                                            >
-                                                <LogoutIcon />
-                                                Sign Out
-                                            </button>
-                                        </div>
+                                            <div style={{ padding: '8px', borderTop: '0.3px solid #cfd8dc', color: '#455a64' }}>
+                                                <button
+                                                    onClick={() => {
+                                                        const auth = getAuth();
+                                                        signOut(auth)
+                                                            .then(() => { window.location.href = '/'; })
+                                                            .catch((error) => { console.error('Logout error:', error); });
+                                                    }}
+                                                    style={{
+                                                        ...buttonStyle,
+                                                        color: '#FF4081'
+                                                    }}
+                                                    onMouseEnter={(e) => e.target.style.backgroundColor = '#FCEEF3'}
+                                                    onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                                >
+                                                    <LogoutIcon />
+                                                    Sign Out
+                                                </button>
+                                            </div></div>
                                     </motion.div>
                                 )}
                             </div>

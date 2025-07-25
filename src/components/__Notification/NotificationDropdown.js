@@ -690,7 +690,7 @@ const NotificationDropdown = () => {
                             className="notification-dropdown"
                             style={{
                                 position: 'absolute',
-                                top: '50px',
+                                top: '53.8px',
                                 // right: '0',
                                 left: smallerThan ? -126 : -300,
 
@@ -702,9 +702,10 @@ const NotificationDropdown = () => {
                                 border: '0.3px solid #cfd8dc',
                                 zIndex: 1000,
                                 overflow: 'hidden',
-                                // background: '#ffffffbb',
+                                background: '#ffffff',
                                 // backdropFilter: 'blur(16px)',
                                 // WebkitBackdropFilter: 'blur(16px)',
+                                borderRadius: 32
                             }}
                         >
                             {/* Header */}
@@ -734,7 +735,7 @@ const NotificationDropdown = () => {
                                             fontWeight: '500',
                                             cursor: 'pointer',
                                             padding: '4px 8px',
-                                            borderRadius: '8px'
+                                            borderRadius: '8px',
                                         }}
                                         onMouseEnter={(e) => e.target.style.backgroundColor = '#f3f4f6'}
                                         onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
@@ -745,15 +746,19 @@ const NotificationDropdown = () => {
                             </div>
 
                             {/* Notifications List */}
-                            <div style={{
+                            <div 
+                            style={{
                                 maxHeight: '400px',
-                                overflowY: 'auto'
-                            }}>
+                                overflowY: 'auto',
+                                background: 'rgba(255, 255, 255, 0)'
+                            }}
+                            >
                                 {loading ? (
                                     <div style={{
                                         padding: '40px 24px',
                                         textAlign: 'center',
-                                        color: '#6b7280'
+                                        color: '#6b7280',
+                                        background: '#ffffff00'
                                     }}>
                                         <div style={{ fontSize: '24px', marginBottom: '12px' }}>⏳</div>
                                         <p style={{ margin: 0, fontSize: '16px' }}>Loading notifications...</p>
@@ -799,15 +804,19 @@ const NotificationDropdown = () => {
                                                     gap: '12px',
                                                     padding: '16px 24px',
                                                     borderBottom: index < notifications.length - 1 ? '1px solid #f3f4f6' : 'none',
-                                                    backgroundColor: notification.read ? 'white' : '#ffffffcc',
+                                                    backgroundColor: notification.read ? 'white' : '#ffffff88',
                                                     cursor: 'pointer',
-                                                    transition: 'background-color 0.2s'
+                                                    transition: 'background-color 0.2s',
+                                                    fontWeight: 400,
+                                                    color: '#78909c',
+                                                    background: '#44444400',
+                                           
                                                 }}
                                                 onMouseEnter={(e) => {
                                                     if (notification.read) {
                                                         e.currentTarget.style.backgroundColor = '#F3F5F7';
                                                     } else {
-                                                        e.currentTarget.style.backgroundColor = '#F3F5F7';
+                                                        e.currentTarget.style.backgroundColor = '#eceff1';
                                                     }
                                                 }}
                                                 onMouseLeave={(e) => {
@@ -821,7 +830,7 @@ const NotificationDropdown = () => {
                                                     width: '40px',
                                                     height: '40px',
                                                     borderRadius: '8px',
-                                                    backgroundColor: notification.read ? '#eceff100' : '#EDEFF1',
+                                                    backgroundColor: notification.read ? 'rgba(35, 149, 224, 0)' : '#ffffff',
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'center',
@@ -838,9 +847,10 @@ const NotificationDropdown = () => {
                                                     <p style={{
                                                         margin: 0,
                                                         fontSize: '14px',
-                                                        color: '#374151',
-                                                        lineHeight: '1.4',
-                                                        fontWeight: notification.read ? '400' : '500'
+                                                        fontWeight: 400,
+                                                        color: '#546e7a',
+                                                        lineHeight: '1.5',
+                                                        // fontWeight: notification.read ? '400' : '500'
                                                     }}
                                                     >
 
@@ -881,9 +891,9 @@ const NotificationDropdown = () => {
                             </div>
 
 
-                        </motion.div>
+                        </motion.div >
                     )}
-                </AnimatePresence>
+                </AnimatePresence >
 
                 <style jsx>{`
                 .notification-container {
@@ -908,7 +918,7 @@ const NotificationDropdown = () => {
                     background: #94a3b8;
                 }
             `}</style>
-            </div>
+            </div >
         </>
 
     );

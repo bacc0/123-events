@@ -8,6 +8,9 @@ import Video from './components/___Site_Base/Welcome_Page';
 import Dashboard from './components/1__Dashboard_HOME';
 import PublicUPser_profile from './components/2__Public_USER_Profile';
 import MyProfile from './components/3__My_Profile_LOGGED_USER';
+import NotificationOnTop from './components/__Notification/NotificationOnTop';
+
+
 
 import Signup from './components/I__Signup';
 import Login from './components/II__Login';
@@ -48,14 +51,19 @@ function App({ loggedIn, setLoggedIn }) {
 
     return (
         <div className="App">
-            <div
+        
+          <div
                 style={{
                     position: loggedIn ? "static" : "absolute",
                     top: 110, left: 0, right: 0, zIndex: 1000,
                 }}
             >
+                 {/* <NotificationOnTop/> 
+                    <div>dddd</div> */}
                 <Navbar isLoggedIn={loggedIn} onToggleLogin={handleToggleLogin} />
+                
             </div>
+                   
             <AnimatePresence mode="wait">
                 <Routes location={location} key={location.pathname}>
                     <Route

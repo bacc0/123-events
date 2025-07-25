@@ -16,13 +16,15 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import PersonIcon from "@mui/icons-material/Person";
-import GroupIcon from '@mui/icons-material/Group';
 
+import GroupIcon from '@mui/icons-material/Group';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import UpdateIcon from '@mui/icons-material/Update';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import EventBusyOutlinedIcon from '@mui/icons-material/EventBusyOutlined';
+
+import NotificationOnTop from './NotificationOnTop'
 
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
 
@@ -633,15 +635,68 @@ const NotificationDropdown = () => {
     )
 
 
+    const [userNotificationsList, setUserNotificationsList] = useState([]);
+    const [topNotification, setTopNotification] = useState(false);
+    const latestSeenNotificationRef = useRef([]);
 
+    useEffect(() => {
+        const auth = getAuth();
+        const currentUser = auth.currentUser;
 
+        if (!currentUser) return;
 
+        const db = getDatabase();
+        const userNotificationsRef = dbRef(db, `notifications/${currentUser.uid}`);
+
+        const unsubscribe = onValue(userNotificationsRef, (snapshot) => {
+            const rawData = snapshot.val();
+            if (!rawData) return;
+
+            const newNotificationsArray = Object.keys(rawData).map(key => ({
+                id: key,
+                ...rawData[key]
+            }));
+
+            newNotificationsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+            const newestNotification = newNotificationsArray[0];
+
+            if (
+                newestNotification &&
+                newestNotification.id !== latestSeenNotificationRef.current?.[0]?.id
+            ) {
+                // alert("🔔 New notification received!");
+                latestSeenNotificationRef.current = [newestNotification];
+
+                setTopNotification(true)
+
+                // alert('1')
+
+                setTimeout(() => {
+                    setTopNotification(false)
+                    // alert('12')
+
+                }, 7000);
+            }
+
+            setUserNotificationsList(newNotificationsArray);
+        });
+
+        return () => unsubscribe();
+    }, []);
 
 
 
     return (
 
-        <>
+        <div >
+
+            {topNotification &&
+                <NotificationOnTop
+                    notifications={notifications}
+                />
+            }
+
             {dialogPopupEvent}
             {dialogPopupMessage}
 
@@ -746,12 +801,12 @@ const NotificationDropdown = () => {
                             </div>
 
                             {/* Notifications List */}
-                            <div 
-                            style={{
-                                maxHeight: '400px',
-                                overflowY: 'auto',
-                                background: 'rgba(255, 255, 255, 0)'
-                            }}
+                            <div
+                                style={{
+                                    maxHeight: '400px',
+                                    overflowY: 'auto',
+                                    background: 'rgba(255, 255, 255, 0)'
+                                }}
                             >
                                 {loading ? (
                                     <div style={{
@@ -810,7 +865,7 @@ const NotificationDropdown = () => {
                                                     fontWeight: 400,
                                                     color: '#78909c',
                                                     background: '#44444400',
-                                           
+
                                                 }}
                                                 onMouseEnter={(e) => {
                                                     if (notification.read) {
@@ -919,7 +974,7 @@ const NotificationDropdown = () => {
                 }
             `}</style>
             </div >
-        </>
+        </div>
 
     );
 };

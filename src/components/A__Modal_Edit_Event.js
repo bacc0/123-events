@@ -18,6 +18,10 @@ import {
 } from "firebase/storage";
 import Progress from "./___Site_Base/_Progress";
 
+import { useTheme, useMediaQuery } from "@mui/material";
+
+
+
 const Modal_Edit_Event = ({
      eventId = "",
      open = false,
@@ -95,14 +99,22 @@ const Modal_Edit_Event = ({
           }
      };
 
+     const smallerThan = useMediaQuery('(max-width:690px)');
+
      return (
           <Dialog
                open={open}
                onClose={onClose}
                fullWidth
                maxWidth="sm"
-               PaperProps={{ style: { borderRadius: 32,  maxWidth:500,
-                        maxHeight:500 } }}
+               PaperProps={{
+                    style: {
+                         borderRadius: 32,
+                         maxWidth: 500,
+                         maxHeight: smallerThan ? '78vh' : 500,
+
+                    }
+               }}
           >
                <DialogTitle>
                     <IconButton
@@ -116,7 +128,7 @@ const Modal_Edit_Event = ({
 
                <DialogContent>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center",  }}>
+                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", }}>
                               <div style={{ width: 280 }}>
                                    <h1
                                         style={{

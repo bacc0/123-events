@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-
+import { useTheme, useMediaQuery } from "@mui/material";
 import { getDatabase, ref, push, set } from "firebase/database";
 import { get as dbGet } from "firebase/database";
 
@@ -151,13 +151,21 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
         onClose();
     };
 
+    const smallerThan = useMediaQuery('(max-width:690px)');
+
     return (
         <div
             className="modal-overlay" onClick={onClose}
-            style={{ zIndex: 10000 }} >
+            style={{ zIndex: 10000 }}
+        >
             <div
                 className="modal-content"
-                style={{ maxWidth: "500px",maxHeight:500, padding: '0 30px', borderRadius: 32 }}
+                style={{
+                    maxWidth: 500,
+                    maxHeight: smallerThan ? '78vh' : 500,
+                    padding: '0 30px',
+                    borderRadius: 32
+                }}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-header">
@@ -176,9 +184,9 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
                                 color: '#455a64',
                                 marginBottom: 35,
                                 position: 'relative',
-                                left: 50,
+                                // left: 50,
                                 // background: 'red',
-                                minWidth: '130%'
+                                // minWidth: '130%'
                             }}
                         >
                             {`Contact Organizer`}

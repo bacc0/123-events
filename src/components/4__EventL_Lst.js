@@ -128,6 +128,8 @@ const DiscoverOnly = ({ creatorName, date }) => {
         await remove(attendeeRef);
     };
 
+    const smallerThan = useMediaQuery('(max-width:690px)');
+
     return (
         <>
             <div
@@ -387,7 +389,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                     style: {
                         borderRadius: 32,
                         maxWidth: 500,
-                        maxHeight: 500
+                        maxHeight: smallerThan ? '78vh' : 500,
                     },
                 }}
             >

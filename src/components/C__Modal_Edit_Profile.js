@@ -10,6 +10,7 @@ import {
 import BuildIcon from "@mui/icons-material/Build";
 import UpdateIcon from "@mui/icons-material/Update";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -107,6 +108,8 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
           }
      };
 
+     const smallerThan = useMediaQuery('(max-width:690px)');
+
      return (
           <Box style={{ borderRadius: 16 }}>
                <Button
@@ -133,8 +136,8 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                     PaperProps={{
                          style: {
                               borderRadius: 32,
-                                maxWidth:500,
-                        maxHeight:500
+                              maxWidth: 500,
+                              maxHeight: smallerThan ? '78vh' : 500
                          },
                     }}
                >
@@ -149,7 +152,12 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                     </DialogTitle>
 
                     <DialogContent>
-                         <div style={{ display: "flex", justifyContent: "center" }}>
+                         <div
+                              style={{
+                                   display: "flex",
+                                   justifyContent: "center"
+                              }}
+                         >
                               <div>
                                    {/* <div style={{ display: "flex", justifyContent: "center" }}>
                                         <img

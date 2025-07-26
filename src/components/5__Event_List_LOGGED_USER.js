@@ -25,6 +25,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import InfoIcon from "@mui/icons-material/Info";
 import PersonIcon from "@mui/icons-material/Person";
 
+
 const DiscoverOnly = ({ creatorName, date }) => {
     // Modal state and handlers
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,6 +53,8 @@ const DiscoverOnly = ({ creatorName, date }) => {
 
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
+    const smallerThan = useMediaQuery('(max-width:690px)');
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -205,7 +208,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                                 // display: 'flex',
                                                 // flexDirection: 'column',
                                                 // justifyContent: 'center',
-                                           
+
                                             }
                                         }
                                     >
@@ -361,8 +364,8 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                                         // onClick={() =>
                                                         //     handleRSVP(event.id)
                                                         // }
-                                                        onClick={() => { 
-                                                            setSelectedEventId(event.id); setEditOpen(true); 
+                                                        onClick={() => {
+                                                            setSelectedEventId(event.id); setEditOpen(true);
                                                         }}
                                                         style={{
                                                             width: "48%",
@@ -375,7 +378,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                                                 "6px -6px 20px rgba(255, 255, 255, 1)",
                                                         }}
                                                     >
-                                                        Edit 
+                                                        Edit
                                                     </Button>
                                                 );
                                             }
@@ -396,8 +399,8 @@ const DiscoverOnly = ({ creatorName, date }) => {
                 PaperProps={{
                     style: {
                         borderRadius: 32,
-                           maxWidth: 500,
-                        maxHeight: 500
+                        maxWidth: 500,
+                        maxHeight: smallerThan ? '78vh' : 500
                     },
                 }}
             >
@@ -609,7 +612,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                 eventId={selectedEventId}
                 open={editOpen}
                 onClose={() => setEditOpen(false)}
-                refreshEvents={() => {}}
+                refreshEvents={() => { }}
             />
         </>
     );

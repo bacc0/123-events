@@ -24,21 +24,28 @@ import InfoIcon from "@mui/icons-material/Info";
 
 
 const EventDetailsModal = ({ event, onClose }) => {
+
     const navigate = useNavigate();
+
+   const smallerThan = useMediaQuery('(max-width:690px)'); 
+
+
     return (
         <>
             <Dialog
                 open={event}
                 // onClose={handleCloseModal}
+                onClick={onClose}
+                // onTouchStart={onClose}
                 fullWidth
                 maxWidth="sm"
                 PaperProps={{
                     style: {
                         borderRadius: 32,
                         // background: 'pink',
-                        maxWidth:500,
-                        maxHeight:500
-                        
+                        maxWidth: 500,
+                        maxHeight: smallerThan ? '78vh' : 500
+
                     },
                 }}
             >
@@ -51,16 +58,14 @@ const EventDetailsModal = ({ event, onClose }) => {
                     }}
                 >
                     <Typography
-                                variant="h6"
-                                sx={{
-                                    fontWeight: 600,
-                                }}
-                            >
-                                {event.title}
-                            </Typography>
-                    <IconButton
-                     onClick={onClose}
-                     >
+                        variant="h6"
+                        sx={{
+                            fontWeight: 600,
+                        }}
+                    >
+                        {event.title}
+                    </Typography>
+                    <IconButton onClick={onClose} >
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
@@ -72,10 +77,10 @@ const EventDetailsModal = ({ event, onClose }) => {
                                 flexDirection: "column",
                                 gap: "16px",
                                 borderRadius: "16px",
-                               
+
                             }}
                         >
-                          
+
                             <div
                                 style={{
                                     maxHeight: 240,
@@ -137,27 +142,27 @@ const EventDetailsModal = ({ event, onClose }) => {
                                 >
                                     Organizer:
                                 </span>
-                                   <div
-                                        className="detail-value"
-                                        style={{
-                                            color: "#0d47a1",
-                                            cursor: "pointer",
-                                            fontWeight: 500,
-                                        }}
-                                        onClick={() =>
-                                            navigate("/public-user-profile", {
-                                                state: {
-                                                    uid: event.organizer?.uid,
-                                                    fullName:
-                                                        event.organizer?.fullName,
-                                                },
-                                            })
-                                        }
-                                    >
-                                        {event.organizer?.fullName || "Unknown"}
-                                    </div>
+                                <div
+                                    className="detail-value"
+                                    style={{
+                                        color: "#0d47a1",
+                                        cursor: "pointer",
+                                        fontWeight: 500,
+                                    }}
+                                    onClick={() =>
+                                        navigate("/public-user-profile", {
+                                            state: {
+                                                uid: event.organizer?.uid,
+                                                fullName:
+                                                    event.organizer?.fullName,
+                                            },
+                                        })
+                                    }
+                                >
+                                    {event.organizer?.fullName || "Unknown"}
+                                </div>
 
-                                
+
                                 {/* <span style={{ fontSize: 15, fontWeight: 500 }}>
                                     {event.organizer?.fullName ||
                                         "Unknown"}
@@ -261,7 +266,7 @@ const EventDetailsModal = ({ event, onClose }) => {
                                 >
                                     Description:
                                 </span>
-                                <span style={{ fontSize: 15, fontWeight: 500, marginBottom: 16, lineHeight:1.5 }}>
+                                <span style={{ fontSize: 15, fontWeight: 500, marginBottom: 16, lineHeight: 1.5 }}>
                                     {event.description ||
                                         "No description"}
                                 </span>

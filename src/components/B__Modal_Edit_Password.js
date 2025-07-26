@@ -12,6 +12,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { getAuth, updatePassword, signOut } from "firebase/auth";
 import UpdateIcon from "@mui/icons-material/Update";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useTheme, useMediaQuery } from "@mui/material";
 
 const getPasswordStrength = (password) => {
     if (!password) return { strength: 0, text: "", color: "#E5E7EB" };
@@ -80,6 +81,8 @@ const ModalEditPassword = ({ open, onClose }) => {
         });
     };
 
+      const smallerThan = useMediaQuery('(max-width:690px)');
+
     return (
         <Dialog
             open={open}
@@ -90,8 +93,8 @@ const ModalEditPassword = ({ open, onClose }) => {
                 style: {
                     borderRadius: 32,
                     padding: "60px 0px",
-                      maxWidth:500,
-                        maxHeight:500
+                    maxWidth: 500,
+                    maxHeight: smallerThan ? '116vw' : 500,
                 },
             }}
         >
@@ -158,8 +161,8 @@ const ModalEditPassword = ({ open, onClose }) => {
                                     borderRadius: 16,
                                     marginBottom: 6,
                                     marginTop: 12,
-                                     width: 280,
-                                             height: 30,
+                                    width: 280,
+                                    height: 30,
                                 }}
                             />
                             <IconButton
@@ -179,7 +182,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                     </div>
                     <div
                         style={{
-                           fontSize: 14, 
+                            fontSize: 14,
                             color: strength.color,
                             marginBottom: 10,
                             textAlign: 'center'
@@ -229,10 +232,10 @@ const ModalEditPassword = ({ open, onClose }) => {
                                     border: "1px solid #CFD8DD",
                                     borderRadius: 16,
 
-                                   
+
                                     marginTop: 12,
-                                     width: 280,
-                                             height: 30,
+                                    width: 280,
+                                    height: 30,
                                 }}
                             />
                             <IconButton
@@ -266,7 +269,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                                 marginBottom: 22,
                             }}
                         >
-                         Update Password
+                            Update Password
                         </Button>
                     </div>
                     <div style={{ textAlign: "center" }}>

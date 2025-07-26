@@ -93,7 +93,7 @@ const NotificationOnTop = ({ notifications }) => {
 
                                         <motion.div
                                              initial={{ y: -160, opacity: 1, scale: 1 }}
-                                             animate={{ y: -4, opacity: 1, scale: 1 }}
+                                             animate={{ y: -3, opacity: 1, scale: 1 }}
                                              transition={{
                                                   type: "spring",
                                                   stiffness: 500,
@@ -103,7 +103,7 @@ const NotificationOnTop = ({ notifications }) => {
                                              }}
                                              key={0}
                                              style={{
-                                                  height: 50,
+                                                  height: 60,
                                                   minHeight: 50,
                                                   width: 280,
                                                   minWidth: 280,
@@ -114,7 +114,7 @@ const NotificationOnTop = ({ notifications }) => {
 
                                                   // backdropFilter: 'blur(32px)',
                                                   // WebkitBackdropFilter: 'blur(30px)',
-                                                  border: '0.1px solid #ffffff',
+                                                  border: '0.1px solid #DCE2E6',
                                                   display: 'flex',
                                                   alignItems: 'center',
                                                   padding: 16

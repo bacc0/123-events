@@ -92,7 +92,8 @@ const Navbar = ({ isLoggedIn, onToggleLogin }) => {
                 background: '#ffffffbb',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
-                borderBottom: '0.1px solid #EDEFF1'
+                borderBottom: '0.1px solid #EDEFF1',
+                // height:60
 
             }}
         >

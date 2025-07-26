@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Button } from '@mui/material';
-
+import { Button, Dialog } from '@mui/material';
 
 const EventDetailsModal = ({ event, onClose }) => {
     const navigate = useNavigate();
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
+        <div
+            className="modal-overlay"
+            onClick={onClose}
+            style={{
+                // background: '#ff32fc66',
+                maxHeight: '100v',
+                zIndex: 10000000,
+            }}
+        >
+            <div
+                className="modal-content" 
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                    // background: '#32ff5166',
+                    maxHeight: '100v',
+                    position: 'relative',
+                    top: 60,
+                    borderRadius: 32
+
+                }}
+            >
+                <div className="modal-header" style={{ height:66}}>
                     <h2 className="modal-title">{event.title}</h2>
                     <button className="close-button" onClick={onClose}>
                         <svg

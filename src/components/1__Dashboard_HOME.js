@@ -1089,6 +1089,7 @@ const Dashboard_HOME = () => {
             )}
             {selectedEvent && (
                 <EventDetailsModal
+                    open={selectedEvent}
                     event={selectedEvent}
                     onClose={() => setSelectedEvent(null)}
                 />

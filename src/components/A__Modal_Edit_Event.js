@@ -101,13 +101,13 @@ const Modal_Edit_Event = ({
                onClose={onClose}
                fullWidth
                maxWidth="sm"
-               PaperProps={{ style: { borderRadius: 16 } }}
+               PaperProps={{ style: { borderRadius: 32 } }}
           >
                <DialogTitle>
                     <IconButton
                          aria-label="close"
                          onClick={onClose}
-                         sx={{ position: "absolute", right: 8, top: 8 }}
+                         sx={{ position: "absolute", right: 16, top: 16 }}
                     >
                          <CloseIcon />
                     </IconButton>
@@ -115,7 +115,7 @@ const Modal_Edit_Event = ({
 
                <DialogContent>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center",  }}>
                               <div style={{ width: 280 }}>
                                    <h1
                                         style={{

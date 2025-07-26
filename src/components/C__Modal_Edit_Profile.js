@@ -132,7 +132,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                     maxWidth="sm"
                     PaperProps={{
                          style: {
-                              borderRadius: 16,
+                              borderRadius: 32,
                          },
                     }}
                >
@@ -140,7 +140,7 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                          <IconButton
                               aria-label="close"
                               onClick={() => setOpen(false)}
-                              sx={{ position: "absolute", right: 8, top: 8 }}
+                              sx={{ position: "absolute", right: 16, top: 16 }}
                          >
                               <CloseIcon />
                          </IconButton>

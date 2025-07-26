@@ -385,7 +385,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                 maxWidth="sm"
                 PaperProps={{
                     style: {
-                        borderRadius: "16px",
+                        borderRadius: 32,
                     },
                 }}
             >

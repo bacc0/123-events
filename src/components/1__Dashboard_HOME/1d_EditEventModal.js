@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 
 
-const  EditEventModal = ({ event, onSave, onClose }) => {
+const EditEventModal = ({ event, onSave, onClose }) => {
     // Use imageUrl consistently
     const [formData, setFormData] = useState({
         ...event,
@@ -48,11 +48,30 @@ const  EditEventModal = ({ event, onSave, onClose }) => {
     };
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <div className="modal-header">
+        <div
+            className="modal-overlay"
+            onClick={onClose}
+            style={{
+                // background: '#fff43266',
+                maxHeight: '100v',
+                zIndex: 10000000
+            }}
+        >
+            <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                    // background: '#32ff5166',
+                    maxHeight: '100v',
+                    position: 'relative',
+                    top: 60,
+                    borderRadius: 32
+
+                }}
+            >
+                <div className="modal-header" style={{ height: 66 }}>
                     <h2 className="modal-title">Edit Event</h2>
-                    <button className="close-button" onClick={onClose}>
+                    <button className="close-button" onClick={onClose} >
                         <svg
                             width="24"
                             height="24"

@@ -88,7 +88,7 @@ const ModalEditPassword = ({ open, onClose }) => {
             maxWidth="sm"
             PaperProps={{
                 style: {
-                    borderRadius: 16,
+                    borderRadius: 32,
                     padding: "60px 0px",
                 },
             }}
@@ -107,7 +107,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                 Update Password
                 <IconButton
                     onClick={onClose}
-                    sx={{ position: "absolute", right: 8, top: 8 }}
+                    sx={{ position: "absolute", right: 16, top: 16 }}
                 >
                     <CloseIcon />
                 </IconButton>
@@ -263,7 +263,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                                 marginBottom: 22,
                             }}
                         >
-                            Update Password
+                         Update Password
                         </Button>
                     </div>
                     <div style={{ textAlign: "center" }}>

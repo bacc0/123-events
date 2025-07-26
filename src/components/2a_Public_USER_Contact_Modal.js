@@ -152,10 +152,12 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
     };
 
     return (
-        <div className="modal-overlay" onClick={onClose} >
+        <div
+            className="modal-overlay" onClick={onClose}
+            style={{ zIndex: 10000 }} >
             <div
                 className="modal-content"
-                style={{ maxWidth: "500px", padding: '0 30px', borderRadius: 16 }}
+                style={{ maxWidth: "500px", padding: '0 30px', borderRadius: 32 }}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-header">

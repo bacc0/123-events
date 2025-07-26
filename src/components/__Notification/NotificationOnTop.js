@@ -71,6 +71,9 @@ const NotificationOnTop = ({ notifications }) => {
                          exit={{opacity: 0, scale: 0, filter: "blur(16px)", y: -20}}
 
                          onClick={handleClick}
+                         onHoverStart={handleClick}
+                         onMouseEnter={handleClick}
+
                          style={{
                               textAlign: 'center',
                               width: '100vw',

@@ -15,6 +15,9 @@ import Modal_Edit_Profile from "./C__Modal_Edit_Profile";
 
 import ContactOrganizerModal from "./2a_Public_USER_Contact_Modal"
 
+import { useMediaQuery } from '@mui/material';
+
+
 const db = getDatabase(app);
 
 // const ContactOrganizerModal = ({ organizerName, onClose }) => (
@@ -165,6 +168,8 @@ const UserProfilePage = () => {
         return () => unsubscribe();
     }, [uid]);
 
+    const smallerThan = useMediaQuery('(max-width:690px)');
+
     return (
         <div className="app-container" style={{ paddingTop: 110, paddingBottom: 74 }}>
             <link rel="stylesheet" href="universal-styles.css" />
@@ -208,7 +213,7 @@ const UserProfilePage = () => {
                         // background: '#32ed2555',
                         borderRadius: 32,
                         maxHeight: '81vh',
-                        position: 'sticky',
+                        position: smallerThan ?  'inherit' : 'sticky',
                         top: 130,
                     }}
                 >

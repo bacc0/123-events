@@ -14,6 +14,8 @@ import { app } from "../firebase";
 import Modal_Edit_Profile from "./C__Modal_Edit_Profile";
 import ModalEditPassword from './B__Modal_Edit_Password';
 
+import { useMediaQuery } from '@mui/material';
+
 const db = getDatabase(app);
 
 const ContactOrganizerModal = ({ organizerName, onClose }) => (
@@ -162,6 +164,8 @@ const UserProfilePage = () => {
         return () => unsubscribe();
     }, [uid]);
 
+    const smallerThan = useMediaQuery('(max-width:690px)');
+
     return (
         <div
             className="app-container"
@@ -204,7 +208,7 @@ const UserProfilePage = () => {
                         // background: '#32ed2555',
                         borderRadius: 32,
                         maxHeight: '81vh',
-                        position: 'sticky',
+                        position: smallerThan ? 'inherit' : 'sticky',
                         top: 130,
 
                     }}

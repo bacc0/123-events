@@ -692,7 +692,7 @@ const NotificationDropdown = () => {
         <div >
 
             {
-            topNotification &&
+                topNotification &&
                 <NotificationOnTop
                     notifications={notifications}
                 />

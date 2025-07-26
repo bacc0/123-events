@@ -143,6 +143,7 @@ const NotificationOnTop = ({ notifications }) => {
                                                        textAlign: 'left',
                                                        marginLeft: 10,
                                                        // background: '#222fff44',
+                                                       lineHeight: 1.5
 
                                                   }}
                                              >
@@ -150,8 +151,8 @@ const NotificationOnTop = ({ notifications }) => {
                                                        {notification.text.charAt(0).toUpperCase()}
                                                        {/* {notification.text.slice(1)} */}
                                                        {
-                                                            notification.text.length > 29
-                                                                 ? notification.text.slice(1, 26) + '...'
+                                                            notification.text.length > 55
+                                                                 ? notification.text.slice(1, 52) + ' ...'
                                                                  : notification.text.slice(1)
                                                        }
                                                   </div>

@@ -141,7 +141,7 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
                 handleSubmit_EmailJS(message, organizerEmail, senderEmail, senderName)
             )
 
-            // alert("✅ Your message was sent successfully!");
+            alert("✅ Your message was sent successfully!");
         } catch (error) {
             console.error("Notification error:", error);
             alert("❌ Something went wrong. Please try again.");

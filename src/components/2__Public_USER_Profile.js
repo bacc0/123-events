@@ -166,7 +166,7 @@ const UserProfilePage = () => {
     }, [uid]);
 
     return (
-        <div className="app-container" style={{ paddingTop: "110px" }}>
+        <div className="app-container" style={{ paddingTop: 110, paddingBottom: 74 }}>
             <link rel="stylesheet" href="universal-styles.css" />
             <div style={{ maxWidth: 1200, margin: "0 auto 12px" }}>
                 <div
@@ -195,7 +195,13 @@ const UserProfilePage = () => {
             >
                 <div
                     className="profile-left-panel"
-                    style={{ borderRadius: 16 }}
+                    style={{
+                        // background: '#32ed2555',
+                         borderRadius: 32,
+                        maxHeight: '81vh',
+                        position: 'sticky',
+                        top: 130,
+                    }}
                 >
                     <div
                         className="profile-header"
@@ -238,6 +244,13 @@ const UserProfilePage = () => {
                                 animate={{ opacity: 1, filter: "blur(0px)" }}
                                 transition={{ duration: 1, delay: 0.2 }}
                                 className="profile-about"
+                                style={{
+
+                                    maxHeight: '30vh',
+                                    overflowY: 'auto',
+                                    borderBottom: '0.1px solid #E5E7EB',
+                                    paddingBottom:10
+                                }}
                             >
                                 {user.about}
                             </motion.p>
@@ -294,9 +307,12 @@ const UserProfilePage = () => {
                 <div
                     className="profile-container_card"
                     style={{
-                        background: "#ffffff",
+                          background: "#ffffff",
                         padding: 16,
+                        paddingBottom: 50,
                         borderRadius: 16,
+                        //  background: '#32ed2555',
+                        borderRadius: 32,
                     }}
                 >
                     <h3

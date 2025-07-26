@@ -163,7 +163,13 @@ const UserProfilePage = () => {
     }, [uid]);
 
     return (
-        <div className="app-container" style={{ paddingTop: "110px" }}>
+        <div
+            className="app-container"
+            style={{
+                paddingTop: 110,
+                paddingBottom: 74
+            }}
+        >
             <link rel="stylesheet" href="universal-styles.css" />
             <div style={{ maxWidth: 1200, margin: "0 auto 12px" }}>
                 <div
@@ -176,14 +182,33 @@ const UserProfilePage = () => {
                         cursor: "pointer",
                         marginLeft: 12,
                         color: "#78909c",
+
+
                     }}
                 >
                     <ArrowBackIcon />
                     <div style={{ fontSize: 12, marginLeft: 6 }}>BACK</div>
                 </div>
             </div>
-            <div className="profile-grid" style={{ margin: "0 auto", padding: "0 16px", maxWidth: "1200px" }}>
-                <div className="profile-left-panel" style={{ borderRadius: 16 }}>
+            <div
+                className="profile-grid"
+                style={{
+                    margin: "0 auto",
+                    padding: "0 16px",
+                    maxWidth: "1200px"
+                }}
+            >
+                <div
+                    className="profile-left-panel"
+                    style={{
+                        // background: '#32ed2555',
+                        borderRadius: 32,
+                        maxHeight: '81vh',
+                        position: 'sticky',
+                        top: 130,
+
+                    }}
+                >
                     <div className="profile-header">
                         <h2
                             className="profile-name"
@@ -191,18 +216,20 @@ const UserProfilePage = () => {
                         >
                             My Profile
                         </h2>
-                        <div style={{
-                            width: 120,
-                            height: 120,
-                            borderRadius: "50%",
-                            backgroundColor: "#F3F5F7",
-                            margin: "0 auto 36px",
-                            backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                            backgroundRepeat: "no-repeat",
-                            border: "1px solid #ffffff",
-                        }}>
+                        <div
+                            style={{
+                                width: 120,
+                                height: 120,
+                                borderRadius: "50%",
+                                backgroundColor: "#F3F5F7",
+                                margin: "0 auto 36px",
+                                backgroundImage: `url(${process.env.PUBLIC_URL}/userIMG.png)`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center",
+                                backgroundRepeat: "no-repeat",
+                                border: "1px solid #ffffff",
+                            }}
+                        >
                             <motion.img
                                 initial={{ opacity: 0, filter: "blur(7px)" }}
                                 animate={{ opacity: 1, filter: "blur(0px)" }}
@@ -214,7 +241,6 @@ const UserProfilePage = () => {
                         <h2
                             className="profile-name"
                             style={{
-
                                 margin: "0 0 35px 0"
                             }}
                         >
@@ -260,7 +286,7 @@ const UserProfilePage = () => {
                         )}
                         <br />
                         <br />
-                      
+
                         <p
                             style={{
                                 fontSize: "14px",
@@ -270,12 +296,33 @@ const UserProfilePage = () => {
                         >
                             About Me
                         </p>
-                        <div className="profile-about" >
+                        <div
+                            className="profile-about"
+                            style={{
+                                // background: '#ed252555',
+                                maxHeight: '30vh',
+                                overflowY: 'auto',
+                                borderBottom: '0.1px solid #E5E7EB',
+                                paddingBottom: 10
+                            }}
+
+                        >
                             {user.about}
                         </div>
                     </div>
                 </div>
-                <div className="profile-container_card" style={{ background: "#ffffff", padding: 16, borderRadius: 16 }}>
+                <div
+                    className="profile-container_card"
+                    style={{
+                        background: "#ffffff",
+                        padding: 16,
+                        paddingBottom: 50,
+                        borderRadius: 16,
+                        //  background: '#32ed2555',
+                        borderRadius: 32,
+
+                    }}
+                >
                     <h3 className="section-title" style={{ fontSize: "1.17em", marginBottom: "24px", paddingBottom: "8px", display: "inline-block", marginLeft: 40, color: "#1565c0" }}>Upcoming Events</h3>
 
 

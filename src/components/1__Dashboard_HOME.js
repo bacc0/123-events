@@ -758,13 +758,23 @@ const Dashboard_HOME = () => {
 
 
     return (
-        <div className="app-container" style={{ marginTop: 41 }}>
+        <div className="app-container" style={{ marginTop: 41, paddingBottom: 44 }}>
             <link rel="stylesheet" href="/universal-styles.css" />
             {currentView === "dashboard" ? (
                 <main className="main-content">
-                    <h3 style={{ color: "#78909c" }}>Events</h3>
+                    <h3
+                        style={{ color: "#78909c", }}
+                    >
+                        Events
+                    </h3>
 
-                    <div className="card card-padded">
+                    <div className="card card-padded"
+                        style={{
+                            // background: '#32ed2555',
+                            padding: '38px 23px 62px',
+                            borderRadius: 32
+                        }}
+                    >
                         <div
                             className="section-header"
                             style={{
@@ -774,6 +784,9 @@ const Dashboard_HOME = () => {
                                 width: "100%",
                                 flexWrap: "wrap",
                                 gap: "12px",
+
+
+
                             }}
                         >
                             <div

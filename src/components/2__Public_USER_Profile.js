@@ -168,7 +168,7 @@ const UserProfilePage = () => {
     return (
         <div className="app-container" style={{ paddingTop: 110, paddingBottom: 74 }}>
             <link rel="stylesheet" href="universal-styles.css" />
-            <div style={{ maxWidth: 1200, margin: "0 auto 12px" }}>
+            <div style={{ maxWidth: 1200, margin: "0 auto 12px" , }}>
                 <div
                     onClick={() => navigate("/")}
                     style={{
@@ -179,10 +179,19 @@ const UserProfilePage = () => {
                         cursor: "pointer",
                         marginLeft: 12,
                         color: "#78909c",
+                     
                     }}
                 >
                     <ArrowBackIcon />
-                    <div style={{ fontSize: 12, marginLeft: 6 }}>BACK</div>
+                    <div
+                        style={{
+                            fontSize: 12,
+                            marginLeft: 6,
+                          
+                        }}
+                    >
+                        BACK
+                    </div>
                 </div>
             </div>
             <div
@@ -197,7 +206,7 @@ const UserProfilePage = () => {
                     className="profile-left-panel"
                     style={{
                         // background: '#32ed2555',
-                         borderRadius: 32,
+                        borderRadius: 32,
                         maxHeight: '81vh',
                         position: 'sticky',
                         top: 130,
@@ -249,7 +258,7 @@ const UserProfilePage = () => {
                                     maxHeight: '30vh',
                                     overflowY: 'auto',
                                     borderBottom: '0.1px solid #E5E7EB',
-                                    paddingBottom:10
+                                    paddingBottom: 10
                                 }}
                             >
                                 {user.about}
@@ -307,7 +316,7 @@ const UserProfilePage = () => {
                 <div
                     className="profile-container_card"
                     style={{
-                          background: "#ffffff",
+                        background: "#ffffff",
                         padding: 16,
                         paddingBottom: 50,
                         borderRadius: 16,

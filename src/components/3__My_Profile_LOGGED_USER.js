@@ -304,7 +304,7 @@ const UserProfilePage = () => {
                             className="profile-about"
                             style={{
                                 // background: '#ed252555',
-                                maxHeight: '30vh',
+                                maxHeight: '18vh',
                                 overflowY: 'auto',
                                 borderBottom: '0.1px solid #E5E7EB',
                                 paddingBottom: 10

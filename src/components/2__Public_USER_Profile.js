@@ -266,6 +266,7 @@ const UserProfilePage = () => {
                                     paddingBottom: 10
                                 }}
                             >
+                                
                                 {user.about}
                             </motion.p>
                         ) : (

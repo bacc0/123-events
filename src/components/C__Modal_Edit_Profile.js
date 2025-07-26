@@ -133,6 +133,8 @@ const Modal_Edit_Profile = ({ userId = "", refreshUser = () => { } }) => {
                     PaperProps={{
                          style: {
                               borderRadius: 32,
+                                maxWidth:500,
+                        maxHeight:500
                          },
                     }}
                >

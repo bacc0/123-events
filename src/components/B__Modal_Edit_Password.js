@@ -90,6 +90,8 @@ const ModalEditPassword = ({ open, onClose }) => {
                 style: {
                     borderRadius: 32,
                     padding: "60px 0px",
+                      maxWidth:500,
+                        maxHeight:500
                 },
             }}
         >
@@ -156,8 +158,8 @@ const ModalEditPassword = ({ open, onClose }) => {
                                     borderRadius: 16,
                                     marginBottom: 6,
                                     marginTop: 12,
-                                    height: 42,
-                                    width: 280,
+                                     width: 280,
+                                             height: 30,
                                 }}
                             />
                             <IconButton
@@ -165,7 +167,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                                 style={{
                                     position: "absolute",
                                     right: 10,
-                                    top: 50,
+                                    top: 45,
                                     transform: "translateY(-50%)",
                                     color: "#cfd8dc",
                                 }}
@@ -227,9 +229,10 @@ const ModalEditPassword = ({ open, onClose }) => {
                                     border: "1px solid #CFD8DD",
                                     borderRadius: 16,
 
-                                    height: 42,
-                                    width: 280,
+                                   
                                     marginTop: 12,
+                                     width: 280,
+                                             height: 30,
                                 }}
                             />
                             <IconButton
@@ -237,7 +240,7 @@ const ModalEditPassword = ({ open, onClose }) => {
                                 style={{
                                     position: "absolute",
                                     right: 10,
-                                    top: 50,
+                                    top: 45,
                                     transform: "translateY(-50%)",
                                     color: "#cfd8dc",
                                 }}

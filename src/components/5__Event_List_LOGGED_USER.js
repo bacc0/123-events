@@ -396,18 +396,20 @@ const DiscoverOnly = ({ creatorName, date }) => {
                 PaperProps={{
                     style: {
                         borderRadius: 32,
+                           maxWidth: 500,
+                        maxHeight: 500
                     },
                 }}
             >
                 <DialogTitle
                     sx={{
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "end",
                         alignItems: "center",
                         fontSize: 12,
                     }}
                 >
-                    Event Details
+                    {/* Event Details */}
                     <IconButton onClick={handleCloseModal}>
                         <CloseIcon />
                     </IconButton>

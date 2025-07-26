@@ -157,7 +157,7 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
             style={{ zIndex: 10000 }} >
             <div
                 className="modal-content"
-                style={{ maxWidth: "500px", padding: '0 30px', borderRadius: 32 }}
+                style={{ maxWidth: "500px",maxHeight:500, padding: '0 30px', borderRadius: 32 }}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="modal-header">
@@ -176,12 +176,12 @@ const ContactOrganizerModal = ({ organizerName, organizerUid, onClose }) => {
                                 color: '#455a64',
                                 marginBottom: 35,
                                 position: 'relative',
-                                left: 40,
+                                left: 50,
                                 // background: 'red',
-                                minWidth: '120%'
+                                minWidth: '130%'
                             }}
                         >
-                            {`Contact ${organizerName}`}
+                            {`Contact Organizer`}
 
                         </h1>
                     </div>

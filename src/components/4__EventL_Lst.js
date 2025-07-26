@@ -251,16 +251,16 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                                 return isNaN(date.getTime())
                                                     ? "Invalid date"
                                                     : date.toLocaleString(
-                                                          "en-GB",
-                                                          {
-                                                              day: "numeric",
-                                                              month: "short",
-                                                              year: "numeric",
-                                                              hour: "numeric",
-                                                              minute: "2-digit",
-                                                              hour12: true,
-                                                          },
-                                                      );
+                                                        "en-GB",
+                                                        {
+                                                            day: "numeric",
+                                                            month: "short",
+                                                            year: "numeric",
+                                                            hour: "numeric",
+                                                            minute: "2-digit",
+                                                            hour12: true,
+                                                        },
+                                                    );
                                             })()}
                                         </Typography>
                                         <Typography
@@ -318,7 +318,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                             const eventDate = new Date(
                                                 (event.dateTime?.seconds ||
                                                     event.dateTime?._seconds) *
-                                                    1000,
+                                                1000,
                                             );
                                             if (eventDate >= now) {
                                                 return isUserAttending(
@@ -386,18 +386,20 @@ const DiscoverOnly = ({ creatorName, date }) => {
                 PaperProps={{
                     style: {
                         borderRadius: 32,
+                        maxWidth: 500,
+                        maxHeight: 500
                     },
                 }}
             >
                 <DialogTitle
                     sx={{
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "end",
                         alignItems: "center",
                         fontSize: 12,
                     }}
                 >
-                    Event Details
+                    {/* Event Details */}
                     <IconButton onClick={handleCloseModal}>
                         <CloseIcon />
                     </IconButton>
@@ -523,7 +525,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                                     day: "2-digit",
                                                     month: "2-digit",
                                                     year: "numeric",
-                                            
+
                                                     hour: "2-digit",
                                                     minute: "2-digit",
                                                 },
@@ -584,7 +586,7 @@ const DiscoverOnly = ({ creatorName, date }) => {
                                 >
                                     Description:
                                 </span>
-                                <span style={{ fontSize: 15, fontWeight: 500, marginBottom:16 }}>
+                                <span style={{ fontSize: 15, fontWeight: 500, marginBottom: 16 }}>
                                     {selectedEvent.description ||
                                         "No description"}
                                 </span>

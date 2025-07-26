@@ -101,7 +101,8 @@ const Modal_Edit_Event = ({
                onClose={onClose}
                fullWidth
                maxWidth="sm"
-               PaperProps={{ style: { borderRadius: 32 } }}
+               PaperProps={{ style: { borderRadius: 32,  maxWidth:500,
+                        maxHeight:500 } }}
           >
                <DialogTitle>
                     <IconButton

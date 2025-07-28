@@ -770,6 +770,7 @@ const NotificationDropdown = () => {
                                 borderBottom: '0.3px solid #cfd8dc',
                                 display: 'flex',
                                 justifyContent: 'space-between',
+                                justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
                                 <h3 style={{
@@ -780,7 +781,7 @@ const NotificationDropdown = () => {
                                 }}>
                                     Notifications {loading && '(Loading...)'}
                                 </h3>
-                                {unreadCount > 0 && (
+                                {/* {unreadCount > 0 && (
                                     <button
                                         onClick={markAllAsRead}
                                         style={{
@@ -798,7 +799,7 @@ const NotificationDropdown = () => {
                                     >
                                         Mark all read
                                     </button>
-                                )}
+                                )} */}
                             </div>
 
                             {/* Notifications List */}

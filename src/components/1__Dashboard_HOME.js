@@ -9,6 +9,7 @@ import EventDetailsModal from "./1__Dashboard_HOME/1c_EventDetailsModal";
 import EditEventModal from "./1__Dashboard_HOME/1d_EditEventModal";
 
 import { useMediaQuery } from "@mui/material";
+// import Palette from 'react-palette';
 
 import {
     Dialog,
@@ -520,7 +521,10 @@ const Dashboard_HOME = () => {
                                 backgroundSize: "66%", // Scale image to 23% of container
                                 backgroundPosition: "center", // Centre the image
                                 backgroundRepeat: "no-repeat", // Do not repeat the image
+                                height: 180
+
                             }}
+
                             initial={{ opacity: 0, scale: 1, filter: "blur(7px)" }}
                             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                             transition={{ duration: 0.6, delay: 0.0 }}
@@ -534,7 +538,9 @@ const Dashboard_HOME = () => {
                             }}
                         />
                     ) : (
-                        <div className="event-image-placeholder">
+                        <div className="event-image-placeholder"
+                            style={{ height: 180 }}
+                        >
                             <div
                                 style={{
                                     width: 33,
@@ -544,12 +550,19 @@ const Dashboard_HOME = () => {
                                     backgroundSize: "cover",
                                     backgroundPosition: "center",
                                     backgroundRepeat: "no-repeat",
+
                                 }}
                             ></div>
                         </div>
                     )}
                 </div>
-                <div className="event-content">
+
+                <div className="event-content"
+                    style={{
+                        marginTop: -30,
+                        zIndex: 1000,
+                    }}
+                >
                     <div>
                         <h3 className="event-title">{event.title}</h3>
                         <div className="event-meta">
